@@ -1,0 +1,1318 @@
+import React from 'react';
+import { supabase } from '@/lib/supabase';
+import { getSetting, HeaderContact } from '@/lib/settings';
+
+export default async function HomePage() {
+  const { data: pageData } = await supabase
+    .from('pages')
+    .select('sections')
+    .eq('slug', '/')
+    .single();
+
+  const sections = pageData?.sections || {};
+  const hero = sections.hero || {};
+  const heroSlides = hero.slides || [
+    {
+      title: "Premium Carpets & <br /><span>Hardwood Fitting</span>",
+      bg_image: "/assets/images/hero/hm1-bg01.webp",
+      cta_link: "/about",
+      cta_text: "Discover More",
+      sub_title: "ZK FLOORING SERVICES",
+      video_url: "https://www.youtube.com/watch?v=SMKPKGW083c",
+      description: "Expert carpet fitting and premium hardwood flooring services across Birmingham and surrounding regions. Discover our custom designs."
+    },
+    {
+      title: "Sleek LVT & <br /><span>Vinyl Flooring</span>",
+      bg_image: "/assets/images/hero/hm1-bg02.webp",
+      cta_link: "/contact",
+      cta_text: "Get a Quote",
+      sub_title: "BEST RATES GUARANTEED",
+      video_url: "https://www.youtube.com/watch?v=SMKPKGW083c",
+      description: "High-durability Luxury Vinyl Tiles (LVT) and sheet vinyl options tailored for domestic and commercial spaces."
+    }
+  ];
+
+  const features = sections.features || {
+    social_proof_count: "3,600",
+    social_proof_label: "active customers",
+    social_proof_images: [
+      "/assets/images/social/social-img01.webp",
+      "/assets/images/social/social-img02.webp",
+      "/assets/images/social/social-img03.webp"
+    ]
+  };
+
+  const about = sections.about || {
+    title: "Transforming Spaces with <br /> Precision and Quality Craftsmanship",
+    cta_link: "/about",
+    cta_text: "Explore More",
+    main_image: "/assets/images/about/hm1-img01.webp",
+    side_image: "/assets/images/about/hm1-img03.webp",
+    since_text: "Since 2007",
+    description: "ZK Flooring is Birmingham's trusted contractor for carpets, laminate, engineered wood, vinyl, and subfloor preparation. We service a 100-200 mile radius from Hobmoor Road, Small Heath."
+  };
+
+  const contactCallback = sections.contact_callback || {
+    title: "Connect with us for next <br />Gen Flooring Projects",
+    sub_title: "Get in Touch",
+    card_label: "Call us anytime",
+    card_phone: "07903723774",
+    card_phone_link: "tel:07903723774"
+  };
+
+  const contactInfo = await getSetting<HeaderContact>('header_contact');
+  const globalPhone = contactInfo?.phone || "07903723774";
+  const globalPhoneLink = contactInfo?.phone_link || "tel:07903723774";
+
+  return (
+    <main>
+
+        {/* Hero Section */}
+        <section className="tv-hero-section overflow-hidden z-2 bg-light">
+          <div className="hero-inner mx-30 ml-mx-0 position-relative">
+            <div className="container-fluid px-0">
+              <div className="hero-slider position-relative swiper" suppressHydrationWarning>
+                <div className="swiper-wrapper" suppressHydrationWarning>
+                  {heroSlides.map((slide: any, index: number) => {
+                    const slideNumber = String(index + 1).padStart(2, '0');
+                    const pathId = `e-path-${index}`;
+                    const textPathId = `e-text-path-${index}`;
+                    const slideClass = index % 2 === 0 ? "pageTurn" : "blurSkew";
+                    return (
+                      <div key={index} className={`swiper-slide ${slideClass}`} suppressHydrationWarning>
+                        <div className="hero-area position-relative">
+                          <div className="p-bottom-left wow slideInUp z-1" suppressHydrationWarning>
+                            <img src="/assets/images/hero/hm1-shape01.webp" alt="shape" />
+                          </div>
+                          <div 
+                            className="bg image" 
+                            data-bg-src={slide.bg_image} 
+                            style={{ backgroundImage: `url(${slide.bg_image})` }}
+                            suppressHydrationWarning
+                          ></div>
+                          <div className="video-box">
+                            <div className="circle-box">
+                              <a 
+                                className="logo-box popup-video" 
+                                href={slide.video_url || "https://www.youtube.com/watch?v=SMKPKGW083c"} 
+                                data-fancybox="video-gallery"
+                              >
+                                <img src="/assets/images/hero/spin-icon.webp" alt="play" />
+                              </a>
+                              <div className="text-inner" style={{ animation: "10s linear 0s infinite normal none running text-rotate" }} suppressHydrationWarning>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="192.5" height="192.5" viewBox="0 0 250.5 250.5">
+                                  <path d="M.25,125.25a125,125,0,1,1,125,125,125,125,0,0,1-125-125" id={pathId}></path>
+                                  <text>
+                                    <textPath id={textPathId} href={`#${pathId}`} startOffset="0%">
+                                      ZK FLOORING PREMIUM CARPET FITTING SERVICE
+                                    </textPath>
+                                  </text>
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="container">
+                            <div className="row">
+                              <div className="col-lg-12">
+                                <div className="hero-content">
+                                  <span className="sub-title">
+                                    <img src="/assets/images/hero/check.webp" alt="check" />
+                                    {slide.sub_title}
+                                  </span>
+                                  <h1 className="hero-title text-white" dangerouslySetInnerHTML={{ __html: slide.title }}></h1>
+                                  <div className="text-icon position-relative">
+                                    <div className="icon d-inline-block spin2">
+                                      <img src="/assets/images/icons/star.png" alt="star" />
+                                    </div>
+                                    <p className="text">{slide.description}</p>
+                                  </div>
+                                  <a href={slide.cta_link} className="theme-btn mt-40 br-30">
+                                    <span className="link-effect">
+                                      <span className="effect-1">{slide.cta_text}</span>
+                                      <span className="effect-1">{slide.cta_text}</span>
+                                    </span>
+                                    <span className="arrow-all">
+                                      <i>
+                                        <svg width="16" height="19" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="#1053f3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                        <svg width="16" height="19" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="#1053f3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                      </i>
+                                    </span>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="slide-number">{slideNumber}</div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Feature Section */}
+        <section className="tv-feature-section bg-light space">
+          <div className="container">
+            <div className="row gy-30">
+              <div className="col-lg-4 col-md-6 col-sm-6">
+                <div className="tv-feature-item wow fadeInLeft" data-wow-delay=".5s">
+                  <div className="client-social-proof">
+                    <div className="social">
+                      {features.social_proof_images?.map((img: string, i: number) => (
+                        <img key={i} src={img} alt={`Client ${i + 1}`} />
+                      )) || (
+                        <>
+                          <img src="/assets/images/social/social-img01.webp" alt="Client 01" />
+                          <img src="/assets/images/social/social-img02.webp" alt="Client 02" />
+                          <img src="/assets/images/social/social-img03.webp" alt="Client 03" />
+                        </>
+                      )}
+                      <h4>+3K</h4>
+                    </div>
+                    <div className="count-box mt-30">
+                      <span className="count-number odometer" data-count={features.social_proof_count || "3,600"}>0</span>
+                    </div>
+                    <div className="rating-viewers">{features.social_proof_label || "active customers"}</div>
+                    <a href="/about" className="theme-btn style2 mt-20 br-30">
+                      <span className="link-effect">
+                        <span className="effect-1">Explore More</span>
+                        <span className="effect-1">Explore More</span>
+                      </span>
+                      <span className="arrow-all-2">
+                        <i>
+                          <svg width="11" height="12" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10.0035 3.90804L1.41153 12.5L0 11.0885L8.59097 2.49651H1.01922V0.5H12V11.4808H10.0035V3.90804Z" fill="white"></path>
+                          </svg>
+                          <svg width="11" height="12" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10.0035 3.90804L1.41153 12.5L0 11.0885L8.59097 2.49651H1.01922V0.5H12V11.4808H10.0035V3.90804Z" fill="white"></path>
+                          </svg>
+                        </i>
+                      </span>
+                    </a>
+                    <div className="scribble-shape1 moving">
+                      <img src="/assets/images/feature/scribble.webp" alt="scribble" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-4 col-md-6 col-sm-6">
+                <div className="tv-feature-box wow fadeInLeft" data-wow-delay=".7s">
+                  <div className="icon-top">
+                    <div className="icon">
+                      <i>
+                        <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M10.0035 3.90804L1.41153 12.5L0 11.0885L8.59097 2.49651H1.01922V0.5H12V11.4808H10.0035V3.90804Z" fill="white"></path>
+                        </svg>
+                        <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M10.0035 3.90804L1.41153 12.5L0 11.0885L8.59097 2.49651H1.01922V0.5H12V11.4808H10.0035V3.90804Z" fill="white"></path>
+                        </svg>
+                      </i>
+                    </div>
+                  </div>
+                  <div className="logo mb-40">
+                    <img src="/assets/images/feature/hm1-icon01.webp" alt="icon" />
+                  </div>
+                  <h2>Premium Carpet <br />Fitting</h2>
+                  <p>Professional fitting services with a wide selection of luxurious carpets for every room.</p>
+                </div>
+              </div>
+              <div className="col-lg-4 col-md-6 col-sm-6">
+                <div className="tv-feature-box bg-theme3 wow fadeInLeft" data-wow-delay=".9s">
+                  <div className="icon-top">
+                    <div className="icon style2 bg-dark">
+                      <i>
+                        <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M10.0035 3.90804L1.41153 12.5L0 11.0885L8.59097 2.49651H1.01922V0.5H12V11.4808H10.0035V3.90804Z" fill="white"></path>
+                        </svg>
+                        <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M10.0035 3.90804L1.41153 12.5L0 11.0885L8.59097 2.49651H1.01922V0.5H12V11.4808H10.0035V3.90804Z" fill="white"></path>
+                        </svg>
+                      </i>
+                    </div>
+                  </div>
+                  <div className="logo mb-40">
+                    <img src="/assets/images/feature/hm1-icon02.webp" alt="icon" />
+                  </div>
+                  <h2>Hardwood & LVT <br />Installations</h2>
+                  <p>Durable and stylish Luxury Vinyl Tiles (LVT) and hardwood options fitted to perfection.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* About Section */}
+        <section className="tv-about-section bg-color2 space-bottom">
+          <div className="container">
+            <div className="row gy-30 align-items-center">
+              <div className="col-lg-7">
+                <div className="about-left pr-60 md-pr-0">
+                  <div className="title-wrap three" data-wow-duration="1.5s" data-wow-delay=".4s">
+                    <div className="sub-title-2 text-theme">
+                      <i className="fa-solid fa-circle-check"></i>
+                      {about.since_text || "Since 2007"}
+                    </div>
+                    <h2 className="sec-title" dangerouslySetInnerHTML={{ __html: about.title }}></h2>
+                  </div>
+                  <div className="image-box br-30 sm-br-0 overflow-hidden data-item-hover">
+                    <figure className="data-img-hover" data-style="01" data-intensity="0.2" data-speedin="1" data-speedout="1">
+                      <img src={about.main_image} alt="main image" />
+                    </figure>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-5">
+                <div className="about-right">
+                  <div className="right-top">
+                    <img src={about.side_image} alt="side image" />
+                    <div className="text">
+                      <h4>Z. K. Khan</h4>
+                      <p>Founder & Lead Fitter - <a href="/contact">ZK Flooring</a></p>
+                    </div>
+                  </div>
+                  <div className="border mt-40 mb-30"></div>
+                  <p>{about.description}</p>
+                  
+                  {about.checkmark_list && (
+                    <ul className="list-style-1 mb-40">
+                      {about.checkmark_list.map((item: string, i: number) => (
+                        <li key={i}>
+                          <i className="fa-solid fa-circle-check" style={{ marginRight: "10px", color: "#1053f3" }}></i>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  <a href={about.cta_link} className="theme-btn mt-25">
+                    <span className="link-effect">
+                      <span className="effect-1">{about.cta_text}</span>
+                      <span className="effect-1">{about.cta_text}</span>
+                    </span>
+                    <span className="arrow-all">
+                      <i>
+                        <svg width="16" height="19" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="#1053f3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                        <svg width="16" height="19" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="#1053f3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </i>
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section><section className="tv-service-section bg-light position-relative overflow-hidden">
+            <div className="p-top-center z-1 wow slideInTop">
+                <img src="assets/images/service/hm1-shape-01.webp" alt="" />
+            </div>
+            <div className="tv-service-inner space bg-theme3 mx-30 ml-mx-0 overflow-hidden">
+                <div className="container">
+                    
+                    <div className="row">
+                        <div className="col-lg-12 text-center">
+                            <div className="title-wrap two white" data-wow-duration="2s" data-wow-delay=".0s">
+                                <div className="sub-title-2 text-white two"><i className="fa-solid fa-circle-check"></i>Services</div>
+                                <h2 className="sec-title">Empowering Companies with Reliable <br />and Scalable IT Services</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="row gy-30">
+                        <div className="col-lg-12">
+                            <div className="tv-service-item-inner">
+                                <div className="service-item-wrap service-item-pin">
+                                    <div className="tv-service-item">
+                                        <div className="service-number">01.</div>
+                                        <div className="service-left">
+                                            <div className="video-btn">
+                                                <a className="popup-video" href="https://www.youtube.com/watch?v=SMKPKGW083c" data-fancybox="video-gallery">
+                                                    <i className="fa-sharp fa-solid fa-play"></i>
+                                                </a>
+                                            </div>
+                                            <div className="overlay-anim4 overflow-hidden">
+                                                <img src="assets/images/service/hm1-img01.webp" alt="Team working" />
+                                            </div>
+                                        </div>
+                                        <div className="service-right">
+                                            <h6>CODING</h6>
+                                            <h2>Android and IOS Apps <br /> Designing</h2>
+                                            <p> Credibly pontificate turnkey processes marketplace transition <br /> competitive testing procedures technology done...
+                                            </p>
+                                            <a href="service-details.html" className="learn-more">Learn More <i className="fa-solid fa-arrow-up-right"></i></a>
+
+                                            <div className="border my-40"></div>
+                                            <div className="tags">
+                                                <span>Wordpress</span>
+                                                <span>Shopify</span>
+                                                <span>Webflow</span>
+                                                <span>Framer</span>
+                                                <span>Hosting</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="service-item-wrap service-item-pin">
+                                    <div className="tv-service-item">
+                                    <div className="service-number">02.</div>
+                                    <div className="service-left">
+                                        <div className="video-btn">
+                                            <a className="popup-video" href="https://www.youtube.com/watch?v=SMKPKGW083c" data-fancybox="video-gallery">
+                                                <i className="fa-sharp fa-solid fa-play"></i>
+                                            </a>
+                                        </div>
+                                        <div className="overlay-anim4 overflow-hidden">
+                                            <img src="assets/images/service/hm1-img02.webp" alt="Team working" />
+                                        </div>
+                                    </div>
+                                    <div className="service-right">
+                                        <h6>CODING</h6>
+                                        <h2>Digital Transformation <br />and Automation</h2>
+                                        <p> Credibly pontificate turnkey processes marketplace transition <br /> competitive testing procedures technology done...
+                                        </p>
+                                        <a href="service-details.html" className="learn-more">Learn More <i className="fa-solid fa-arrow-up-right"></i></a>
+
+                                        <div className="border my-40"></div>
+                                        <div className="tags">
+                                            <span>Wordpress</span>
+                                            <span>Shopify</span>
+                                            <span>Webflow</span>
+                                            <span>Framer</span>
+                                            <span>Hosting</span>
+                                        </div>
+                                    </div>
+                                    </div>                                
+                                </div>
+                                <div className="service-item-wrap">
+                                    <div className="tv-service-item">
+                                        <div className="service-number">03.</div>
+                                        <div className="service-left">
+                                            <div className="video-btn">
+                                                <a className="popup-video" href="https://www.youtube.com/watch?v=SMKPKGW083c" data-fancybox="video-gallery">
+                                                    <i className="fa-sharp fa-solid fa-play"></i>
+                                                </a>
+                                            </div>
+                                            <div className="overlay-anim4 overflow-hidden">
+                                                <img src="assets/images/service/hm1-img03.webp" alt="Team working" />
+                                            </div>
+                                        </div>
+                                        <div className="service-right">
+                                            <h6>DRSIGNING</h6>
+                                            <h2>Web and Mobile UI/UX <br />Designing</h2>
+                                            <p> Credibly pontificate turnkey processes marketplace transition <br /> competitive testing procedures technology done...
+                                            </p>
+                                            <a href="service-details.html" className="learn-more">Learn More <i className="fa-solid fa-arrow-up-right"></i></a>
+
+                                            <div className="border my-40"></div>
+                                            <div className="tags">
+                                                <span>Wordpress</span>
+                                                <span>Shopify</span>
+                                                <span>Webflow</span>
+                                                <span>Framer</span>
+                                                <span>Hosting</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+        
+        <section className="tv-choose-section space bg-light">
+            <div className="container">
+                <div className="row gy-30">
+                    <div className="col-lg-12 col-xl-6">
+                        <div className="tv-choose-left">
+                            
+                            <div className="title-wrap three" data-wow-duration="1.5s" data-wow-delay=".4s">
+                                <div className="sub-title-2 text-theme"><i className="fa-solid fa-circle-check"></i>Why Choose Us</div>
+                                <h2 className="sec-title">Proven Track Record of Driving <br /> Digital Transformation</h2>
+                            </div>
+                            <div className="tv-choose-boxs">
+                                <div className="tv-choose-single-box two wow fadeInLeft" data-wow-delay=".3s">
+                                    <div className="box-top-content mb-20">
+                                        <div className="icon-top"><img src="assets/images/choose/hm1-icon01.webp" alt="" /></div>
+                                        <h4 className="title">Cutting-Edge Technology</h4>
+                                    </div>
+                                    <p>Pontificate turnkey processes competitive testing</p>
+                                    <div className="icon bg-light">
+                                        <i>
+                                            <svg width="10" height="12" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10.0035 3.90804L1.41153 12.5L0 11.0885L8.59097 2.49651H1.01922V0.5H12V11.4808H10.0035V3.90804Z"></path>
+                                            </svg>
+                                            <svg width="10" height="12" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10.0035 3.90804L1.41153 12.5L0 11.0885L8.59097 2.49651H1.01922V0.5H12V11.4808H10.0035V3.90804Z"></path>
+                                            </svg>
+                                        </i>
+                                    </div>
+                                    
+                                    <div className="choose-box box-1"></div>
+                                    <div className="choose-box box-2"></div>
+                                    <div className="choose-box box-3"></div>
+                                    <div className="choose-box box-4"></div>
+                                </div>
+                                <div className="tv-choose-single-box wow fadeInRight" data-wow-delay=".5s">
+                                    <div className="box-top-content mb-20">
+                                        <div className="icon-top"><img src="assets/images/choose/hm1-icon02.webp" alt="" /></div>
+                                        <h4 className="title">Proven Client Satisfaction</h4>
+                                    </div>
+                                    <p>Pontificate turnkey processes competitive testing</p>
+                                    <div className="icon bg-light">
+                                        <i>
+                                            <svg width="10" height="12" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10.0035 3.90804L1.41153 12.5L0 11.0885L8.59097 2.49651H1.01922V0.5H12V11.4808H10.0035V3.90804Z"></path>
+                                            </svg>
+                                            <svg width="10" height="12" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10.0035 3.90804L1.41153 12.5L0 11.0885L8.59097 2.49651H1.01922V0.5H12V11.4808H10.0035V3.90804Z"></path>
+                                            </svg>
+                                        </i>
+                                    </div>
+                                    
+                                    <div className="choose-box box-1"></div>
+                                    <div className="choose-box box-2"></div>
+                                    <div className="choose-box box-3"></div>
+                                    <div className="choose-box box-4"></div>
+                                </div>
+                            </div>
+                            <a href="faq.html" className="theme-btn mt-40">
+                                <span className="link-effect">
+                                    <span className="effect-1">Discover More</span>
+                                    <span className="effect-1">Discover More</span>
+                                </span>
+                                <span className="arrow-all">
+                                    <i>
+                                        <svg width="16" height="19" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="#1053f3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                        </svg>
+                                        <svg width="16" height="19" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="#1053f3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                        </svg>
+                                    </i>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    <div className="col-lg-12 col-xl-6">
+                       <div className="tv-choose-right-box">
+                            <div className="data-item-hover">
+                                <figure className="image_right data-img-hover" data-style="08" data-intensity="0.2" data-speedin="1" data-speedout="1">
+                                    <img src="assets/images/choose/hm1-choose-img01.webp" alt="Agency Image" />
+                                </figure>
+                            </div>
+
+							<div className="text_right">
+								<div className="content">
+									<div className="icon"><img src="assets/images/choose/star.webp" alt="" /></div>
+									<h3 className="title">Best <br /> Agency</h3>
+									<div className="arrow"><img src="assets/images/choose/arrow.webp" alt="" /></div>
+									<span className="year">2025</span>
+								</div>
+							</div>
+							<a className="middle-btn" href="#"><i className="fa-solid fa-arrow-up-right"></i></a>
+						</div>
+                    </div>
+                </div>
+            </div>
+            <div className="p-bottom-left wow slideInUp"><img src="assets/images/choose/hm1-shape01.webp" alt="" /></div>
+        </section>
+
+
+
+
+        
+        <div className="tv-marquee-section bg-light position-relative">
+            <div className="tv-marquee-inner mx-30 ml-mx-0 position-relative">
+                <div className="container-fluid p-0 overflow-hidden">
+                    <div className="slider__marquee clearfix marquee-wrap">
+                        <ul className="marquee_mode marquee__group">
+                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> Digital Marketing</li>
+                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> Branding Solutions</li>
+                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> Custom Website</li>
+                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> Innovation Design</li>
+                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> Cyber Security</li>
+                        </ul>
+                    </div>
+                 </div>
+            </div>
+        </div>
+
+
+
+
+        
+        <section className="tv-process-section bg-light position-relative">
+            <div className="p-top-center z-1 wow slideInTop">
+                <img src="assets/images/process/hm1-shape01.png" alt="" />
+            </div>
+            <div className="process-inner bg-theme3 mx-30 ml-mx-0 space  overflow-hidden xxl-br-0 position-relative">
+                <div className="container position-relative">
+                    
+                    <div className="row">
+                        <div className="col-lg-12">
+                            <div className="process-title mt--25">
+                                <h2 className="text-white text-center">PR<span className="text-theme">O</span>CESS</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row gy-30">
+                        <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                            <div className="tv-process-item wow fadeInRightBig" data-wow-delay=".2s">
+                                <h4 className="title-text">STEP 01</h4>
+                                <div className="process-box">
+                                    <div className="icon"><img src="assets/images/process/hm1-icon1.webp" alt="" /></div>
+                                    <h3 className="title">Consult Understand</h3>
+                                    <p>Technically sound chains to main and paid marketplace</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                            <div className="tv-process-item wow fadeInRightBig" data-wow-delay=".3s">
+                                <h4 className="title-text">STEP 02</h4>
+                                <div className="process-box">
+                                    <div className="icon"><img src="assets/images/process/hm1-icon2.webp" alt="" /></div>
+                                    <h3 className="title">Plan Strategize</h3>
+                                    <p>Technically sound chains to main and paid marketplace</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                            <div className="tv-process-item  wow fadeInRightBig" data-wow-delay=".4s">
+                                <h4 className="title-text">STEP 03</h4>
+                                <div className="process-box">
+                                    <div className="icon"><img src="assets/images/process/hm1-icon3.webp" alt="" /></div>
+                                    <h3 className="title">Implement Execute</h3>
+                                    <p>Technically sound chains to main and paid marketplace</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                            <div className="tv-process-item wow fadeInRightBig" data-wow-delay=".5s">
+                                <h4 className="title-text">STEP 04</h4>
+                                <div className="process-box">
+                                    <div className="icon"><img src="assets/images/process/hm1-icon4.webp" alt="" /></div>
+                                    <h3 className="title">Support Optimize</h3>
+                                    <p>Technically sound chains to main and paid marketplace</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+        
+        <section className="tv-project-section space bg-light">
+            <div className="container">
+                
+                <div className="row">
+                    <div className="col-lg-12">
+                        <div className="project-title-area d-flex  sm-mb-30">
+                            <div className="title-wrap white">
+                                <div className="sub-title-2 text-white two"><i className="fa-solid fa-circle-check"></i>{contactCallback.sub_title}</div>
+                                <h2 className="sec-title" dangerouslySetInnerHTML={{ __html: contactCallback.title }}></h2>
+                            </div>
+                            <div className="contact-form">
+                                <h2 className="sec-title">Ask for a call back</h2>
+                                <form id="contact_form" className="contact_form" action="https://formspree.io/f/mzbnjrnb" method="post">
+                                    <div className="form-grid">
+                                        <div className="form-group">
+                                            
+                                            <input type="text" id="fullName" name="name" placeholder="Your Name" required autoComplete="on" />
+                                        </div>
+                                        <div className="form-group">
+                                            
+                                            <input type="email" id="userEmail" name="email" placeholder="E-Mail" required autoComplete="on" />
+                                        </div>
+                                    </div>
+                                    <div className="form-grid">
+                                        <div className="form-group">
+                                            <select className="custom-select" id="service" name="service" autoComplete="off" defaultValue="">
+
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <textarea id="msg" name="msg" placeholder="Write Message" required></textarea>
+                                    </div>
+                                    <button type="submit" className="theme-btn"  data-loading-text="Please wait...">
+                                            <span className="btn-title mr-10">Send Message</span>
+                                            <i className="fa-solid fa-arrow-right"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <div className="col-lg-6">
+                            <div className="choose-image-wrapper">
+                                <div className="thumb-bg spin2"><img src="/assets/images/contact/hm1-shape01.webp" alt="" /></div>
+                                <div className="thumb">
+                                    <img className="wow img-anim-right" src="/assets/images/contact/hm1-img01.webp" alt="" />
+                                </div>
+                                <div className="info-card">
+                                    <div className="info-icon">
+                                        <img src="/assets/images/contact/hm1-icon01.webp" alt="" />
+                                    </div>
+                                    <div className="info-text">
+                                        <p>{contactCallback.card_label}</p>
+                                        <h4><a className="text-white" href={contactCallback.card_phone_link || globalPhoneLink}>{contactCallback.card_phone || globalPhone}</a></h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="p-bottom-left wow slideInUp xs-d-none"><img src="/assets/images/contact/hm1-shape02.webp" alt="" /></div>
+            </div>
+        </section>
+
+
+
+
+
+        
+        <section className="tv-team-section bg-light space">
+            <div className="container">
+                
+                <div className="title-wrap three text-center">
+                    <div className="sub-title-2 text-theme"><i className="fa-solid fa-circle-check"></i>Our Team</div>
+                    <h2 className="sec-title">Meet the Expert Team Powering Our <br />Goals and Ambitions</h2>
+                </div>
+                <div className="row gy-30">
+                    <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6">
+                        <div className="tv-team-card wow fadeInUp" data-wow-delay=".2s">
+                            <div className="team-photo">
+                                <img src="/assets/images/team/hm1-img01.webp" alt="Jobaer Khanom" />
+                                <div className="team-social">
+                                    <a href="#"><i className="fa-brands fa-facebook-f"></i></a>
+                                    <a href="#"><i className="fa-brands fa-x-twitter"></i></a>
+                                    <a href="#"><i className="fa-brands fa-linkedin-in"></i></a>
+                                </div>
+                            </div>
+                            <div className="team-info">
+                                <div className="info-inner">
+                                    <h3 className="team-name"><a href="#">Jobaer Khanom</a></h3>
+                                    <p className="team-role">UI/UX Designer</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6">
+                        <div className="tv-team-card wow fadeInUp" data-wow-delay=".4s">
+                            <div className="team-photo">
+                            <img src="/assets/images/team/hm1-img02.webp" alt="Sayma D. Farna" />
+                            <div className="team-social">
+                                <a href="#"><i className="fa-brands fa-facebook-f"></i></a>
+                                <a href="#"><i className="fa-brands fa-x-twitter"></i></a>
+                                <a href="#"><i className="fa-brands fa-linkedin-in"></i></a>
+                            </div>
+                            </div>
+                            <div className="team-info">
+                                <div className="info-inner">
+                                    <h3 className="team-name"><a href="#">Sayma D. Farna</a></h3>
+                                    <p className="team-role">App Developer</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6">
+                        <div className="tv-team-card wow fadeInUp" data-wow-delay=".6s">
+                            <div className="team-photo">
+                            <img src="/assets/images/team/hm1-img03.webp" alt="Jubin E. Nawtail" />
+                            <div className="team-social">
+                                <a href="#"><i className="fa-brands fa-facebook-f"></i></a>
+                                <a href="#"><i className="fa-brands fa-x-twitter"></i></a>
+                                <a href="#"><i className="fa-brands fa-linkedin-in"></i></a>
+                            </div>
+                            </div>
+                            <div className="team-info">
+                                <div className="info-inner">
+                                    <h3 className="team-name"><a href="#">Jubin E. Nawtail</a></h3>
+                                    <p className="team-role">SEO Marketer</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+        
+        <section className="tv-testimonial-section bg-light overflow-hidden">
+            <div className="tv-testi-inner br-30 ml-br-0 space position-relative mx-30 xxl-mx-0 overflow-hidden">
+                <div className="bg image"><img src="/assets/images/testimonial/hm1-bg01.webp" alt="" /></div>
+                    <div className="container">
+                        
+                        <div className="row">
+                            <div className="col-lg-12">
+                                <div className="testimonial-content-wrap d-flex justify-content-between sm-flex-column">
+                                    <div className="title-wrap two white">
+                                        <div className="sub-title-2 two text-white"><i className="fa-solid fa-circle-check"></i>Testimonial</div>
+                                        <h2 className="sec-title">Helping Business in 3,000+ <br /> Different Industries</h2>
+                                    </div>
+                                    <div className="testimonial-btn-wrapper">
+                                        <div className="scribble-shape scribble md-d-none">
+                                            <img src="/assets/images/testimonial/scribble01.webp" alt="" />
+                                        </div>
+                                        <div className="client-social-proof">
+                                            <div className="social">
+                                                <img src="/assets/images/social/social-img02.webp" alt="Client 02" />
+                                                <img src="/assets/images/social/social-img03.webp" alt="Client 03" />
+                                                <h4>+3K</h4>
+                                            </div>
+                                            <h4 className="text">Trusted Clients <br /> Worldwide</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                        <div className="tv-brands-section  position-relative z-1">
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-lg-12">
+                                        <div className="sponsors-outer  brand-outher">
+                                            <div className="trusted-partners d-flex align-items-center">
+                                            </div>
+                                            <div className="border"></div>
+                                            <div className="brands-slider-two swiper py-45">
+                                                <div className="swiper-wrapper">
+                                                    <div className="swiper-slide">
+                                                        <div className="brand-item">
+                                                            <a className="image" href="#">
+                                                                <img src="/assets/images/brands/01.webp" alt="Brand 01" />
+                                                                <img src="/assets/images/brands/01.webp" alt="Brand 01" />
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div className="swiper-slide">
+                                                        <div className="brand-item">
+                                                            <a className="image" href="#">
+                                                                <img src="/assets/images/brands/02.webp" alt="Brand 02" />
+                                                                <img src="/assets/images/brands/02.webp" alt="Brand 02" />
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div className="swiper-slide">
+                                                        <div className="brand-item">
+                                                            <a className="image" href="#">
+                                                                <img src="/assets/images/brands/03.webp" alt="Brand  03" />
+                                                                <img src="/assets/images/brands/03.webp" alt="Brand  03" />
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div className="swiper-slide">
+                                                        <div className="brand-item">
+                                                            <a className="image" href="#">
+                                                                <img src="/assets/images/brands/04.webp" alt="Brand 04" />
+                                                                <img src="/assets/images/brands/04.webp" alt="Brand 04" />
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div className="swiper-slide">
+                                                        <div className="brand-item">
+                                                            <a className="image" href="#">
+                                                                <img src="/assets/images/brands/05.webp" alt="Brand 05" />
+                                                                <img src="/assets/images/brands/05.webp" alt="Brand 05" />
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div className="swiper-slide">
+                                                        <div className="brand-item">
+                                                            <a className="image" href="#">
+                                                                <img src="/assets/images/brands/06.webp" alt="Brand 06" />
+                                                                <img src="/assets/images/brands/06.webp" alt="Brand 06" />
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="border mb-60"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                        <div className="row">
+                            <div className="col-lg-12">
+                                <div className="testi-slider swiper">
+                                    <div className="swiper-wrapper">
+                                        <div className="swiper-slide">
+                                            <div className="tv-testi-card wow fadeInUp" data-wow-delay=".5s">
+                                                <div className="testi-top">
+                                                    <div className="image position-relative z-1">
+                                                        <img src="/assets/images/testimonial/hm1-testi01.webp" alt="User" />
+                                                        <span className="quote-icon"><i className="fa-solid fa-quote-left"></i></span>
+                                                    </div>
+                                                    <div className="testi-info">
+                                                        <h4>Jubin Nawtail</h4>
+                                                        <p>App Developer</p>
+                                                    </div>
+                                                </div>
+                                                <div className="testi-content">
+                                                    <div className="stars">
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <span>(4.8)</span>
+                                                    </div>
+                                                    <p>“Technically sound chains to main business and paids marketplace technology that’s targeted audience done”</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="swiper-slide">
+                                            <div className="tv-testi-card wow fadeInUp" data-wow-delay=".7s">
+                                                <div className="testi-top">
+                                                    <div className="image position-relative z-1">
+                                                        <img src="/assets/images/testimonial/hm1-testi02.webp" alt="User" />
+                                                        <span className="quote-icon"><i className="fa-solid fa-quote-left"></i></span>
+                                                    </div>
+                                                    <div className="testi-info">
+                                                        <h4>Apel Mahmud</h4>
+                                                        <p>SEO Marketer</p>
+                                                    </div>
+                                                </div>
+                                                <div className="testi-content">
+                                                    <div className="stars">
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <span>(4.8)</span>
+                                                    </div>
+                                                    <p>“Technically sound chains to main business and paids marketplace technology that’s targeted audience done”</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="swiper-slide">
+                                            <div className="tv-testi-card wow fadeInUp" data-wow-delay=".9s">
+                                                <div className="testi-top">
+                                                    <div className="image position-relative z-1">
+                                                        <img src="/assets/images/testimonial/hm1-testi03.webp" alt="User" />
+                                                        <span className="quote-icon"><i className="fa-solid fa-quote-left"></i></span>
+                                                    </div>
+                                                    <div className="testi-info">
+                                                        <h4>John D. Alexon</h4>
+                                                        <p>UI/UX Designer</p>
+                                                    </div>
+                                                </div>
+                                                <div className="testi-content">
+                                                    <div className="stars">
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <span>(4.8)</span>
+                                                    </div>
+                                                    <p>“Technically sound chains to main business and paids marketplace technology that’s targeted audience done”</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="swiper-slide">
+                                            <div className="tv-testi-card wow fadeInUp" data-wow-delay=".5s">
+                                                <div className="testi-top">
+                                                    <div className="image position-relative z-1">
+                                                        <img src="/assets/images/testimonial/hm1-testi01.webp" alt="User" />
+                                                        <span className="quote-icon"><i className="fa-solid fa-quote-left"></i></span>
+                                                    </div>
+                                                    <div className="testi-info">
+                                                        <h4>Jubin Nawtail</h4>
+                                                        <p>App Developer</p>
+                                                    </div>
+                                                </div>
+                                                <div className="testi-content">
+                                                    <div className="stars">
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <span>(4.8)</span>
+                                                    </div>
+                                                    <p>“Technically sound chains to main business and paids marketplace technology that’s targeted audience done”</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="swiper-slide">
+                                            <div className="tv-testi-card wow fadeInUp" data-wow-delay=".7s">
+                                                <div className="testi-top">
+                                                    <div className="image position-relative z-1">
+                                                        <img src="/assets/images/testimonial/hm1-testi02.webp" alt="User" />
+                                                        <span className="quote-icon"><i className="fa-solid fa-quote-left"></i></span>
+                                                    </div>
+                                                    <div className="testi-info">
+                                                        <h4>Apel Mahmud</h4>
+                                                        <p>SEO Marketer</p>
+                                                    </div>
+                                                </div>
+                                                <div className="testi-content">
+                                                    <div className="stars">
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <span>(4.8)</span>
+                                                    </div>
+                                                    <p>“Technically sound chains to main business and paids marketplace technology that’s targeted audience done”</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="swiper-slide">
+                                            <div className="tv-testi-card wow fadeInUp" data-wow-delay=".9s">
+                                                <div className="testi-top">
+                                                    <div className="image position-relative z-1">
+                                                        <img src="/assets/images/testimonial/hm1-testi03.webp" alt="User" />
+                                                        <span className="quote-icon"><i className="fa-solid fa-quote-left"></i></span>
+                                                    </div>
+                                                    <div className="testi-info">
+                                                        <h4>John D. Alexon</h4>
+                                                        <p>UI/UX Designer</p>
+                                                    </div>
+                                                </div>
+                                                <div className="testi-content">
+                                                    <div className="stars">
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <i className="fas fa-star"></i>
+                                                        <span>(4.8)</span>
+                                                    </div>
+                                                    <p>“Technically sound chains to main business and paids marketplace technology that’s targeted audience done”</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </section>
+
+        <section className="tv-pricing-section space bg-light">
+            <div className="shape-mockup z-1 spin d-none d-xxl-block" data-left="15%" data-bottom="69%"><img src="/assets/images/pricing/eart.webp" alt="..." /></div>
+            <div className="shape-mockup z-1 spin2 d-none d-xxl-block" data-right="15%" data-bottom="69%"><img src="/assets/images/pricing/spin-shape.webp" alt="..." /></div>
+
+            <div className="container">
+                <div className="row">
+                    <div className="col-lg-12">
+                        <div className="title-wrap text-center three">
+                            <div className="sub-title-2  text-theme"><i className="fa-solid fa-circle-check"></i>Pricing Plans</div>
+                            <h2 className="sec-title">Choose the Perfect Plans for <br /> Your Business Growth</h2>
+                        </div>
+                    </div>
+                </div>
+                <div className="row gy-30 align-items-end">
+                    <div className="col-lg-4 col-md-6 col-sm-6">
+                        <div className="tv-pricing-card wow fadeInUp" data-wow-delay=".5s">
+                            <div className="pricing-inner-box">
+                                <div className="pricing-inner">
+                                    <div className="pricing-plan">
+                                        <h5 className="plan">Starter</h5>
+                                        <div className="price">
+                                            <h2>29 USD</h2>
+                                            <span className="billing-cycle">/ month</span>
+                                        </div>
+                                        <p>Organize Daily Task by free</p>
+                                        <a href="pricing.html" className="theme-btn mt-25 w-100 br-25">
+                                            <span className="link-effect">
+                                                <span className="effect-1">Join this Plan</span>
+                                                <span className="effect-1">Join this Plan</span>
+                                            </span>
+                                            <span className="arrow1"><i className="fa-solid fa-arrow-right"></i></span>
+                                        </a>
+                                        <h4>Key Features</h4>
+                                    </div>
+                                        <ul className="features">
+                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> 3 Users availble</li>
+                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> Limited tools</li>
+                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> Unlimited Supports</li>
+                                            <li className="disabled"><span className="checkmark"><i className="fa-solid fa-circle-x"></i></span> API Access</li>
+                                            <li className="disabled"><span className="checkmark"><i className="fa-solid fa-circle-x"></i></span> Premium apps</li>
+                                        </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-4 col-md-6 col-sm-6">
+                        <div className="tv-pricing-card style2 wow fadeInUp" data-wow-delay=".7s">
+                            <div className="popular-badge"><i className="fa-solid fa-fire"></i> Most Popular</div>
+                            <div className="pricing-inner-box">
+                                <div className="top-icon spin"><img src="/assets/images/pricing/spin-shape02.webp" alt="" /></div>
+                                <div className="pricing-inner">
+                                    <div className="pricing-plan">
+                                        <h5 className="plan">Starter</h5>
+                                        <div className="price">
+                                            <h2>39 USD</h2>
+                                            <span className="billing-cycle">/ month</span>
+                                        </div>
+                                        <p>Organize Daily Task by free</p>
+                                        <a href="pricing.html" className="theme-btn mt-25 w-100 br-25">
+                                            <span className="link-effect">
+                                                <span className="effect-1">Join this Plan</span>
+                                                <span className="effect-1">Join this Plan</span>
+                                            </span>
+                                            <span className="arrow1"><i className="fa-solid fa-arrow-right"></i></span>
+                                        </a>
+                                        <h4>Key Features</h4>
+                                    </div>
+                                        <ul className="features">
+                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> 3 Users availble</li>
+                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> Limited tools</li>
+                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> Unlimited Supports</li>
+                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> API Access</li>
+                                            <li className="disabled"><span className="checkmark"><i className="fa-solid fa-circle-x"></i></span> Premium apps</li>
+                                        </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-4 col-md-6 col-sm-6">
+                        <div className="tv-pricing-card wow fadeInUp" data-wow-delay=".9s">
+                            <div className="pricing-inner-box">
+                                <div className="pricing-inner">
+                                    <div className="pricing-plan">
+                                        <h5 className="plan">Business</h5>
+                                        <div className="price">
+                                            <h2>39 USD</h2>
+                                            <span className="billing-cycle">/ month</span>
+                                        </div>
+                                        <p>Organize Daily Task by free</p>
+                                        <a href="pricing.html" className="theme-btn mt-25 w-100 br-25">
+                                            <span className="link-effect">
+                                                <span className="effect-1">Join this Plan</span>
+                                                <span className="effect-1">Join this Plan</span>
+                                            </span>
+                                            <span className="arrow1"><i className="fa-solid fa-arrow-right"></i></span>
+                                        </a>
+                                        <h4>Key Features</h4>
+                                    </div>
+                                        <ul className="features">
+                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> 3 Users availble</li>
+                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> Limited tools</li>
+                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> Unlimited Supports</li>
+                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> API Access</li>
+                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> Premium apps</li>
+                                        </ul>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div className="tv-counter-section style-2 bg-light position-relative z-1">
+            <div className="counter-inner lg-br-0 py-65 lg-py-40 position-relative mx-30 xxl-mx-0 overflow-hidden">
+                <div className="bg image"><img src="/assets/images/counter/hm1-bg01.webp" alt="" /></div>
+                <div className="overlay bg-theme mbm-overlay"></div>
+                <div className="container">
+                    <div className="row gy-30">
+                        <div className="col-lg-4 col-md-6">
+                            <div className="counter-box">
+                                <div className="icon"><img src="/assets/images/counter/hm1-icon01.webp" alt="Icon" /></div>
+                                <div className="content">
+                                    <h4 className="title mb-0"><span className="count-number odometer" data-count="100">0</span>K+</h4>
+                                    <h6 className="text mb-0">Successful Projects</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-4 col-md-6">
+                            <div className="counter-box justify-content-center ustify-content-md-center">
+                                <div className="icon"><img src="/assets/images/counter/hm1-icon02.webp" alt="Icon" /></div>
+                                <div className="content">
+                                    <h4 className="title mb-0"><span className="count-number odometer" data-count="270">0</span>+</h4>
+                                    <h6 className="text mb-0">All Awards Winning</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-4 col-md-6">
+                            <div className="counter-box align-items-start align-items-lg-end">
+                                <div className="icon"><img src="/assets/images/counter/hm1-icon03.webp" alt="Icon" /></div>
+                                <div className="content">
+                                    <h4 className="title mb-0"><span className="count-number odometer" data-count="96">0</span>%</h4>
+                                    <h6 className="text mb-0">Satisfaction Rates</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section className="tv-callus-section bg-light">
+            <div className="callus-inner space position-relative mx-30 xxl-mx-0 overflow-hidden">
+                <div className="bg image"><img src="/assets/images/callus/hm1-bg01.webp" alt="" /></div>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-12">
+                            <div className="title-wrap white three">
+                                <div className="sub-title-2 two text-white"><i className="fa-solid fa-circle-check"></i>Get in Touch</div>
+                                <h2 className="sec-title">Delivering Premium Flooring <br /> for Homes and Commercial <br /> Properties in Birmingham</h2>
+                            </div>
+                            <div className="callus-contact">
+                                <a href="/contact" className="theme-btn">
+                                    <span className="link-effect">
+                                        <span className="effect-1">Discover More</span>
+                                        <span className="effect-1">Discover More</span>
+                                    </span>
+                                    <span className="arrow-all">
+                                        <i>
+                                            <svg width="16" height="19" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="#1053f3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                            </svg>
+                                            <svg width="16" height="19" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="#1053f3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                            </svg>
+                                        </i>
+                                    </span>
+                                </a>
+                                <div className="inner-contact">
+                                    <div className="icon">
+                                        <img src="/assets/images/callus/call-iocn.webp" alt="" />
+                                    </div>
+                                    <div className="content">
+                                        <h6 className="call-text">Need Help?</h6>
+                                        <a className="call-phone" href={globalPhoneLink}> <span>Free :</span>{globalPhone}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section className="tv-blog-section space bg-color2">
+            <div className="container">
+                <div className="row">
+                    <div className="col-lg-12">
+                        <div className="title-wrap text-center">
+                            <div className="sub-title-2 text-theme"><i className="fa-solid fa-circle-check"></i>Latest Blog</div>
+                            <h2 className="sec-title">Read our Latest Insights from <br /> Update Blog Posts</h2>
+                        </div>
+                    </div>
+                </div>
+                <div className="row gy-25">
+                    <div className="col-lg-4 col-md-6 col-sm-6">
+                        <article className="blog-single-box">
+                            <div className="inner-box">
+                                <div className="blog-image">
+                                    <img src="/assets/images/blog/blog01.webp" alt="Blog Image" />
+                                    <div className="category-tag"><span></span>16 Aug, 2025</div>
+                                </div>
+                                <div className="blog-content">
+                                    <h4 className="title"><a href="blog-details.html">Top 10 Most Popular Tools <br /> For Marketing</a></h4>
+                                    <div className="pt-25 pb-30"><div className="border dark"></div></div>
+                                    <div className="blog-meta">
+                                        <a href="blog-details.html" className="continue-reading">Explore More</a>
+                                        <span>(2) Comments</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <div className="col-lg-4 col-md-6 col-sm-6">
+                        <article className="blog-single-box">
+                            <div className="inner-box">
+                                <div className="blog-image">
+                                    <img src="/assets/images/blog/blog02.webp" alt="Blog Image" />
+                                    <div className="category-tag"><span></span>17 Aug, 2025</div>
+                                </div>
+                                <div className="blog-content">
+                                    <h4 className="title"><a href="blog-details.html">Business Growing Tips for <br /> Sales Globally</a></h4>
+                                    <div className="pt-25 pb-30"><div className="border dark"></div></div>
+                                    <div className="blog-meta">
+                                        <a href="blog-details.html" className="continue-reading">Explore More</a>
+                                        <span>(5) Comments</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <div className="col-lg-4 col-md-6 col-sm-6">
+                        <article className="blog-single-box">
+                            <div className="inner-box">
+                                <div className="blog-image">
+                                    <img src="/assets/images/blog/blog03.webp" alt="Blog Image" />
+                                    <div className="category-tag"><span></span>29 Aug, 2025</div>
+                                </div>
+                                <div className="blog-content">
+                                    <h4 className="title"><a href="blog-details.html">Installation Sales Navigator <br />Extension on Chrome</a></h4>
+                                    <div className="pt-25 pb-30"><div className="border dark"></div></div>
+                                    <div className="blog-meta">
+                                        <a href="blog-details.html" className="continue-reading">Explore More</a>
+                                        <span>(7) Comments</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section className="newsletter-section mb--75">
+            <div className="container">
+                <div className="row">
+                    <div className="col-lg-12">
+                        <div className="newsletter">
+                            <div className="arrow-shape md-d-none"><img src="/assets/images/newsletter/arrow-shape.webp" alt="" /></div>
+                            <div className="bg image"><img className="br-30" src="/assets/images/newsletter/hm1-bg01.webp" alt="" /></div>
+                            <div className="thumb d-none d-xl-block">
+                                <img src="/assets/images/newsletter/img01.webp" alt="thumb" />
+                             </div>
+                             <div className="image-text">
+                                <img src="/assets/images/icons/check-circle2.png" alt="" />
+                                <h3 className="title title-anim" data-animation="bounce-in">Subscribe Our Newsletter <br /> For Latest Updates</h3>
+                             </div>
+                                <form className="newsletter-form" action="https://formspree.io/f/mzbnjrnb" method="post">
+                                    <div className="form-group">
+                                        <input type="email" name="email" className="email" defaultValue="" placeholder="Email Address" autoComplete="on" required />
+                                        <button type="submit">
+                                            <i className="far fa-paper-plane"></i>
+                                            <span className="btn-title"></span>
+                                        </button>
+                                    </div>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+  );
+}
