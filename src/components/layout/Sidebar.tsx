@@ -17,7 +17,7 @@ export default async function Sidebar() {
         </button>
         <div className="sidebar-content">
           <div className="sidebar-logo">
-            <a className="dark-logo" href="/"><img src="/assets/images/logo/logo.png" alt="logo" /></a>
+            <a className="dark-logo" href="/"><img src="/zk-logo.png" alt="ZK Flooring Logo" style={{ maxHeight: '55px', width: 'auto', objectFit: 'contain' }} /></a>
           </div>
           <div className="sidebar-menu-wrap"></div>
           <div className="sidebar-about">

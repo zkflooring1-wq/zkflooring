@@ -1,6 +1,7 @@
 import React from 'react';
 import { supabase } from '@/lib/supabase';
 import { getSetting, HeaderContact } from '@/lib/settings';
+import HeroSlider from '@/components/HeroSlider';
 
 export default async function HomePage() {
   const { data: pageData } = await supabase
@@ -11,26 +12,55 @@ export default async function HomePage() {
 
   const sections = pageData?.sections || {};
   const hero = sections.hero || {};
-  const heroSlides = hero.slides || [
+  const defaultSliderImages = [
     {
-      title: "Premium Carpets & <br /><span>Hardwood Fitting</span>",
-      bg_image: "/assets/images/hero/hm1-bg01.webp",
-      cta_link: "/about",
-      cta_text: "Discover More",
+      title: "Luxury & Comfort <br /><span>Carpet Fitting</span>",
+      bg_image: "/slider/Carpet.webp",
+      cta_link: "/services",
+      cta_text: "Explore Carpets",
       sub_title: "ZK FLOORING SERVICES",
       video_url: "https://www.youtube.com/watch?v=SMKPKGW083c",
-      description: "Expert carpet fitting and premium hardwood flooring services across Birmingham and surrounding regions. Discover our custom designs."
+      description: "Transform your home with soft, durable, and expertly fitted carpets across Birmingham & surrounding regions."
     },
     {
-      title: "Sleek LVT & <br /><span>Vinyl Flooring</span>",
-      bg_image: "/assets/images/hero/hm1-bg02.webp",
-      cta_link: "/contact",
-      cta_text: "Get a Quote",
-      sub_title: "BEST RATES GUARANTEED",
+      title: "Durable & Stylish <br /><span>Laminate Flooring</span>",
+      bg_image: "/slider/Laminate Flooring.webp",
+      cta_link: "/services",
+      cta_text: "View Laminates",
+      sub_title: "EXPERT INSTALLATION",
       video_url: "https://www.youtube.com/watch?v=SMKPKGW083c",
-      description: "High-durability Luxury Vinyl Tiles (LVT) and sheet vinyl options tailored for domestic and commercial spaces."
+      description: "High-quality laminate flooring options designed for elegance, easy maintenance, and long-lasting performance."
+    },
+    {
+      title: "Sleek LVT & <br /><span>Vinyl Tiles</span>",
+      bg_image: "/slider/Vinyl Tile.webp",
+      cta_link: "/services",
+      cta_text: "Discover LVT",
+      sub_title: "PREMIUM DESIGN",
+      video_url: "https://www.youtube.com/watch?v=SMKPKGW083c",
+      description: "Luxury Vinyl Tiles (LVT) with waterproof durability and stunning modern aesthetic finishes for any space."
+    },
+    {
+      title: "Versatile Sheet <br /><span>Vinyl Flooring</span>",
+      bg_image: "/slider/Vinyl flooring.webp",
+      cta_link: "/contact",
+      cta_text: "Get a Free Quote",
+      sub_title: "COMMERCIAL & DOMESTIC",
+      video_url: "https://www.youtube.com/watch?v=SMKPKGW083c",
+      description: "Seamless, easy-to-clean vinyl flooring solutions ideal for kitchens, bathrooms, offices, and heavy traffic areas."
+    },
+    {
+      title: "Heavy Duty <br /><span>Carpet Tile Solutions</span>",
+      bg_image: "/slider/Carpet Tile.webp",
+      cta_link: "/contact",
+      cta_text: "Contact Us",
+      sub_title: "COMMERCIAL CONTRACTING",
+      video_url: "https://www.youtube.com/watch?v=SMKPKGW083c",
+      description: "Modular, high-durability carpet tiles engineered for offices, retail stores, and commercial establishments."
     }
   ];
+
+  const heroSlides = defaultSliderImages;
 
   const features = sections.features || {
     social_proof_count: "3,600",
@@ -68,94 +98,7 @@ export default async function HomePage() {
     <main>
 
         {/* Hero Section */}
-        <section className="tv-hero-section overflow-hidden z-2 bg-light">
-          <div className="hero-inner mx-30 ml-mx-0 position-relative">
-            <div className="container-fluid px-0">
-              <div className="hero-slider position-relative swiper" suppressHydrationWarning>
-                <div className="swiper-wrapper" suppressHydrationWarning>
-                  {heroSlides.map((slide: any, index: number) => {
-                    const slideNumber = String(index + 1).padStart(2, '0');
-                    const pathId = `e-path-${index}`;
-                    const textPathId = `e-text-path-${index}`;
-                    const slideClass = index % 2 === 0 ? "pageTurn" : "blurSkew";
-                    return (
-                      <div key={index} className={`swiper-slide ${slideClass}`} suppressHydrationWarning>
-                        <div className="hero-area position-relative">
-                          <div className="p-bottom-left wow slideInUp z-1" suppressHydrationWarning>
-                            <img src="/assets/images/hero/hm1-shape01.webp" alt="shape" />
-                          </div>
-                          <div 
-                            className="bg image" 
-                            data-bg-src={slide.bg_image} 
-                            style={{ backgroundImage: `url(${slide.bg_image})` }}
-                            suppressHydrationWarning
-                          ></div>
-                          <div className="video-box">
-                            <div className="circle-box">
-                              <a 
-                                className="logo-box popup-video" 
-                                href={slide.video_url || "https://www.youtube.com/watch?v=SMKPKGW083c"} 
-                                data-fancybox="video-gallery"
-                              >
-                                <img src="/assets/images/hero/spin-icon.webp" alt="play" />
-                              </a>
-                              <div className="text-inner" style={{ animation: "10s linear 0s infinite normal none running text-rotate" }} suppressHydrationWarning>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="192.5" height="192.5" viewBox="0 0 250.5 250.5">
-                                  <path d="M.25,125.25a125,125,0,1,1,125,125,125,125,0,0,1-125-125" id={pathId}></path>
-                                  <text>
-                                    <textPath id={textPathId} href={`#${pathId}`} startOffset="0%">
-                                      ZK FLOORING PREMIUM CARPET FITTING SERVICE
-                                    </textPath>
-                                  </text>
-                                </svg>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="container">
-                            <div className="row">
-                              <div className="col-lg-12">
-                                <div className="hero-content">
-                                  <span className="sub-title">
-                                    <img src="/assets/images/hero/check.webp" alt="check" />
-                                    {slide.sub_title}
-                                  </span>
-                                  <h1 className="hero-title text-white" dangerouslySetInnerHTML={{ __html: slide.title }}></h1>
-                                  <div className="text-icon position-relative">
-                                    <div className="icon d-inline-block spin2">
-                                      <img src="/assets/images/icons/star.png" alt="star" />
-                                    </div>
-                                    <p className="text">{slide.description}</p>
-                                  </div>
-                                  <a href={slide.cta_link} className="theme-btn mt-40 br-30">
-                                    <span className="link-effect">
-                                      <span className="effect-1">{slide.cta_text}</span>
-                                      <span className="effect-1">{slide.cta_text}</span>
-                                    </span>
-                                    <span className="arrow-all">
-                                      <i>
-                                        <svg width="16" height="19" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                          <path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="#1053f3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        <svg width="16" height="19" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                          <path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="#1053f3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                      </i>
-                                    </span>
-                                  </a>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="slide-number">{slideNumber}</div>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <HeroSlider slides={heroSlides} />
 
         {/* Feature Section */}
         <section className="tv-feature-section bg-light space">

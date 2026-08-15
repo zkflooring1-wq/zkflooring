@@ -51,8 +51,8 @@ export default async function Header() {
             <div className="col-auto logo">
               <div className="header-logo">
                 <a href="/">
-                  <img alt="logo" src="/assets/images/logo/logo.png" />
-                  <img alt="logo" src="/assets/images/logo/logo.png" />
+                  <img alt="ZK Flooring Logo" src="/zk-logo.png" style={{ maxHeight: '65px', width: 'auto', objectFit: 'contain' }} />
+                  <img alt="ZK Flooring Logo" src="/zk-logo.png" style={{ maxHeight: '65px', width: 'auto', objectFit: 'contain' }} />
                 </a>
               </div>
             </div>
@@ -103,10 +103,10 @@ export default async function Header() {
                   <span className="arrow-all">
                     <i>
                       <svg width="16" height="19" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="#061153" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="#16120B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                       <svg width="16" height="19" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="#061153" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="#16120B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </i>
                   </span>

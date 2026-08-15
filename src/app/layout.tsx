@@ -1,16 +1,33 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { Manrope, Noto_Sans } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/layout/Header";
-import MobileMenu from "@/components/layout/MobileMenu";
-import StickyHeader from "@/components/layout/StickyHeader";
-import HeaderSearch from "@/components/layout/HeaderSearch";
-import Sidebar from "@/components/layout/Sidebar";
-import Footer from "@/components/layout/Footer";
+import LayoutWrapper from "@/components/layout/LayoutWrapper";
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-manrope",
+  display: "swap",
+});
+
+const notoSans = Noto_Sans({
+  subsets: ["latin"],
+  variable: "--font-noto-sans",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
   title: "ZK Flooring - Premium Flooring & Carpet Installation in Birmingham",
   description: "ZK Flooring offers premium carpet, wood, vinyl, LVT, and SPC flooring installation services in Birmingham and surrounding regions.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-icon.png",
+  },
 };
 
 export default function RootLayout({
@@ -19,12 +36,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={`${manrope.variable} ${notoSans.variable}`} suppressHydrationWarning>
       <head>
-        {/* Preconnect to fonts */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+        {/* Favicon & Site Icons */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/icon.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/apple-icon.png" />
 
         {/* Template CSS Stylesheets */}
         <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
@@ -46,15 +63,9 @@ export default function RootLayout({
             <span className="loader"></span>
           </div>
 
-          <Header />
-          <MobileMenu />
-          <StickyHeader />
-          <HeaderSearch />
-          <Sidebar />
-
-          {children}
-
-          <Footer />
+          <LayoutWrapper>
+            {children}
+          </LayoutWrapper>
 
           {/* Scroll To Top */}
           <div className="scrollToTop">
@@ -80,31 +91,32 @@ export default function RootLayout({
           </div>
         </div>
 
-        {/* Vendor scripts loaded afterInteractive so React hydrates first, then jQuery runs safely.
-            This prevents the hydration-mismatch cascade that caused the preloader to get stuck. */}
-        <Script src="/assets/js/vendor/jquery-3.7.1.min.js" strategy="afterInteractive" />
-        <Script src="/assets/js/bootstrap.min.js" strategy="afterInteractive" />
-        <Script src="/assets/js/gsap.min.js" strategy="afterInteractive" />
-        <Script src="/assets/js/ScrollSmoother.js" strategy="afterInteractive" />
-        <Script src="/assets/js/gsap-scroll-to-plugin.min.js" strategy="afterInteractive" />
-        <Script src="/assets/js/ScrollTrigger.min.js" strategy="afterInteractive" />
-        <Script src="/assets/js/swiper-bundle.min.js" strategy="afterInteractive" />
-        <Script src="/assets/js/marquee.min.js" strategy="afterInteractive" />
-        <Script src="/assets/js/jquery.fancybox.js" strategy="afterInteractive" />
-        <Script src="/assets/js/select2.min.js" strategy="afterInteractive" />
-        <Script src="/assets/js/jquery-ui.min.js" strategy="afterInteractive" />
-        <Script src="/assets/js/jquery.validate.min.js" strategy="afterInteractive" />
-        <Script src="/assets/js/jquery.appear.js" strategy="afterInteractive" />
-        <Script src="/assets/js/jquery.odometer.min.js" strategy="afterInteractive" />
-        <Script src="/assets/js/wow.min.js" strategy="afterInteractive" />
-        <Script src="/assets/js/imagesloaded.pkgd.min.js" strategy="afterInteractive" />
-        <Script src="/assets/js/isotope.pkgd.min.js" strategy="afterInteractive" />
-        <Script src="/assets/js/lenis.min.js" strategy="afterInteractive" />
-        <Script src="/assets/js/splite-type.min.js" strategy="afterInteractive" />
-        <Script src="/assets/js/vanilla-tilt.min.js" strategy="afterInteractive" />
-        <Script src="/assets/js/three.min.js" strategy="afterInteractive" />
-        <Script src="/assets/js/hover.js" strategy="afterInteractive" />
-        <Script src="/assets/js/main.js" strategy="afterInteractive" />
+        {/* Core essential scripts for initial interactive shell */}
+        <script defer src="/assets/js/vendor/jquery-3.7.1.min.js"></script>
+        <script defer src="/assets/js/bootstrap.min.js"></script>
+        <script defer src="/assets/js/gsap.min.js"></script>
+        <script defer src="/assets/js/ScrollSmoother.js"></script>
+        <script defer src="/assets/js/gsap-scroll-to-plugin.min.js"></script>
+        <script defer src="/assets/js/ScrollTrigger.min.js"></script>
+        <script defer src="/assets/js/swiper-bundle.min.js"></script>
+        <script defer src="/assets/js/marquee.min.js"></script>
+        <script defer src="/assets/js/main.js"></script>
+
+        {/* Secondary / Heavy visual scripts deferred */}
+        <script defer src="/assets/js/jquery.fancybox.js"></script>
+        <script defer src="/assets/js/select2.min.js"></script>
+        <script defer src="/assets/js/jquery-ui.min.js"></script>
+        <script defer src="/assets/js/jquery.validate.min.js"></script>
+        <script defer src="/assets/js/jquery.appear.js"></script>
+        <script defer src="/assets/js/jquery.odometer.min.js"></script>
+        <script defer src="/assets/js/wow.min.js"></script>
+        <script defer src="/assets/js/imagesloaded.pkgd.min.js"></script>
+        <script defer src="/assets/js/isotope.pkgd.min.js"></script>
+        <script defer src="/assets/js/lenis.min.js"></script>
+        <script defer src="/assets/js/splite-type.min.js"></script>
+        <script defer src="/assets/js/vanilla-tilt.min.js"></script>
+        <script defer src="/assets/js/three.min.js"></script>
+        <script defer src="/assets/js/hover.js"></script>
       </body>
     </html>
   );

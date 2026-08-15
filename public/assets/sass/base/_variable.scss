@@ -1,60 +1,60 @@
 :root {
-	--theme-color: #1053f3;
-	--theme-color3: #061153;
+	--theme-color: #D4AF37;
+	--theme-color3: #16120B;
 	--title-color: var(--dark-color);
 	--body-color: var(--gray-color);
 	--dark-color: var(--theme-color3);
-	--dark-color2: #09155c;
-	--dark-color3: #18225f;
-	--dark-color4:  #06134c;
+	--dark-color2: #16120B;
+	--dark-color3: #1F190F;
+	--dark-color4: #120F09;
 	--gray-color: #a0a3b5;
 	--gray-color2: #616161;
 	--white-color: #ffffff;
-	--light-color: #f4f7ff;
-	--light-color2: #e8edfa;
-	--light-color3: #e9eefb;
-	--light-color4: #b9bfe4;
+	--light-color: #FAF6EE;
+	--light-color2: #F5EFE0;
+	--light-color3: #F2EAD8;
+	--light-color4: #D4AF37;
 
 	// --light-color4: f;
 	--orange-color: #ff9d10;
 	--success-color: #28a745;
 	--error-color: #ff0000;
-	--bs-text-color1: #10171d;
+	--bs-text-color1: #16120B;
 	--bs-text-color2: rgb(255 255 255 / 60%);
 	--bs-text-color3: rgb(255 255 255 / 30%);
 	--bs-text-color4: rgb(255 255 255 / 80%);
 	--bs-text-color5: #161616;
 	--bs-bg-color1: var(--theme-color);
-	--bs-bg-color2: #f3f6fe;
-	--bs-bg-color3: rgba(16, 83, 243, 0.2);
+	--bs-bg-color2: #FAF6EE;
+	--bs-bg-color3: rgba(212, 175, 55, 0.2);
 	// --bs-bg-color3: #121e62;
-	--bs-bg-color4: #dce5fc;
+	--bs-bg-color4: #F0E6D2;
 	--bs-bg-color5: rgba(255, 255, 255, 0.10);
 	--bs-bg-color6: rgba(189, 189, 189, 0.2);
-	--bs-bg-color7: rgba(98, 72, 255, 0.14);
+	--bs-bg-color7: rgba(212, 175, 55, 0.14);
 	--bs-bg-color8: rgba(255, 255, 255, 0.70);
-	--bs-bg-color9: rgba(98, 72, 255, 0.2);
+	--bs-bg-color9: rgba(212, 175, 55, 0.2);
 	--bs-bg-color10: rgba(255, 255, 255, 0.30);
-	--bs-bg-color11: rgba(244, 247, 255, 0.30);
+	--bs-bg-color11: rgba(250, 246, 238, 0.30);
 	--bs-bg-color12: rgba(255, 255, 255, 0.2);
-	--bs-bg-color13: #121e62;
+	--bs-bg-color13: #16120B;
 	--bs-bg-color14: rgba(255, 255, 255, 0.050);
 	--bs-bg-color15: rgba(255, 255, 255, 0.07);
 	--bs-bg-color16: rgba(255, 255, 255, 0.40);
-	--bs-bg-color17: rgba(246, 245, 252, 0.50);
-	--bs-bg-color18: rgba(243, 252, 253, 0.47);
-	--bs-bg-color19: rgba(3, 15, 68, 0.50);
+	--bs-bg-color17: rgba(247, 243, 233, 0.50);
+	--bs-bg-color18: rgba(247, 243, 233, 0.47);
+	--bs-bg-color19: rgba(22, 18, 11, 0.50);
 	--bs-bg-color20: rgba(255, 255, 255, 0.50);
-	--bs-bg-color21: #f2f5fd;
+	--bs-bg-color21: #FAF6EE;
 	--bs-bg-color22: rgba(255, 255, 255, 0.14);
 	--bs-border-color: rgba(22, 22, 22, 0.10196078431372549);
-	--bs-border-color2: rgba(3, 15, 68, 0.10);
+	--bs-border-color2: rgba(22, 18, 11, 0.10);
 	--bs-border-color3: rgba(255, 255, 255, 0.30);
 	--bs-border-color5: rgba(255, 255, 255, 0.15);
 	--bs-border-color7: rgba(255, 255, 255, 0.20);
-	--bs-border-color8: rgba(6, 17, 83, 0.1);
-	--bs-border-color9: rgba(98, 72, 255, 0.40);
-	--bs-border-color10: rgba(16, 83, 243, 0.2);
+	--bs-border-color8: rgba(22, 18, 11, 0.1);
+	--bs-border-color9: rgba(212, 175, 55, 0.40);
+	--bs-border-color10: rgba(212, 175, 55, 0.2);
 	--bs-border-color11: rgba(255, 255, 255, 0.6);
 	--bs-border-color12: rgba(255, 255, 255, 0.70);
 	--bs-border-color13: var(--dark-color2);
@@ -220,7 +220,7 @@ $overlaycolorMap: map-merge(("theme" : $theme-color,
 		"light" : $light-color,
 		"light2" : $light-color2,
 		"gray" : $gray-color,
-		"overlay1" : #131B23,
+		"overlay1" : #16120B,
 	), $overlaycolorMap);
 
 

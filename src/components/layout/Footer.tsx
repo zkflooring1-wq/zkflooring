@@ -18,14 +18,14 @@ export default async function Footer() {
 
   return (
     <footer className="footer-section z-1 br-30 xxl-br-0 pt-75 bg-dark position-relative mx-30 mb-30 xxl-m-0 overflow-hidden">
-      <div className="bg image mbm-screen"><img src="/assets/images/footer/hm1-bg01.webp" alt="" /></div>
+      <div className="bg image mbm-screen"><img src="/assets/images/footer/hm1-bg01.webp" alt="" loading="lazy" decoding="async" /></div>
       <div className="footer-top space">
         <div className="container">
           <div className="row">
             <div className="col-lg-4 col-md-4 col-sm-6 footer-brand">
               <div className="brand-info wow fadeInUp" data-wow-delay=".2s">
                 <div className="logo">
-                  <img src="/assets/images/logo/logo-2.png" alt="ZK Flooring Logo" />
+                  <img src="/zk-logo.png" alt="ZK Flooring Logo" loading="lazy" decoding="async" style={{ maxHeight: '75px', width: 'auto', objectFit: 'contain' }} />
                 </div>
                 <div className="contact-info">
                   <div className="contact-item">
@@ -95,7 +95,7 @@ export default async function Footer() {
                 <h4 className="title">Latest Blog</h4>
                 <div className="recent-post-item">
                   <figure className="image">
-                    <a href="/blog"><img src="/assets/images/footer/gallery-1.webp" alt="" /></a>
+                    <a href="/blog"><img src="/assets/images/footer/gallery-1.webp" alt="" loading="lazy" decoding="async" /></a>
                   </figure>
                   <div className="recent-post-info">
                     <h4 className="title"><a href="/blog">Top 10 Most Popular Flooring Trends</a></h4>
@@ -104,7 +104,7 @@ export default async function Footer() {
                 </div>
                 <div className="recent-post-item mb--20">
                   <figure className="image">
-                    <a href="/blog"><img src="/assets/images/footer/gallery-2.webp" alt="" /></a>
+                    <a href="/blog"><img src="/assets/images/footer/gallery-2.webp" alt="" loading="lazy" decoding="async" /></a>
                   </figure>
                   <div className="recent-post-info">
                     <h4 className="title"><a href="/blog">How to Choose the Best Carpet for Your Home</a></h4>

@@ -1406,7 +1406,8 @@ JS TABLE OF CONTENTS
 
 
 		// hero slider Slider   Use this project
-		if ($('.hero-slider').length) {
+		/*
+		if ($('.hero-slider').length && !$('.hero-slider')[0].swiper) {
 			new Swiper(".hero-slider", {
 				spaceBetween: 24,
 				speed: 1500,
@@ -1438,6 +1439,7 @@ JS TABLE OF CONTENTS
 				},
 			});
 		}
+		*/
 
 
 		// hero slider Slider   Use this project home6

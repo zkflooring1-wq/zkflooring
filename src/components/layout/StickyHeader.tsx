@@ -10,8 +10,8 @@ export default function StickyHeader() {
             <div className="col-auto logo">
               <div className="header-logo">
                 <a href="/">
-                  <img alt="logo" src="/assets/images/logo/logo.png" />
-                  <img alt="logo" src="/assets/images/logo/logo.png" />
+                  <img alt="ZK Flooring Logo" src="/zk-logo.png" style={{ maxHeight: '50px', width: 'auto', objectFit: 'contain' }} />
+                  <img alt="ZK Flooring Logo" src="/zk-logo.png" style={{ maxHeight: '50px', width: 'auto', objectFit: 'contain' }} />
                 </a>
               </div>
             </div>

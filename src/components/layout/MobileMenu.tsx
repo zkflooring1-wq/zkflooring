@@ -13,7 +13,7 @@ export default async function MobileMenu() {
       <div className="mobile-menu-area">
         <button className="menu-toggle"><i className="fas fa-times"></i></button>
         <div className="mobile-logo">
-          <a href="/"><img alt="Pureflow" src="/assets/images/logo/logo-2.png" /></a>
+          <a href="/"><img alt="ZK Flooring Logo" src="/zk-logo.png" style={{ maxHeight: '50px', width: 'auto', objectFit: 'contain' }} /></a>
         </div>
         <div className="mobile-menu">
           <ul className="navigation clearfix" suppressHydrationWarning>

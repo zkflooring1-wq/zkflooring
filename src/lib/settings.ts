@@ -23,12 +23,10 @@ export async function getSetting<T>(key: string): Promise<T | null> {
       .single();
 
     if (error || !data) {
-      console.error(`Error fetching setting ${key}:`, error?.message);
       return null;
     }
     return data.value as T;
   } catch (err) {
-    console.error(`Unexpected error fetching setting ${key}:`, err);
     return null;
   }
 }
