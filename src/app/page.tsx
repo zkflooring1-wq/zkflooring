@@ -239,8 +239,30 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section className="tv-service-section bg-light position-relative overflow-hidden">
-            <div className="p-top-center z-1 wow slideInTop">
+        <section className="tv-service-section bg-light position-relative overflow-hidden space">
+            <style>{`
+                .tv-service-section .tv-service-inner .tv-service-item .service-right .tags {
+                    display: grid;
+                    grid-template-columns: repeat(3, 105px);
+                    gap: 10px;
+                    max-width: 340px;
+                }
+                .tv-service-section .tv-service-inner .tv-service-item .service-right .tags span {
+                    display: inline-flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    width: 105px !important;
+                    height: 52px !important;
+                    min-height: 52px !important;
+                    max-height: 52px !important;
+                    padding: 4px 6px !important;
+                    box-sizing: border-box !important;
+                    text-align: center !important;
+                    line-height: 1.25 !important;
+                    font-size: 13px !important;
+                }
+            `}</style>
+            <div className="p-top-right z-1 wow slideInRight">
                 <img src="assets/images/service/hm1-shape-01.webp" alt="" />
             </div>
             <div className="tv-service-inner space bg-theme3 mx-30 ml-mx-0 overflow-hidden">
@@ -282,7 +304,7 @@ export default async function HomePage() {
                                             <h2>Expert Self Levelling & <br /> Subfloor Preparation</h2>
                                             <p> Ensure a perfectly smooth and durable foundation for your new floors. <br /> Our professional self-levelling services guarantee a flawless finish...
                                             </p>
-                                            <a href="service-details.html" className="learn-more">Learn More <i className="fa-solid fa-arrow-up-right"></i></a>
+                                            <a href="/contact" className="learn-more">Learn More <i className="fa-solid fa-arrow-up-right"></i></a>
 
                                             <div className="border my-40"></div>
                                             <div className="tags">
@@ -318,7 +340,7 @@ export default async function HomePage() {
                                         <h2>Premium Carpet & <br /> Carpet Tile Fitting</h2>
                                         <p> From luxurious domestic carpets to heavy-duty commercial tiles, <br /> we provide expert installation tailored to your space...
                                         </p>
-                                        <a href="service-details.html" className="learn-more">Learn More <i className="fa-solid fa-arrow-up-right"></i></a>
+                                        <a href="/contact" className="learn-more">Learn More <i className="fa-solid fa-arrow-up-right"></i></a>
 
                                         <div className="border my-40"></div>
                                         <div className="tags">
@@ -354,7 +376,7 @@ export default async function HomePage() {
                                             <h2>Luxury Vinyl Tile (LVT) & <br /> Sheet Vinyl Flooring</h2>
                                             <p> Transform your interiors with versatile, water-resistant vinyl solutions. <br /> We specialize in precision fitting for stunning LVT and seamless sheets...
                                             </p>
-                                            <a href="service-details.html" className="learn-more">Learn More <i className="fa-solid fa-arrow-up-right"></i></a>
+                                            <a href="/contact" className="learn-more">Learn More <i className="fa-solid fa-arrow-up-right"></i></a>
 
                                             <div className="border my-40"></div>
                                             <div className="tags">

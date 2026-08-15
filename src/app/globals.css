@@ -27,3 +27,26 @@
 .tv-process-item .process-box p {
   flex-grow: 1;
 }
+
+/* Services section equal tags sizing */
+.tv-service-section .tv-service-inner .tv-service-item .service-right .tags {
+  display: grid;
+  grid-template-columns: repeat(3, 105px);
+  gap: 10px;
+  max-width: 340px;
+}
+
+.tv-service-section .tv-service-inner .tv-service-item .service-right .tags span {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 105px !important;
+  height: 52px !important;
+  min-height: 52px !important;
+  max-height: 52px !important;
+  padding: 4px 6px !important;
+  box-sizing: border-box !important;
+  text-align: center !important;
+  line-height: 1.25 !important;
+  font-size: 13px !important;
+}
