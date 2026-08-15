@@ -60,6 +60,57 @@ export default async function HomePage() {
     }
   ];
 
+  const testimonials = [
+    {
+      id: 1,
+      name: "John Doe",
+      designation: "Software Engineer",
+      company: "TechCorp",
+      testimonial: "This product has completely transformed the way we work. The efficiency and ease of use are unmatched!",
+      avatar: "https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=600",
+    },
+    {
+      id: 2,
+      name: "Sophia Lee",
+      designation: "Data Analyst",
+      company: "InsightTech",
+      testimonial: "This tool has saved me hours of work! The analytics and reporting features are incredibly powerful.",
+      avatar: "https://images.pexels.com/photos/1520760/pexels-photo-1520760.jpeg?auto=compress&cs=tinysrgb&w=600",
+    },
+    {
+      id: 3,
+      name: "Michael Johnson",
+      designation: "UX Designer",
+      company: "DesignPro",
+      testimonial: "An amazing tool that simplifies complex tasks. Highly recommended for professionals in the industry.",
+      avatar: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=600",
+    },
+    {
+      id: 4,
+      name: "Emily Davis",
+      designation: "Marketing Specialist",
+      company: "BrandBoost",
+      testimonial: "I've seen a significant improvement in our team's productivity since we started using this service.",
+      avatar: "https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=600",
+    },
+    {
+      id: 5,
+      name: "Daniel Martinez",
+      designation: "Full-Stack Developer",
+      company: "CodeCrafters",
+      testimonial: "The best investment we've made! The support team is also super responsive and helpful.",
+      avatar: "https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=600",
+    },
+    {
+      id: 6,
+      name: "Jane Smith",
+      designation: "Product Manager",
+      company: "InnovateX",
+      testimonial: "The user experience is top-notch! The interface is clean, intuitive, and easy to navigate.",
+      avatar: "https://images.pexels.com/photos/2613260/pexels-photo-2613260.jpeg?auto=compress&cs=tinysrgb&w=600",
+    },
+  ];
+
   const heroSlides = defaultSliderImages;
 
   const features = sections.features || {
@@ -578,158 +629,81 @@ export default async function HomePage() {
                         
                         <div className="row">
                             <div className="col-lg-12">
-                                <div className="testi-slider swiper">
-                                    <div className="swiper-wrapper">
-                                        <div className="swiper-slide">
-                                            <div className="tv-testi-card wow fadeInUp" data-wow-delay=".5s">
-                                                <div className="testi-top">
-                                                    <div className="image position-relative z-1">
-                                                        <img src="/assets/images/testimonial/hm1-testi01.webp" alt="User" />
-                                                        <span className="quote-icon"><i className="fa-solid fa-quote-left"></i></span>
+                                <div style={{ overflow: 'hidden', width: '100%', position: 'relative', padding: '1rem 0' }}>
+                                    <style dangerouslySetInnerHTML={{__html: `
+                                        @keyframes customMarquee {
+                                            0% { transform: translateX(0); }
+                                            100% { transform: translateX(-50%); }
+                                        }
+                                        .custom-marquee-content {
+                                            display: flex;
+                                            gap: 1.5rem;
+                                            width: max-content;
+                                            animation: customMarquee 40s linear infinite;
+                                        }
+                                        .custom-marquee-content:hover {
+                                            animation-play-state: paused;
+                                        }
+                                    `}} />
+                                    <div className="custom-marquee-content">
+                                        {[...testimonials, ...testimonials].map((testimonial, index) => (
+                                            <div key={index} style={{ width: '24rem', flexShrink: 0, padding: '0.5rem' }}>
+                                                <div className="wow fadeInUp" data-wow-delay={`.${(index % 3) * 2 + 5}s`} style={{
+                                                    display: 'flex',
+                                                    flexDirection: index % 2 === 0 ? 'column-reverse' : 'column',
+                                                    width: '100%',
+                                                }}>
+                                                    <div style={{
+                                                        position: 'relative',
+                                                        display: 'flex',
+                                                        height: '10.5rem',
+                                                        width: '100%',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        padding: '1.5rem',
+                                                    }}>
+                                                        <span style={{ fontSize: '20px', fontWeight: 'bold', color: '#6b7280', zIndex: 1 }}>{testimonial.company}</span>
+                                                        <div style={{
+                                                            position: 'absolute', inset: 0, zIndex: 0, opacity: 0.15,
+                                                            backgroundImage: 'linear-gradient(to right, #6b7280 1px, transparent 1px), linear-gradient(to bottom, #6b7280 1px, transparent 1px)',
+                                                            backgroundSize: '20px 20px',
+                                                            WebkitMaskImage: 'repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px), repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px)',
+                                                            WebkitMaskComposite: 'source-in'
+                                                        }} />
                                                     </div>
-                                                    <div className="testi-info">
-                                                        <h4>Jubin Nawtail</h4>
-                                                        <p>App Developer</p>
+                                                    <div style={{
+                                                        borderRadius: '0.75rem',
+                                                        border: '1px solid #e5e7eb',
+                                                        backgroundColor: '#ffffff',
+                                                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                                                        padding: '1.5rem',
+                                                        position: 'relative',
+                                                        zIndex: 2
+                                                    }}>
+                                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                                                <div style={{ width: '40px', height: '40px', borderRadius: '50%', overflow: 'hidden', backgroundColor: '#f3f4f6' }}>
+                                                                    <img src={testimonial.avatar} alt={testimonial.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                                </div>
+                                                                <div>
+                                                                    <p style={{ margin: 0, fontWeight: 500, color: '#111827', lineHeight: 1.2 }}>{testimonial.name}</p>
+                                                                    <p style={{ margin: 0, fontSize: '0.875rem', color: '#6b7280', marginTop: '4px' }}>{testimonial.designation}</p>
+                                                                </div>
+                                                            </div>
+                                                            <a href="#" target="_blank" style={{ color: '#9ca3af', display: 'flex', padding: '0.5rem', borderRadius: '0.375rem', textDecoration: 'none' }}>
+                                                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={{ width: '16px', height: '16px', fill: 'currentColor' }}>
+                                                                    <title>X</title>
+                                                                    <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
+                                                                </svg>
+                                                            </a>
+                                                        </div>
+                                                        <p style={{ marginTop: '1.25rem', fontSize: '17px', color: '#374151', lineHeight: 1.6, marginBottom: 0 }}>
+                                                            {testimonial.testimonial}
+                                                        </p>
                                                     </div>
-                                                </div>
-                                                <div className="testi-content">
-                                                    <div className="stars">
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <span>(4.8)</span>
-                                                    </div>
-                                                    <p>“Technically sound chains to main business and paids marketplace technology that’s targeted audience done”</p>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="swiper-slide">
-                                            <div className="tv-testi-card wow fadeInUp" data-wow-delay=".7s">
-                                                <div className="testi-top">
-                                                    <div className="image position-relative z-1">
-                                                        <img src="/assets/images/testimonial/hm1-testi02.webp" alt="User" />
-                                                        <span className="quote-icon"><i className="fa-solid fa-quote-left"></i></span>
-                                                    </div>
-                                                    <div className="testi-info">
-                                                        <h4>Apel Mahmud</h4>
-                                                        <p>SEO Marketer</p>
-                                                    </div>
-                                                </div>
-                                                <div className="testi-content">
-                                                    <div className="stars">
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <span>(4.8)</span>
-                                                    </div>
-                                                    <p>“Technically sound chains to main business and paids marketplace technology that’s targeted audience done”</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="swiper-slide">
-                                            <div className="tv-testi-card wow fadeInUp" data-wow-delay=".9s">
-                                                <div className="testi-top">
-                                                    <div className="image position-relative z-1">
-                                                        <img src="/assets/images/testimonial/hm1-testi03.webp" alt="User" />
-                                                        <span className="quote-icon"><i className="fa-solid fa-quote-left"></i></span>
-                                                    </div>
-                                                    <div className="testi-info">
-                                                        <h4>John D. Alexon</h4>
-                                                        <p>UI/UX Designer</p>
-                                                    </div>
-                                                </div>
-                                                <div className="testi-content">
-                                                    <div className="stars">
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <span>(4.8)</span>
-                                                    </div>
-                                                    <p>“Technically sound chains to main business and paids marketplace technology that’s targeted audience done”</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="swiper-slide">
-                                            <div className="tv-testi-card wow fadeInUp" data-wow-delay=".5s">
-                                                <div className="testi-top">
-                                                    <div className="image position-relative z-1">
-                                                        <img src="/assets/images/testimonial/hm1-testi01.webp" alt="User" />
-                                                        <span className="quote-icon"><i className="fa-solid fa-quote-left"></i></span>
-                                                    </div>
-                                                    <div className="testi-info">
-                                                        <h4>Jubin Nawtail</h4>
-                                                        <p>App Developer</p>
-                                                    </div>
-                                                </div>
-                                                <div className="testi-content">
-                                                    <div className="stars">
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <span>(4.8)</span>
-                                                    </div>
-                                                    <p>“Technically sound chains to main business and paids marketplace technology that’s targeted audience done”</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="swiper-slide">
-                                            <div className="tv-testi-card wow fadeInUp" data-wow-delay=".7s">
-                                                <div className="testi-top">
-                                                    <div className="image position-relative z-1">
-                                                        <img src="/assets/images/testimonial/hm1-testi02.webp" alt="User" />
-                                                        <span className="quote-icon"><i className="fa-solid fa-quote-left"></i></span>
-                                                    </div>
-                                                    <div className="testi-info">
-                                                        <h4>Apel Mahmud</h4>
-                                                        <p>SEO Marketer</p>
-                                                    </div>
-                                                </div>
-                                                <div className="testi-content">
-                                                    <div className="stars">
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <span>(4.8)</span>
-                                                    </div>
-                                                    <p>“Technically sound chains to main business and paids marketplace technology that’s targeted audience done”</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="swiper-slide">
-                                            <div className="tv-testi-card wow fadeInUp" data-wow-delay=".9s">
-                                                <div className="testi-top">
-                                                    <div className="image position-relative z-1">
-                                                        <img src="/assets/images/testimonial/hm1-testi03.webp" alt="User" />
-                                                        <span className="quote-icon"><i className="fa-solid fa-quote-left"></i></span>
-                                                    </div>
-                                                    <div className="testi-info">
-                                                        <h4>John D. Alexon</h4>
-                                                        <p>UI/UX Designer</p>
-                                                    </div>
-                                                </div>
-                                                <div className="testi-content">
-                                                    <div className="stars">
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <i className="fas fa-star"></i>
-                                                        <span>(4.8)</span>
-                                                    </div>
-                                                    <p>“Technically sound chains to main business and paids marketplace technology that’s targeted audience done”</p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
