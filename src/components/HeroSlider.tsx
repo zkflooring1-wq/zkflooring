@@ -17,42 +17,38 @@ interface HeroSliderProps {
 }
 
 export default function HeroSlider({ slides }: HeroSliderProps) {
-  const swiperRef = useRef<any>(null);
+  const swiperInstanceRef = useRef<any>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let intervalId: NodeJS.Timeout;
-    const initSwiper = () => {
-      const windowAny = window as any;
-      if (windowAny.Swiper) {
-        clearInterval(intervalId);
-        
-        // Destroy existing instance if any
-        const heroEl = document.querySelector('.hero-slider') as any;
-        if (heroEl && heroEl.swiper) {
-          heroEl.swiper.destroy(true, true);
-        }
+    let timeoutId: NodeJS.Timeout;
 
-        swiperRef.current = new windowAny.Swiper('.hero-slider', {
+    const tryInit = () => {
+      const w = window as any;
+      if (w.Swiper && containerRef.current) {
+        console.log("Initializing Swiper now!");
+        if ((containerRef.current as any).swiper) {
+          (containerRef.current as any).swiper.destroy(true, true);
+        }
+        swiperInstanceRef.current = new w.Swiper(containerRef.current, {
           spaceBetween: 0,
           speed: 1500,
           effect: 'fade',
           fadeEffect: { crossFade: true },
           loop: true,
-          autoplay: {
-            delay: 4000,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: false,
-          },
+          autoplay: { delay: 4000, disableOnInteraction: false },
         });
+      } else {
+        timeoutId = setTimeout(tryInit, 200);
       }
     };
 
-    intervalId = setInterval(initSwiper, 100);
+    tryInit();
 
     return () => {
-      clearInterval(intervalId);
-      if (swiperRef.current) {
-        swiperRef.current.destroy(true, true);
+      clearTimeout(timeoutId);
+      if (swiperInstanceRef.current) {
+        swiperInstanceRef.current.destroy(true, true);
       }
     };
   }, [slides]);
@@ -61,7 +57,7 @@ export default function HeroSlider({ slides }: HeroSliderProps) {
     <section className="tv-hero-section overflow-hidden z-2 bg-light">
       <div className="hero-inner mx-30 ml-mx-0 position-relative">
         <div className="container-fluid px-0">
-          <div className="hero-slider position-relative swiper" suppressHydrationWarning>
+          <div className="hero-slider position-relative swiper" suppressHydrationWarning ref={containerRef}>
             <div className="swiper-wrapper" suppressHydrationWarning>
               {slides.map((slide, index) => {
                 const slideNumber = String(index + 1).padStart(2, '0');

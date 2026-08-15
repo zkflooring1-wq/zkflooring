@@ -2,6 +2,13 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Manrope, Noto_Sans } from "next/font/google";
 import "./globals.css";
+import Header from '@/components/layout/Header';
+import MobileMenu from '@/components/layout/MobileMenu';
+import StickyHeader from '@/components/layout/StickyHeader';
+import HeaderSearch from '@/components/layout/HeaderSearch';
+import Sidebar from '@/components/layout/Sidebar';
+import Footer from '@/components/layout/Footer';
+import Newsletter from '@/components/Newsletter';
 import LayoutWrapper from "@/components/layout/LayoutWrapper";
 
 const manrope = Manrope({
@@ -63,7 +70,15 @@ export default function RootLayout({
             <span className="loader"></span>
           </div>
 
-          <LayoutWrapper>
+          <LayoutWrapper
+            header={<Header />}
+            mobileMenu={<MobileMenu />}
+            stickyHeader={<StickyHeader />}
+            headerSearch={<HeaderSearch />}
+            sidebar={<Sidebar />}
+            footer={<Footer />}
+            newsletter={<Newsletter />}
+          >
             {children}
           </LayoutWrapper>
 
@@ -92,31 +107,31 @@ export default function RootLayout({
         </div>
 
         {/* Core essential scripts for initial interactive shell */}
-        <script defer src="/assets/js/vendor/jquery-3.7.1.min.js"></script>
-        <script defer src="/assets/js/bootstrap.min.js"></script>
-        <script defer src="/assets/js/gsap.min.js"></script>
-        <script defer src="/assets/js/ScrollSmoother.js"></script>
-        <script defer src="/assets/js/gsap-scroll-to-plugin.min.js"></script>
-        <script defer src="/assets/js/ScrollTrigger.min.js"></script>
-        <script defer src="/assets/js/swiper-bundle.min.js"></script>
-        <script defer src="/assets/js/marquee.min.js"></script>
-        <script defer src="/assets/js/main.js"></script>
+        <Script src="/assets/js/vendor/jquery-3.7.1.min.js" strategy="beforeInteractive" />
+        <Script src="/assets/js/bootstrap.min.js" strategy="afterInteractive" />
+        <Script src="/assets/js/gsap.min.js" strategy="afterInteractive" />
+        <Script src="/assets/js/ScrollSmoother.js" strategy="afterInteractive" />
+        <Script src="/assets/js/gsap-scroll-to-plugin.min.js" strategy="afterInteractive" />
+        <Script src="/assets/js/ScrollTrigger.min.js" strategy="afterInteractive" />
+        <Script src="/assets/js/swiper-bundle.min.js" strategy="afterInteractive" />
+        <Script src="/assets/js/marquee.min.js" strategy="afterInteractive" />
+        <Script src="/assets/js/main.js" strategy="afterInteractive" />
 
         {/* Secondary / Heavy visual scripts deferred */}
-        <script defer src="/assets/js/jquery.fancybox.js"></script>
-        <script defer src="/assets/js/select2.min.js"></script>
-        <script defer src="/assets/js/jquery-ui.min.js"></script>
-        <script defer src="/assets/js/jquery.validate.min.js"></script>
-        <script defer src="/assets/js/jquery.appear.js"></script>
-        <script defer src="/assets/js/jquery.odometer.min.js"></script>
-        <script defer src="/assets/js/wow.min.js"></script>
-        <script defer src="/assets/js/imagesloaded.pkgd.min.js"></script>
-        <script defer src="/assets/js/isotope.pkgd.min.js"></script>
-        <script defer src="/assets/js/lenis.min.js"></script>
-        <script defer src="/assets/js/splite-type.min.js"></script>
-        <script defer src="/assets/js/vanilla-tilt.min.js"></script>
-        <script defer src="/assets/js/three.min.js"></script>
-        <script defer src="/assets/js/hover.js"></script>
+        <Script src="/assets/js/jquery.fancybox.js" strategy="afterInteractive" />
+        <Script src="/assets/js/select2.min.js" strategy="afterInteractive" />
+        <Script src="/assets/js/jquery-ui.min.js" strategy="afterInteractive" />
+        <Script src="/assets/js/jquery.validate.min.js" strategy="afterInteractive" />
+        <Script src="/assets/js/jquery.appear.js" strategy="afterInteractive" />
+        <Script src="/assets/js/jquery.odometer.min.js" strategy="afterInteractive" />
+        <Script src="/assets/js/wow.min.js" strategy="afterInteractive" />
+        <Script src="/assets/js/imagesloaded.pkgd.min.js" strategy="afterInteractive" />
+        <Script src="/assets/js/isotope.pkgd.min.js" strategy="afterInteractive" />
+        <Script src="/assets/js/lenis.min.js" strategy="afterInteractive" />
+        <Script src="/assets/js/splite-type.min.js" strategy="afterInteractive" />
+        <Script src="/assets/js/vanilla-tilt.min.js" strategy="afterInteractive" />
+        <Script src="/assets/js/three.min.js" strategy="afterInteractive" />
+        <Script src="/assets/js/hover.js" strategy="afterInteractive" />
       </body>
     </html>
   );

@@ -3,17 +3,29 @@
 
 import React from 'react';
 import { usePathname } from 'next/navigation';
-import Header from '@/components/layout/Header';
-import MobileMenu from '@/components/layout/MobileMenu';
-import StickyHeader from '@/components/layout/StickyHeader';
-import HeaderSearch from '@/components/layout/HeaderSearch';
-import Sidebar from '@/components/layout/Sidebar';
-import Footer from '@/components/layout/Footer';
-import Newsletter from '@/components/Newsletter';
-
 import InitClientScripts from '@/components/InitClientScripts';
 
-export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
+interface LayoutWrapperProps {
+  children: React.ReactNode;
+  header: React.ReactNode;
+  mobileMenu: React.ReactNode;
+  stickyHeader: React.ReactNode;
+  headerSearch: React.ReactNode;
+  sidebar: React.ReactNode;
+  footer: React.ReactNode;
+  newsletter: React.ReactNode;
+}
+
+export default function LayoutWrapper({ 
+  children,
+  header,
+  mobileMenu,
+  stickyHeader,
+  headerSearch,
+  sidebar,
+  footer,
+  newsletter
+}: LayoutWrapperProps) {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith('/admin') || pathname.startsWith('/admin-login.php');
 
@@ -24,14 +36,14 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
   return (
     <>
       <InitClientScripts />
-      <Header />
-      <MobileMenu />
-      <StickyHeader />
-      <HeaderSearch />
-      <Sidebar />
+      {header}
+      {mobileMenu}
+      {stickyHeader}
+      {headerSearch}
+      {sidebar}
       {children}
-      <Newsletter />
-      <Footer />
+      {newsletter}
+      {footer}
     </>
   );
 }
