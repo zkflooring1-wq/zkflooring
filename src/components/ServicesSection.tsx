@@ -17,9 +17,7 @@ interface ServicesSectionProps {
 export default function ServicesSection({ flooringServices }: ServicesSectionProps) {
   return (
     <section className="tv-service-section bg-light position-relative overflow-hidden space">
-      <div className="p-top-center z-1 wow slideInTop">
-        <img src="/assets/images/service/hm1-shape-01.webp" alt="shape" loading="lazy" decoding="async" />
-      </div>
+
       <div className="tv-service-inner space bg-theme3 mx-30 ml-mx-0 overflow-hidden br-30">
         <div className="container">
           <div className="row">

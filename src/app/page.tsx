@@ -60,56 +60,53 @@ export default async function HomePage() {
     }
   ];
 
-  const testimonials = [
+  const reviews = [
     {
-      id: 1,
-      name: "John Doe",
-      designation: "Software Engineer",
-      company: "TechCorp",
-      testimonial: "This product has completely transformed the way we work. The efficiency and ease of use are unmatched!",
-      avatar: "https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=600",
+      name: "Sarah Jenkins",
+      username: "@sarah_j",
+      body: "“The carpet installation was completely flawless. The team was highly professional, clean, and transformed our living room entirely. I highly recommend ZK Flooring!”",
+      profile: "",
     },
     {
-      id: 2,
-      name: "Sophia Lee",
-      designation: "Data Analyst",
-      company: "InsightTech",
-      testimonial: "This tool has saved me hours of work! The analytics and reporting features are incredibly powerful.",
-      avatar: "https://images.pexels.com/photos/1520760/pexels-photo-1520760.jpeg?auto=compress&cs=tinysrgb&w=600",
+      name: "Mark Thompson",
+      username: "@mthompson",
+      body: "“Incredible quality and service! We chose their premium hardwood flooring for our office, and the finish is simply stunning. Will definitely use them again for future projects.”",
+      profile: "",
     },
     {
-      id: 3,
-      name: "Michael Johnson",
-      designation: "UX Designer",
-      company: "DesignPro",
-      testimonial: "An amazing tool that simplifies complex tasks. Highly recommended for professionals in the industry.",
-      avatar: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=600",
+      name: "Emma Davis",
+      username: "@emma_davis",
+      body: "“ZK Flooring made the entire process so easy. From selecting the right carpets to the final fitting, their attention to detail is truly unmatched here in Birmingham.”",
+      profile: "",
     },
     {
-      id: 4,
-      name: "Emily Davis",
-      designation: "Marketing Specialist",
-      company: "BrandBoost",
-      testimonial: "I've seen a significant improvement in our team's productivity since we started using this service.",
-      avatar: "https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=600",
+      name: "David Roberts",
+      username: "@david_rob",
+      body: "“We couldn't be happier with our new laminate floors. They look exactly like real wood but are so much easier to maintain. Excellent workmanship by the fitters!”",
+      profile: "",
     },
     {
-      id: 5,
-      name: "Daniel Martinez",
-      designation: "Full-Stack Developer",
-      company: "CodeCrafters",
-      testimonial: "The best investment we've made! The support team is also super responsive and helpful.",
-      avatar: "https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=600",
+      name: "Laura Bennett",
+      username: "@laura_b",
+      body: "“Fast, reliable, and very reasonably priced. The installation team arrived right on time and did an amazing job with our bedroom carpets. Absolutely five stars!”",
+      profile: "",
     },
     {
-      id: 6,
-      name: "Jane Smith",
-      designation: "Product Manager",
-      company: "InnovateX",
-      testimonial: "The user experience is top-notch! The interface is clean, intuitive, and easy to navigate.",
-      avatar: "https://images.pexels.com/photos/2613260/pexels-photo-2613260.jpeg?auto=compress&cs=tinysrgb&w=600",
+      name: "James Wilson",
+      username: "@jwilson",
+      body: "“Outstanding service from start to finish. Our luxury vinyl tiles look incredible in the kitchen. ZK Flooring truly understands quality and customer care.”",
+      profile: "",
+    },
+    {
+      name: "Olivia Clark",
+      username: "@olivia_c",
+      body: "“A highly professional team with a fantastic range of flooring options. They guided us perfectly, and the installation was done exactly on our tight schedule.”",
+      profile: "",
     },
   ];
+
+  const firstRow = reviews.slice(0, Math.ceil(reviews.length / 2));
+  const secondRow = reviews.slice(Math.ceil(reviews.length / 2));
 
   const heroSlides = defaultSliderImages;
 
@@ -271,23 +268,28 @@ export default async function HomePage() {
                                                 </a>
                                             </div>
                                             <div className="overlay-anim4 overflow-hidden">
-                                                <img src="assets/images/service/hm1-img01.webp" alt="Team working" />
+                                                <img
+                                                    src="/services/Self Levelling.webp"
+                                                    alt="Self Levelling"
+                                                    width={700}
+                                                    height={479}
+                                                    style={{ width: '700px', height: '479px', maxWidth: '100%', objectFit: 'cover', display: 'block' }}
+                                                />
                                             </div>
                                         </div>
                                         <div className="service-right">
-                                            <h6>CODING</h6>
-                                            <h2>Android and IOS Apps <br /> Designing</h2>
-                                            <p> Credibly pontificate turnkey processes marketplace transition <br /> competitive testing procedures technology done...
+                                            <h6>PREPARATION</h6>
+                                            <h2>Expert Self Levelling & <br /> Subfloor Preparation</h2>
+                                            <p> Ensure a perfectly smooth and durable foundation for your new floors. <br /> Our professional self-levelling services guarantee a flawless finish...
                                             </p>
                                             <a href="service-details.html" className="learn-more">Learn More <i className="fa-solid fa-arrow-up-right"></i></a>
 
                                             <div className="border my-40"></div>
                                             <div className="tags">
-                                                <span>Wordpress</span>
-                                                <span>Shopify</span>
-                                                <span>Webflow</span>
-                                                <span>Framer</span>
-                                                <span>Hosting</span>
+                                                <span>Latex Screed</span>
+                                                <span>Plywood</span>
+                                                <span>DPM</span>
+                                                <span>Moisture Testing</span>
                                             </div>
                                         </div>
                                     </div>
@@ -302,23 +304,28 @@ export default async function HomePage() {
                                             </a>
                                         </div>
                                         <div className="overlay-anim4 overflow-hidden">
-                                            <img src="assets/images/service/hm1-img02.webp" alt="Team working" />
+                                            <img
+                                                src="/services/Carpet, Carpet Tile.webp"
+                                                alt="Carpet & Carpet Tile"
+                                                width={700}
+                                                height={479}
+                                                style={{ width: '700px', height: '479px', maxWidth: '100%', objectFit: 'cover', display: 'block' }}
+                                            />
                                         </div>
                                     </div>
                                     <div className="service-right">
-                                        <h6>CODING</h6>
-                                        <h2>Digital Transformation <br />and Automation</h2>
-                                        <p> Credibly pontificate turnkey processes marketplace transition <br /> competitive testing procedures technology done...
+                                        <h6>INSTALLATION</h6>
+                                        <h2>Premium Carpet & <br /> Carpet Tile Fitting</h2>
+                                        <p> From luxurious domestic carpets to heavy-duty commercial tiles, <br /> we provide expert installation tailored to your space...
                                         </p>
                                         <a href="service-details.html" className="learn-more">Learn More <i className="fa-solid fa-arrow-up-right"></i></a>
 
                                         <div className="border my-40"></div>
                                         <div className="tags">
-                                            <span>Wordpress</span>
-                                            <span>Shopify</span>
-                                            <span>Webflow</span>
-                                            <span>Framer</span>
-                                            <span>Hosting</span>
+                                            <span>Broadloom</span>
+                                            <span>Carpet Tiles</span>
+                                            <span>Underlay</span>
+                                            <span>Stair Runners</span>
                                         </div>
                                     </div>
                                     </div>                                
@@ -333,23 +340,28 @@ export default async function HomePage() {
                                                 </a>
                                             </div>
                                             <div className="overlay-anim4 overflow-hidden">
-                                                <img src="assets/images/service/hm1-img03.webp" alt="Team working" />
+                                                <img
+                                                    src="/services/Vinyl, Vinyl Tile.webp"
+                                                    alt="Vinyl & LVT"
+                                                    width={700}
+                                                    height={479}
+                                                    style={{ width: '700px', height: '479px', maxWidth: '100%', objectFit: 'cover', display: 'block' }}
+                                                />
                                             </div>
                                         </div>
                                         <div className="service-right">
-                                            <h6>DRSIGNING</h6>
-                                            <h2>Web and Mobile UI/UX <br />Designing</h2>
-                                            <p> Credibly pontificate turnkey processes marketplace transition <br /> competitive testing procedures technology done...
+                                            <h6>INSTALLATION</h6>
+                                            <h2>Luxury Vinyl Tile (LVT) & <br /> Sheet Vinyl Flooring</h2>
+                                            <p> Transform your interiors with versatile, water-resistant vinyl solutions. <br /> We specialize in precision fitting for stunning LVT and seamless sheets...
                                             </p>
                                             <a href="service-details.html" className="learn-more">Learn More <i className="fa-solid fa-arrow-up-right"></i></a>
 
                                             <div className="border my-40"></div>
                                             <div className="tags">
-                                                <span>Wordpress</span>
-                                                <span>Shopify</span>
-                                                <span>Webflow</span>
-                                                <span>Framer</span>
-                                                <span>Hosting</span>
+                                                <span>LVT</span>
+                                                <span>Sheet Vinyl</span>
+                                                <span>Amtico</span>
+                                                <span>Karndean</span>
                                             </div>
                                         </div>
                                     </div>
@@ -558,153 +570,78 @@ export default async function HomePage() {
                             </div>
                         </div>
 
-                        
-                        <div className="tv-brands-section  position-relative z-1">
-                            <div className="container">
-                                <div className="row">
-                                    <div className="col-lg-12">
-                                        <div className="sponsors-outer  brand-outher">
-                                            <div className="trusted-partners d-flex align-items-center">
-                                            </div>
-                                            <div className="border"></div>
-                                            <div className="brands-slider-two swiper py-45">
-                                                <div className="swiper-wrapper">
-                                                    <div className="swiper-slide">
-                                                        <div className="brand-item">
-                                                            <a className="image" href="#">
-                                                                <img src="/assets/images/brands/01.webp" alt="Brand 01" />
-                                                                <img src="/assets/images/brands/01.webp" alt="Brand 01" />
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div className="swiper-slide">
-                                                        <div className="brand-item">
-                                                            <a className="image" href="#">
-                                                                <img src="/assets/images/brands/02.webp" alt="Brand 02" />
-                                                                <img src="/assets/images/brands/02.webp" alt="Brand 02" />
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div className="swiper-slide">
-                                                        <div className="brand-item">
-                                                            <a className="image" href="#">
-                                                                <img src="/assets/images/brands/03.webp" alt="Brand  03" />
-                                                                <img src="/assets/images/brands/03.webp" alt="Brand  03" />
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div className="swiper-slide">
-                                                        <div className="brand-item">
-                                                            <a className="image" href="#">
-                                                                <img src="/assets/images/brands/04.webp" alt="Brand 04" />
-                                                                <img src="/assets/images/brands/04.webp" alt="Brand 04" />
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div className="swiper-slide">
-                                                        <div className="brand-item">
-                                                            <a className="image" href="#">
-                                                                <img src="/assets/images/brands/05.webp" alt="Brand 05" />
-                                                                <img src="/assets/images/brands/05.webp" alt="Brand 05" />
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div className="swiper-slide">
-                                                        <div className="brand-item">
-                                                            <a className="image" href="#">
-                                                                <img src="/assets/images/brands/06.webp" alt="Brand 06" />
-                                                                <img src="/assets/images/brands/06.webp" alt="Brand 06" />
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="border mb-60"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        
                         <div className="row">
                             <div className="col-lg-12">
                                 <div style={{ overflow: 'hidden', width: '100%', position: 'relative', padding: '1rem 0' }}>
                                     <style dangerouslySetInnerHTML={{__html: `
-                                        @keyframes customMarquee {
+                                        @keyframes customMarqueeLeft {
                                             0% { transform: translateX(0); }
                                             100% { transform: translateX(-50%); }
                                         }
-                                        .custom-marquee-content {
+                                        @keyframes customMarqueeRight {
+                                            0% { transform: translateX(-50%); }
+                                            100% { transform: translateX(0); }
+                                        }
+                                        .custom-marquee-content-left {
                                             display: flex;
                                             gap: 1.5rem;
                                             width: max-content;
-                                            animation: customMarquee 40s linear infinite;
+                                            animation: customMarqueeLeft 30s linear infinite;
                                         }
-                                        .custom-marquee-content:hover {
+                                        .custom-marquee-content-right {
+                                            display: flex;
+                                            gap: 1.5rem;
+                                            width: max-content;
+                                            animation: customMarqueeRight 30s linear infinite;
+                                        }
+                                        .custom-marquee-content-left:hover, .custom-marquee-content-right:hover {
                                             animation-play-state: paused;
                                         }
                                     `}} />
-                                    <div className="custom-marquee-content">
-                                        {[...testimonials, ...testimonials].map((testimonial, index) => (
-                                            <div key={index} style={{ width: '24rem', flexShrink: 0, padding: '0.5rem' }}>
-                                                <div className="wow fadeInUp" data-wow-delay={`.${(index % 3) * 2 + 5}s`} style={{
-                                                    display: 'flex',
-                                                    flexDirection: index % 2 === 0 ? 'column-reverse' : 'column',
-                                                    width: '100%',
+                                    
+                                    <div className="custom-marquee-content-left" style={{ marginBottom: '1.5rem' }}>
+                                        {[...firstRow, ...firstRow].map((review, index) => (
+                                            <div key={`first-${index}`} style={{ width: '20rem', flexShrink: 0 }}>
+                                                <div style={{
+                                                    height: '100%', width: '100%', cursor: 'pointer', overflow: 'hidden',
+                                                    borderRadius: '0.75rem', border: '1px solid rgba(255, 255, 255, 0.4)', backgroundColor: '#ffffff', boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)', padding: '1.5rem',
                                                 }}>
-                                                    <div style={{
-                                                        position: 'relative',
-                                                        display: 'flex',
-                                                        height: '10.5rem',
-                                                        width: '100%',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
-                                                        padding: '1.5rem',
-                                                    }}>
-                                                        <span style={{ fontSize: '20px', fontWeight: 'bold', color: '#6b7280', zIndex: 1 }}>{testimonial.company}</span>
-                                                        <div style={{
-                                                            position: 'absolute', inset: 0, zIndex: 0, opacity: 0.15,
-                                                            backgroundImage: 'linear-gradient(to right, #6b7280 1px, transparent 1px), linear-gradient(to bottom, #6b7280 1px, transparent 1px)',
-                                                            backgroundSize: '20px 20px',
-                                                            WebkitMaskImage: 'repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px), repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px)',
-                                                            WebkitMaskComposite: 'source-in'
-                                                        }} />
-                                                    </div>
-                                                    <div style={{
-                                                        borderRadius: '0.75rem',
-                                                        border: '1px solid #e5e7eb',
-                                                        backgroundColor: '#ffffff',
-                                                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-                                                        padding: '1.5rem',
-                                                        position: 'relative',
-                                                        zIndex: 2
-                                                    }}>
-                                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                                                                <div style={{ width: '40px', height: '40px', borderRadius: '50%', overflow: 'hidden', backgroundColor: '#f3f4f6' }}>
-                                                                    <img src={testimonial.avatar} alt={testimonial.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                                                </div>
-                                                                <div>
-                                                                    <p style={{ margin: 0, fontWeight: 500, color: '#111827', lineHeight: 1.2 }}>{testimonial.name}</p>
-                                                                    <p style={{ margin: 0, fontSize: '0.875rem', color: '#6b7280', marginTop: '4px' }}>{testimonial.designation}</p>
-                                                                </div>
+                                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                                        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.75rem' }}>
+                                                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                                                <p style={{ margin: 0, fontSize: '0.875rem', fontWeight: 600, color: '#1f2937' }}>{review.name}</p>
+                                                                <p style={{ margin: 0, fontSize: '0.75rem', fontWeight: 500, color: '#6b7280' }}>{review.username}</p>
                                                             </div>
-                                                            <a href="#" target="_blank" style={{ color: '#9ca3af', display: 'flex', padding: '0.5rem', borderRadius: '0.375rem', textDecoration: 'none' }}>
-                                                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={{ width: '16px', height: '16px', fill: 'currentColor' }}>
-                                                                    <title>X</title>
-                                                                    <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
-                                                                </svg>
-                                                            </a>
                                                         </div>
-                                                        <p style={{ marginTop: '1.25rem', fontSize: '17px', color: '#374151', lineHeight: 1.6, marginBottom: 0 }}>
-                                                            {testimonial.testimonial}
-                                                        </p>
+                                                        <p style={{ margin: 0, fontSize: '0.875rem', color: '#374151', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', lineHeight: 1.6 }}>{review.body}</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
+                                    
+                                    <div className="custom-marquee-content-right">
+                                        {[...secondRow, ...secondRow].map((review, index) => (
+                                            <div key={`second-${index}`} style={{ width: '20rem', flexShrink: 0 }}>
+                                                <div style={{
+                                                    height: '100%', width: '100%', cursor: 'pointer', overflow: 'hidden',
+                                                    borderRadius: '0.75rem', border: '1px solid rgba(255, 255, 255, 0.4)', backgroundColor: '#ffffff', boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)', padding: '1.5rem',
+                                                }}>
+                                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                                        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.75rem' }}>
+                                                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                                                <p style={{ margin: 0, fontSize: '0.875rem', fontWeight: 600, color: '#1f2937' }}>{review.name}</p>
+                                                                <p style={{ margin: 0, fontSize: '0.75rem', fontWeight: 500, color: '#6b7280' }}>{review.username}</p>
+                                                            </div>
+                                                        </div>
+                                                        <p style={{ margin: 0, fontSize: '0.875rem', color: '#374151', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', lineHeight: 1.6 }}>{review.body}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -825,43 +762,6 @@ export default async function HomePage() {
             </div>
         </section>
 
-        <div className="tv-counter-section style-2 bg-light position-relative z-1">
-            <div className="counter-inner lg-br-0 py-65 lg-py-40 position-relative mx-30 xxl-mx-0 overflow-hidden">
-                <div className="bg image"><img src="/assets/images/counter/hm1-bg01.webp" alt="" /></div>
-                <div className="overlay bg-theme mbm-overlay"></div>
-                <div className="container">
-                    <div className="row gy-30">
-                        <div className="col-lg-4 col-md-6">
-                            <div className="counter-box">
-                                <div className="icon"><img src="/assets/images/counter/hm1-icon01.webp" alt="Icon" /></div>
-                                <div className="content">
-                                    <h4 className="title mb-0"><span className="count-number odometer" data-count="100">0</span>K+</h4>
-                                    <h6 className="text mb-0">Successful Projects</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-6">
-                            <div className="counter-box justify-content-center ustify-content-md-center">
-                                <div className="icon"><img src="/assets/images/counter/hm1-icon02.webp" alt="Icon" /></div>
-                                <div className="content">
-                                    <h4 className="title mb-0"><span className="count-number odometer" data-count="270">0</span>+</h4>
-                                    <h6 className="text mb-0">All Awards Winning</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-6">
-                            <div className="counter-box align-items-start align-items-lg-end">
-                                <div className="icon"><img src="/assets/images/counter/hm1-icon03.webp" alt="Icon" /></div>
-                                <div className="content">
-                                    <h4 className="title mb-0"><span className="count-number odometer" data-count="96">0</span>%</h4>
-                                    <h6 className="text mb-0">Satisfaction Rates</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
 
         <section className="tv-blog-section space bg-color2">
