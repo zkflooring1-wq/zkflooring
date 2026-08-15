@@ -191,70 +191,7 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* About Section */}
-        <section className="tv-about-section bg-color2 space-bottom">
-          <div className="container">
-            <div className="row gy-30 align-items-center">
-              <div className="col-lg-7">
-                <div className="about-left pr-60 md-pr-0">
-                  <div className="title-wrap three" data-wow-duration="1.5s" data-wow-delay=".4s">
-                    <div className="sub-title-2 text-theme">
-                      <i className="fa-solid fa-circle-check"></i>
-                      {about.since_text || "Since 2007"}
-                    </div>
-                    <h2 className="sec-title" dangerouslySetInnerHTML={{ __html: about.title }}></h2>
-                  </div>
-                  <div className="image-box br-30 sm-br-0 overflow-hidden data-item-hover">
-                    <figure className="data-img-hover" data-style="01" data-intensity="0.2" data-speedin="1" data-speedout="1">
-                      <img src={about.main_image} alt="main image" />
-                    </figure>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-5">
-                <div className="about-right">
-                  <div className="right-top">
-                    <img src={about.side_image} alt="side image" />
-                    <div className="text">
-                      <h4>Z. K. Khan</h4>
-                      <p>Founder & Lead Fitter - <a href="/contact">ZK Flooring</a></p>
-                    </div>
-                  </div>
-                  <div className="border mt-40 mb-30"></div>
-                  <p>{about.description}</p>
-                  
-                  {about.checkmark_list && (
-                    <ul className="list-style-1 mb-40">
-                      {about.checkmark_list.map((item: string, i: number) => (
-                        <li key={i}>
-                          <i className="fa-solid fa-circle-check" style={{ marginRight: "10px", color: "#1053f3" }}></i>
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-
-                  <a href={about.cta_link} className="theme-btn mt-25">
-                    <span className="link-effect">
-                      <span className="effect-1">{about.cta_text}</span>
-                      <span className="effect-1">{about.cta_text}</span>
-                    </span>
-                    <span className="arrow-all">
-                      <i>
-                        <svg width="16" height="19" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="#1053f3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                        <svg width="16" height="19" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="#1053f3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      </i>
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section><section className="tv-service-section bg-light position-relative overflow-hidden">
+        <section className="tv-service-section bg-light position-relative overflow-hidden">
             <div className="p-top-center z-1 wow slideInTop">
                 <img src="assets/images/service/hm1-shape-01.webp" alt="" />
             </div>
@@ -378,103 +315,7 @@ export default async function HomePage() {
 
 
         
-        <section className="tv-choose-section space bg-light">
-            <div className="container">
-                <div className="row gy-30">
-                    <div className="col-lg-12 col-xl-6">
-                        <div className="tv-choose-left">
-                            
-                            <div className="title-wrap three" data-wow-duration="1.5s" data-wow-delay=".4s">
-                                <div className="sub-title-2 text-theme"><i className="fa-solid fa-circle-check"></i>Why Choose Us</div>
-                                <h2 className="sec-title">Proven Track Record of Driving <br /> Digital Transformation</h2>
-                            </div>
-                            <div className="tv-choose-boxs">
-                                <div className="tv-choose-single-box two wow fadeInLeft" data-wow-delay=".3s">
-                                    <div className="box-top-content mb-20">
-                                        <div className="icon-top"><img src="assets/images/choose/hm1-icon01.webp" alt="" /></div>
-                                        <h4 className="title">Cutting-Edge Technology</h4>
-                                    </div>
-                                    <p>Pontificate turnkey processes competitive testing</p>
-                                    <div className="icon bg-light">
-                                        <i>
-                                            <svg width="10" height="12" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M10.0035 3.90804L1.41153 12.5L0 11.0885L8.59097 2.49651H1.01922V0.5H12V11.4808H10.0035V3.90804Z"></path>
-                                            </svg>
-                                            <svg width="10" height="12" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M10.0035 3.90804L1.41153 12.5L0 11.0885L8.59097 2.49651H1.01922V0.5H12V11.4808H10.0035V3.90804Z"></path>
-                                            </svg>
-                                        </i>
-                                    </div>
-                                    
-                                    <div className="choose-box box-1"></div>
-                                    <div className="choose-box box-2"></div>
-                                    <div className="choose-box box-3"></div>
-                                    <div className="choose-box box-4"></div>
-                                </div>
-                                <div className="tv-choose-single-box wow fadeInRight" data-wow-delay=".5s">
-                                    <div className="box-top-content mb-20">
-                                        <div className="icon-top"><img src="assets/images/choose/hm1-icon02.webp" alt="" /></div>
-                                        <h4 className="title">Proven Client Satisfaction</h4>
-                                    </div>
-                                    <p>Pontificate turnkey processes competitive testing</p>
-                                    <div className="icon bg-light">
-                                        <i>
-                                            <svg width="10" height="12" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M10.0035 3.90804L1.41153 12.5L0 11.0885L8.59097 2.49651H1.01922V0.5H12V11.4808H10.0035V3.90804Z"></path>
-                                            </svg>
-                                            <svg width="10" height="12" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M10.0035 3.90804L1.41153 12.5L0 11.0885L8.59097 2.49651H1.01922V0.5H12V11.4808H10.0035V3.90804Z"></path>
-                                            </svg>
-                                        </i>
-                                    </div>
-                                    
-                                    <div className="choose-box box-1"></div>
-                                    <div className="choose-box box-2"></div>
-                                    <div className="choose-box box-3"></div>
-                                    <div className="choose-box box-4"></div>
-                                </div>
-                            </div>
-                            <a href="faq.html" className="theme-btn mt-40">
-                                <span className="link-effect">
-                                    <span className="effect-1">Discover More</span>
-                                    <span className="effect-1">Discover More</span>
-                                </span>
-                                <span className="arrow-all">
-                                    <i>
-                                        <svg width="16" height="19" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="#1053f3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                                        </svg>
-                                        <svg width="16" height="19" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="#1053f3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                                        </svg>
-                                    </i>
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                    <div className="col-lg-12 col-xl-6">
-                       <div className="tv-choose-right-box">
-                            <div className="data-item-hover">
-                                <figure className="image_right data-img-hover" data-style="08" data-intensity="0.2" data-speedin="1" data-speedout="1">
-                                    <img src="assets/images/choose/hm1-choose-img01.webp" alt="Agency Image" />
-                                </figure>
-                            </div>
 
-							<div className="text_right">
-								<div className="content">
-									<div className="icon"><img src="assets/images/choose/star.webp" alt="" /></div>
-									<h3 className="title">Best <br /> Agency</h3>
-									<div className="arrow"><img src="assets/images/choose/arrow.webp" alt="" /></div>
-									<span className="year">2025</span>
-								</div>
-							</div>
-							<a className="middle-btn" href="#"><i className="fa-solid fa-arrow-up-right"></i></a>
-						</div>
-                    </div>
-                </div>
-            </div>
-            <div className="p-bottom-left wow slideInUp"><img src="assets/images/choose/hm1-shape01.webp" alt="" /></div>
-        </section>
 
 
 
@@ -560,74 +401,6 @@ export default async function HomePage() {
             </div>
         </section>
 
-
-
-
-
-        
-        <section className="tv-project-section space bg-light">
-            <div className="container">
-                
-                <div className="row">
-                    <div className="col-lg-12">
-                        <div className="project-title-area d-flex  sm-mb-30">
-                            <div className="title-wrap white">
-                                <div className="sub-title-2 text-white two"><i className="fa-solid fa-circle-check"></i>{contactCallback.sub_title}</div>
-                                <h2 className="sec-title" dangerouslySetInnerHTML={{ __html: contactCallback.title }}></h2>
-                            </div>
-                            <div className="contact-form">
-                                <h2 className="sec-title">Ask for a call back</h2>
-                                <form id="contact_form" className="contact_form" action="https://formspree.io/f/mzbnjrnb" method="post">
-                                    <div className="form-grid">
-                                        <div className="form-group">
-                                            
-                                            <input type="text" id="fullName" name="name" placeholder="Your Name" required autoComplete="on" />
-                                        </div>
-                                        <div className="form-group">
-                                            
-                                            <input type="email" id="userEmail" name="email" placeholder="E-Mail" required autoComplete="on" />
-                                        </div>
-                                    </div>
-                                    <div className="form-grid">
-                                        <div className="form-group">
-                                            <select className="custom-select" id="service" name="service" autoComplete="off" defaultValue="">
-
-
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="form-group">
-                                        <textarea id="msg" name="msg" placeholder="Write Message" required></textarea>
-                                    </div>
-                                    <button type="submit" className="theme-btn"  data-loading-text="Please wait...">
-                                            <span className="btn-title mr-10">Send Message</span>
-                                            <i className="fa-solid fa-arrow-right"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                        <div className="col-lg-6">
-                            <div className="choose-image-wrapper">
-                                <div className="thumb-bg spin2"><img src="/assets/images/contact/hm1-shape01.webp" alt="" /></div>
-                                <div className="thumb">
-                                    <img className="wow img-anim-right" src="/assets/images/contact/hm1-img01.webp" alt="" />
-                                </div>
-                                <div className="info-card">
-                                    <div className="info-icon">
-                                        <img src="/assets/images/contact/hm1-icon01.webp" alt="" />
-                                    </div>
-                                    <div className="info-text">
-                                        <p>{contactCallback.card_label}</p>
-                                        <h4><a className="text-white" href={contactCallback.card_phone_link || globalPhoneLink}>{contactCallback.card_phone || globalPhone}</a></h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="p-bottom-left wow slideInUp xs-d-none"><img src="/assets/images/contact/hm1-shape02.webp" alt="" /></div>
-            </div>
-        </section>
 
 
 
@@ -1116,48 +889,6 @@ export default async function HomePage() {
             </div>
         </div>
 
-        <section className="tv-callus-section bg-light">
-            <div className="callus-inner space position-relative mx-30 xxl-mx-0 overflow-hidden">
-                <div className="bg image"><img src="/assets/images/callus/hm1-bg01.webp" alt="" /></div>
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <div className="title-wrap white three">
-                                <div className="sub-title-2 two text-white"><i className="fa-solid fa-circle-check"></i>Get in Touch</div>
-                                <h2 className="sec-title">Delivering Premium Flooring <br /> for Homes and Commercial <br /> Properties in Birmingham</h2>
-                            </div>
-                            <div className="callus-contact">
-                                <a href="/contact" className="theme-btn">
-                                    <span className="link-effect">
-                                        <span className="effect-1">Discover More</span>
-                                        <span className="effect-1">Discover More</span>
-                                    </span>
-                                    <span className="arrow-all">
-                                        <i>
-                                            <svg width="16" height="19" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="#1053f3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                            <svg width="16" height="19" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="#1053f3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                        </i>
-                                    </span>
-                                </a>
-                                <div className="inner-contact">
-                                    <div className="icon">
-                                        <img src="/assets/images/callus/call-iocn.webp" alt="" />
-                                    </div>
-                                    <div className="content">
-                                        <h6 className="call-text">Need Help?</h6>
-                                        <a className="call-phone" href={globalPhoneLink}> <span>Free :</span>{globalPhone}</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
         <section className="tv-blog-section space bg-color2">
             <div className="container">
@@ -1228,34 +959,7 @@ export default async function HomePage() {
             </div>
         </section>
 
-        <section className="newsletter-section mb--75">
-            <div className="container">
-                <div className="row">
-                    <div className="col-lg-12">
-                        <div className="newsletter">
-                            <div className="arrow-shape md-d-none"><img src="/assets/images/newsletter/arrow-shape.webp" alt="" /></div>
-                            <div className="bg image"><img className="br-30" src="/assets/images/newsletter/hm1-bg01.webp" alt="" /></div>
-                            <div className="thumb d-none d-xl-block">
-                                <img src="/assets/images/newsletter/img01.webp" alt="thumb" />
-                             </div>
-                             <div className="image-text">
-                                <img src="/assets/images/icons/check-circle2.png" alt="" />
-                                <h3 className="title title-anim" data-animation="bounce-in">Subscribe Our Newsletter <br /> For Latest Updates</h3>
-                             </div>
-                                <form className="newsletter-form" action="https://formspree.io/f/mzbnjrnb" method="post">
-                                    <div className="form-group">
-                                        <input type="email" name="email" className="email" defaultValue="" placeholder="Email Address" autoComplete="on" required />
-                                        <button type="submit">
-                                            <i className="far fa-paper-plane"></i>
-                                            <span className="btn-title"></span>
-                                        </button>
-                                    </div>
-                                </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+
     </main>
   );
 }
