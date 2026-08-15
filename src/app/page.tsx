@@ -405,6 +405,34 @@ export default async function HomePage() {
 
         
         <section className="tv-process-section bg-light position-relative">
+            <style>{`
+                .tv-process-section .tv-process-item {
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .tv-process-section .process-box {
+                    display: flex !important;
+                    flex-direction: column !important;
+                    height: 355px !important;
+                    min-height: 355px !important;
+                    max-height: 355px !important;
+                    box-sizing: border-box !important;
+                    width: 100% !important;
+                }
+                .tv-process-section .process-box .title {
+                    min-height: 54px !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    margin-top: 50px !important;
+                    margin-bottom: 12px !important;
+                }
+                .tv-process-section .process-box p {
+                    margin: 0 !important;
+                    flex-grow: 1 !important;
+                }
+            `}</style>
             <div className="p-top-center z-1 wow slideInTop">
                 <img src="assets/images/process/hm1-shape01.png" alt="" />
             </div>
@@ -423,9 +451,9 @@ export default async function HomePage() {
                             <div className="tv-process-item wow fadeInRightBig" data-wow-delay=".2s">
                                 <h4 className="title-text">STEP 01</h4>
                                 <div className="process-box">
-                                    <div className="icon"><img src="assets/images/process/hm1-icon1.webp" alt="" /></div>
-                                    <h3 className="title">Consult Understand</h3>
-                                    <p>Technically sound chains to main and paid marketplace</p>
+                                    <div className="icon"><img width="24" height="24" src="https://img.icons8.com/plumpy/24/tape-measure-sewing.png" alt="tape-measure-sewing" /></div>
+                                    <h3 className="title">Site Consultation</h3>
+                                    <p>Assess the space, understand your flooring needs, and recommend the right solution.</p>
                                 </div>
                             </div>
                         </div>
@@ -433,9 +461,9 @@ export default async function HomePage() {
                             <div className="tv-process-item wow fadeInRightBig" data-wow-delay=".3s">
                                 <h4 className="title-text">STEP 02</h4>
                                 <div className="process-box">
-                                    <div className="icon"><img src="assets/images/process/hm1-icon2.webp" alt="" /></div>
-                                    <h3 className="title">Plan Strategize</h3>
-                                    <p>Technically sound chains to main and paid marketplace</p>
+                                    <div className="icon"><img width="24" height="24" src="https://img.icons8.com/plumpy/24/wallpaper-roll.png" alt="wallpaper-roll" /></div>
+                                    <h3 className="title">Product Selection</h3>
+                                    <p>Choose from carpets, carpet tiles, vinyl, LVT, and other flooring options suited to your space.</p>
                                 </div>
                             </div>
                         </div>
@@ -443,9 +471,9 @@ export default async function HomePage() {
                             <div className="tv-process-item  wow fadeInRightBig" data-wow-delay=".4s">
                                 <h4 className="title-text">STEP 03</h4>
                                 <div className="process-box">
-                                    <div className="icon"><img src="assets/images/process/hm1-icon3.webp" alt="" /></div>
-                                    <h3 className="title">Implement Execute</h3>
-                                    <p>Technically sound chains to main and paid marketplace</p>
+                                    <div className="icon"><img width="24" height="24" src="https://img.icons8.com/plumpy/24/cut-paper.png" alt="cut-paper" /></div>
+                                    <h3 className="title">Professional Installation</h3>
+                                    <p>Our skilled team prepares the surface and installs your chosen flooring with precision.</p>
                                 </div>
                             </div>
                         </div>
@@ -453,9 +481,9 @@ export default async function HomePage() {
                             <div className="tv-process-item wow fadeInRightBig" data-wow-delay=".5s">
                                 <h4 className="title-text">STEP 04</h4>
                                 <div className="process-box">
-                                    <div className="icon"><img src="assets/images/process/hm1-icon4.webp" alt="" /></div>
-                                    <h3 className="title">Support Optimize</h3>
-                                    <p>Technically sound chains to main and paid marketplace</p>
+                                    <div className="icon"><img width="24" height="24" src="https://img.icons8.com/plumpy/24/best-seller.png" alt="best-seller" /></div>
+                                    <h3 className="title">Final Inspection &amp; Support</h3>
+                                    <p>We complete the final checks and provide reliable support after your flooring installation.</p>
                                 </div>
                             </div>
                         </div>
