@@ -515,12 +515,7 @@ export default async function HomePage() {
                     <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6">
                         <div className="tv-team-card wow fadeInUp" data-wow-delay=".2s">
                             <div className="team-photo">
-                                <img src="/assets/images/team/hm1-img01.webp" alt="Jobaer Khanom" />
-                                <div className="team-social">
-                                    <a href="#"><i className="fa-brands fa-facebook-f"></i></a>
-                                    <a href="#"><i className="fa-brands fa-x-twitter"></i></a>
-                                    <a href="#"><i className="fa-brands fa-linkedin-in"></i></a>
-                                </div>
+                                <img src="/Our Team/1.jpg" alt="Jobaer Khanom" style={{ width: '100%', height: '420px', objectFit: 'cover' }} />
                             </div>
                             <div className="team-info">
                                 <div className="info-inner">
@@ -533,12 +528,7 @@ export default async function HomePage() {
                     <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6">
                         <div className="tv-team-card wow fadeInUp" data-wow-delay=".4s">
                             <div className="team-photo">
-                            <img src="/assets/images/team/hm1-img02.webp" alt="Sayma D. Farna" />
-                            <div className="team-social">
-                                <a href="#"><i className="fa-brands fa-facebook-f"></i></a>
-                                <a href="#"><i className="fa-brands fa-x-twitter"></i></a>
-                                <a href="#"><i className="fa-brands fa-linkedin-in"></i></a>
-                            </div>
+                                <img src="/Our Team/2.jpg" alt="Sayma D. Farna" style={{ width: '100%', height: '420px', objectFit: 'cover' }} />
                             </div>
                             <div className="team-info">
                                 <div className="info-inner">
@@ -551,12 +541,7 @@ export default async function HomePage() {
                     <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6">
                         <div className="tv-team-card wow fadeInUp" data-wow-delay=".6s">
                             <div className="team-photo">
-                            <img src="/assets/images/team/hm1-img03.webp" alt="Jubin E. Nawtail" />
-                            <div className="team-social">
-                                <a href="#"><i className="fa-brands fa-facebook-f"></i></a>
-                                <a href="#"><i className="fa-brands fa-x-twitter"></i></a>
-                                <a href="#"><i className="fa-brands fa-linkedin-in"></i></a>
-                            </div>
+                                <img src="/Our Team/3.jpg" alt="Jubin E. Nawtail" style={{ width: '100%', height: '420px', objectFit: 'cover' }} />
                             </div>
                             <div className="team-info">
                                 <div className="info-inner">
