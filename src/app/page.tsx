@@ -262,9 +262,6 @@ export default async function HomePage() {
                     font-size: 13px !important;
                 }
             `}</style>
-            <div className="p-top-right z-1 wow slideInRight">
-                <img src="assets/images/service/hm1-shape-01.webp" alt="" />
-            </div>
             <div className="tv-service-inner space bg-theme3 mx-30 ml-mx-0 overflow-hidden">
                 <div className="container">
                     
@@ -284,11 +281,6 @@ export default async function HomePage() {
                                     <div className="tv-service-item">
                                         <div className="service-number">01.</div>
                                         <div className="service-left">
-                                            <div className="video-btn">
-                                                <a className="popup-video" href="https://www.youtube.com/watch?v=SMKPKGW083c" data-fancybox="video-gallery">
-                                                    <i className="fa-sharp fa-solid fa-play"></i>
-                                                </a>
-                                            </div>
                                             <div className="overlay-anim4 overflow-hidden">
                                                 <img
                                                     src="/services/Self Levelling.webp"
@@ -320,11 +312,6 @@ export default async function HomePage() {
                                     <div className="tv-service-item">
                                     <div className="service-number">02.</div>
                                     <div className="service-left">
-                                        <div className="video-btn">
-                                            <a className="popup-video" href="https://www.youtube.com/watch?v=SMKPKGW083c" data-fancybox="video-gallery">
-                                                <i className="fa-sharp fa-solid fa-play"></i>
-                                            </a>
-                                        </div>
                                         <div className="overlay-anim4 overflow-hidden">
                                             <img
                                                 src="/services/Carpet, Carpet Tile.webp"
@@ -356,11 +343,6 @@ export default async function HomePage() {
                                     <div className="tv-service-item">
                                         <div className="service-number">03.</div>
                                         <div className="service-left">
-                                            <div className="video-btn">
-                                                <a className="popup-video" href="https://www.youtube.com/watch?v=SMKPKGW083c" data-fancybox="video-gallery">
-                                                    <i className="fa-sharp fa-solid fa-play"></i>
-                                                </a>
-                                            </div>
                                             <div className="overlay-anim4 overflow-hidden">
                                                 <img
                                                     src="/services/Vinyl, Vinyl Tile.webp"
@@ -411,11 +393,13 @@ export default async function HomePage() {
                 <div className="container-fluid p-0 overflow-hidden">
                     <div className="slider__marquee clearfix marquee-wrap">
                         <ul className="marquee_mode marquee__group">
-                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> Digital Marketing</li>
-                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> Branding Solutions</li>
-                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> Custom Website</li>
-                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> Innovation Design</li>
-                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> Cyber Security</li>
+                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> Carpet Flooring</li>
+                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> Carpet Tile</li>
+                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> Vinyl Flooring</li>
+                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> LVT Flooring</li>
+                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> Professional Installation</li>
+                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> Self Levelling</li>
+                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> Floor Preparation</li>
                         </ul>
                     </div>
                  </div>
@@ -475,7 +459,7 @@ export default async function HomePage() {
                                 <div className="process-box">
                                     <div className="icon"><img width="24" height="24" src="https://img.icons8.com/plumpy/24/tape-measure-sewing.png" alt="tape-measure-sewing" /></div>
                                     <h3 className="title">Site Consultation</h3>
-                                    <p>Assess the space, understand your flooring needs, and recommend the right solution.</p>
+                                    <p>Understand the space, assess the flooring requirements, and recommend the right solution.</p>
                                 </div>
                             </div>
                         </div>
@@ -485,7 +469,7 @@ export default async function HomePage() {
                                 <div className="process-box">
                                     <div className="icon"><img width="24" height="24" src="https://img.icons8.com/plumpy/24/wallpaper-roll.png" alt="wallpaper-roll" /></div>
                                     <h3 className="title">Product Selection</h3>
-                                    <p>Choose from carpets, carpet tiles, vinyl, LVT, and other flooring options suited to your space.</p>
+                                    <p>Explore the right carpets, carpet tiles, vinyl, LVT, and flooring options for your space.</p>
                                 </div>
                             </div>
                         </div>
@@ -495,7 +479,7 @@ export default async function HomePage() {
                                 <div className="process-box">
                                     <div className="icon"><img width="24" height="24" src="https://img.icons8.com/plumpy/24/cut-paper.png" alt="cut-paper" /></div>
                                     <h3 className="title">Professional Installation</h3>
-                                    <p>Our skilled team prepares the surface and installs your chosen flooring with precision.</p>
+                                    <p>Prepare the surface and install your selected flooring with precision and professional workmanship.</p>
                                 </div>
                             </div>
                         </div>
@@ -505,7 +489,7 @@ export default async function HomePage() {
                                 <div className="process-box">
                                     <div className="icon"><img width="24" height="24" src="https://img.icons8.com/plumpy/24/best-seller.png" alt="best-seller" /></div>
                                     <h3 className="title">Final Inspection &amp; Support</h3>
-                                    <p>We complete the final checks and provide reliable support after your flooring installation.</p>
+                                    <p>Complete the final checks and provide reliable support after your flooring installation.</p>
                                 </div>
                             </div>
                         </div>
