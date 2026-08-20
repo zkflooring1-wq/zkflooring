@@ -1,4 +1,5 @@
 import React from 'react';
+import NavMenu from '@/components/layout/NavMenu';
 
 export default function StickyHeader() {
   return (
@@ -17,30 +18,7 @@ export default function StickyHeader() {
             </div>
             <div className="col-auto nav-menu">
               <nav className="main-menu d-none d-lg-inline-block">
-                <ul className="navigation clearfix">
-                  <li className="active">
-                    <a href="/">Home</a>
-                  </li>
-                  <li>
-                    <a href="/about">About</a>
-                  </li>
-                  <li>
-                    <a href="/services">Services</a>
-                  </li>
-                  <li>
-                    <a href="/projects">Portfolio</a>
-                  </li>
-                  <li>
-                    <a href="/pricing">Pricing</a>
-                  </li>
-                  <li>
-                    <a href="/faq">FAQ</a>
-                  </li>
-                  <li>
-                    <a href="/blog">Blog</a>
-                  </li>
-                  <li><a href="/contact">Contact</a></li>
-                </ul>
+                <NavMenu className="navigation clearfix" />
               </nav>
               <div className="navbar-right d-inline-flex d-lg-none">
                 <button className="menu-toggle sidebar-btn" type="button">

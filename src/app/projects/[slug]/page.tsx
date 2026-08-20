@@ -13,20 +13,23 @@ interface ProjectDetail {
 }
 
 import { supabase } from '@/lib/supabase';
+import { defaultProjects, FlooringProject } from '@/data/projectsData';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const { data: project } = await supabase.from('projects').select('*').eq('slug', slug).single();
+  const { data: dbProject } = await supabase.from('projects').select('*').eq('slug', slug).single();
+  const project = dbProject || defaultProjects.find(p => p.slug === slug);
   if (!project) return { title: "Project | ZK Flooring Birmingham" };
   return {
     title: `${project.title} | ZK Flooring Projects`,
-    description: project.description && project.description.length ? project.description[0] : '',
+    description: project.description && project.description.length ? project.description[0] : project.shortDesc || '',
   };
 }
 
 export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const { data: project } = await supabase.from('projects').select('*').eq('slug', slug).single();
+  const { data: dbProject } = await supabase.from('projects').select('*').eq('slug', slug).single();
+  const project = dbProject || defaultProjects.find(p => p.slug === slug);
 
   if (!project) {
     notFound();

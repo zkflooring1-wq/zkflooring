@@ -27,7 +27,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <>
-      <Script src="https://cdn.tailwindcss.com" strategy="beforeInteractive" />
+      <Script src="https://cdn.tailwindcss.com" strategy="afterInteractive" />
       <div className="flex h-screen bg-[#111] text-gray-200 font-sans">
         {/* Sidebar */}
         <aside className="w-64 bg-[#1a1a1a] border-r border-[#333] flex flex-col">

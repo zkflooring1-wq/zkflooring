@@ -1,5 +1,6 @@
 import React from 'react';
 import { getSetting, SocialLink, HeaderContact } from '@/lib/settings';
+import NavMenu from '@/components/layout/NavMenu';
 
 export default async function Header() {
   const socialLinks = await getSetting<SocialLink[]>('social_links');
@@ -59,30 +60,7 @@ export default async function Header() {
             <div className="col-auto nav-outer">
               <div className="nav-menu">
                 <nav className="main-menu d-none d-lg-inline-block">
-                  <ul className="navigation">
-                    <li className="active">
-                      <a href="/">Home</a>
-                    </li>
-                    <li>
-                      <a href="/about">About</a>
-                    </li>
-                    <li>
-                      <a href="/services">Services</a>
-                    </li>
-                    <li>
-                      <a href="/projects">Portfolio</a>
-                    </li>
-                    <li>
-                      <a href="/pricing">Pricing</a>
-                    </li>
-                    <li>
-                      <a href="/faq">FAQ</a>
-                    </li>
-                    <li>
-                      <a href="/blog">Blog</a>
-                    </li>
-                    <li><a href="/contact">Contact</a></li>
-                  </ul>
+                  <NavMenu className="navigation" />
                 </nav>
                 <div className="navbar-right d-inline-flex d-lg-none">
                   <button className="menu-toggle sidebar-btn" type="button">

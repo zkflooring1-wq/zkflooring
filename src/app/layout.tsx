@@ -107,7 +107,7 @@ export default function RootLayout({
         </div>
 
         {/* Core essential scripts for initial interactive shell */}
-        <Script src="/assets/js/vendor/jquery-3.7.1.min.js" strategy="beforeInteractive" />
+        <Script src="/assets/js/vendor/jquery-3.7.1.min.js" strategy="afterInteractive" />
         <Script src="/assets/js/bootstrap.min.js" strategy="afterInteractive" />
         <Script src="/assets/js/gsap.min.js" strategy="afterInteractive" />
         <Script src="/assets/js/ScrollSmoother.js" strategy="afterInteractive" />

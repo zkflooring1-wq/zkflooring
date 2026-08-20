@@ -8,9 +8,11 @@ export const metadata: Metadata = {
   description: "Explore ZK Flooring's comprehensive installation services: Carpet fitting, LVT, hardwood, laminate, SPC flooring, and subfloor prep in Birmingham.",
 };
 
+import { defaultZkServices } from '@/components/ServicesSection';
+
 export default async function ServicesPage() {
   const { data: dbServices } = await supabase.from('services').select('*').order('created_at', { ascending: false });
-  const flooringServices = dbServices || [];
+  const flooringServices = dbServices && dbServices.length > 0 ? dbServices : defaultZkServices;
 
   return (
     <main>

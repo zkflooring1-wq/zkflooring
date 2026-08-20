@@ -126,7 +126,7 @@ export default function AboutPage() {
             <div className="col-lg-4">
               <div className="about-left">
                 <div className="about-thumb">
-                  <img className="br-20" src="/assets/images/about/hm3-img01.webp" alt="ZK Flooring Craftsmanship" />
+                  <img className="br-20" src="/about page/1.webp" alt="ZK Flooring Craftsmanship" />
                 </div>
                 <div className="pt-50 pb-30 md-d-none">
                   <div className="border"></div>
@@ -203,7 +203,7 @@ export default function AboutPage() {
             <div className="col-lg-3 col-md-6 col-sm-6 d-flex align-items-end">
               <div className="about-right ml-40 xs-ml-0">
                 <div className="profile-card overlay-anim1 mt-40">
-                  <img className="image overlay-anim1" src="/Our Team/1.jpg" alt="ZK Flooring Lead Fitter" />
+                  <img className="image overlay-anim1" src="/about page/2.webp" alt="ZK Flooring Lead Fitter" />
                   <div className="profile-details">
                     <h5 className="name">ZK FLOORING</h5>
                     <p className="title">Master Flooring Installer</p>
@@ -234,7 +234,7 @@ export default function AboutPage() {
                         <img src="/assets/images/social/social-img03.webp" alt="Fitter 03" />
                         <h4>+3K</h4>
                       </div>
-                      <h4 className="text">Trade-Certified <br />Installers</h4>
+                      <h4 className="text text-dark" style={{ color: '#16120B' }}>Professional Flooring <br />Experts</h4>
                       <div className="scribble-shape scribble md-d-none">
                         <img src="/assets/images/team/hm2-scribble.webp" alt="" />
                       </div>
@@ -249,10 +249,10 @@ export default function AboutPage() {
                       <div className="team-photo">
                         <img src="/Our Team/1.jpg" alt="Flooring Specialist" style={{ objectFit: 'cover', height: '350px', width: '100%' }} />
                       </div>
-                      <div className="team-info">
-                        <div className="info-inner">
-                          <h3 className="team-name text-dark">Zeeshan</h3>
-                          <p className="team-role text-dark">Master Fitter</p>
+                      <div className="team-info" style={{ width: '74%', height: '125px', minHeight: '125px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '15px 10px' }}>
+                        <div className="info-inner text-center w-100">
+                          <h3 className="team-name text-dark" style={{ margin: 0, fontSize: '22px', lineHeight: '28px' }}>Zeeshan</h3>
+                          <p className="team-role text-dark" style={{ margin: '6px 0 0 0', fontSize: '15px', lineHeight: '20px' }}>Master Fitter</p>
                         </div>
                       </div>
                     </div>
@@ -262,10 +262,10 @@ export default function AboutPage() {
                       <div className="team-photo">
                         <img src="/Our Team/2.jpg" alt="Master Carpet Fitter" style={{ objectFit: 'cover', height: '350px', width: '100%' }} />
                       </div>
-                      <div className="team-info">
-                        <div className="info-inner">
-                          <h3 className="team-name text-dark">Ali</h3>
-                          <p className="team-role text-dark">Installation Expert</p>
+                      <div className="team-info" style={{ width: '74%', height: '125px', minHeight: '125px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '15px 10px' }}>
+                        <div className="info-inner text-center w-100">
+                          <h3 className="team-name text-dark" style={{ margin: 0, fontSize: '22px', lineHeight: '28px' }}>Ali</h3>
+                          <p className="team-role text-dark" style={{ margin: '6px 0 0 0', fontSize: '15px', lineHeight: '20px' }}>Installation Expert</p>
                         </div>
                       </div>
                     </div>
@@ -275,10 +275,10 @@ export default function AboutPage() {
                       <div className="team-photo">
                         <img src="/Our Team/3.jpg" alt="Flooring Technician" style={{ objectFit: 'cover', height: '350px', width: '100%' }} />
                       </div>
-                      <div className="team-info">
-                        <div className="info-inner">
-                          <h3 className="team-name text-dark">Hassan</h3>
-                          <p className="team-role text-dark">Subfloor Specialist</p>
+                      <div className="team-info" style={{ width: '74%', height: '125px', minHeight: '125px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '15px 10px' }}>
+                        <div className="info-inner text-center w-100">
+                          <h3 className="team-name text-dark" style={{ margin: 0, fontSize: '22px', lineHeight: '28px' }}>Hassan</h3>
+                          <p className="team-role text-dark" style={{ margin: '6px 0 0 0', fontSize: '15px', lineHeight: '20px' }}>Subfloor Specialist</p>
                         </div>
                       </div>
                     </div>
