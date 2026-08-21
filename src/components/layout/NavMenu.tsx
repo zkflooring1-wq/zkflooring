@@ -31,7 +31,7 @@ export default function NavMenu({ className = 'navigation', suppressHydrationWar
     { label: 'Home', href: '/' },
     { label: 'About', href: '/about' },
     { label: 'Services', href: '/services' },
-    { label: 'Portfolio', href: '/projects' },
+    { label: 'Projects', href: '/projects' },
     { label: 'Pricing', href: '/pricing' },
     { label: 'FAQ', href: '/faq' },
     { label: 'Blog', href: '/blog' },
