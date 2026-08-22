@@ -53,4 +53,42 @@ export async function listR2Objects(prefix?: string) {
   return result.Contents || [];
 }
 
+export async function listAllR2Objects(prefix?: string) {
+  const allObjects: Array<{
+    key: string;
+    size: number;
+    lastModified: Date | undefined;
+  }> = [];
+  let continuationToken: string | undefined;
+
+  do {
+    const result = await r2Client.send(
+      new ListObjectsV2Command({
+        Bucket: BUCKET,
+        Prefix: prefix,
+        MaxKeys: 1000,
+        ContinuationToken: continuationToken,
+      })
+    );
+
+    if (result.Contents) {
+      for (const obj of result.Contents) {
+        if (obj.Key) {
+          allObjects.push({
+            key: obj.Key,
+            size: obj.Size || 0,
+            lastModified: obj.LastModified,
+          });
+        }
+      }
+    }
+
+    continuationToken = result.IsTruncated
+      ? result.NextContinuationToken
+      : undefined;
+  } while (continuationToken);
+
+  return allObjects;
+}
+
 export { PUBLIC_URL };

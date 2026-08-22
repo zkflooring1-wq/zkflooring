@@ -2,21 +2,21 @@
 
 import { useState, useRef, useCallback } from "react";
 import { Upload, X, Image as ImageIcon, Loader2 } from "lucide-react";
+import MediaPicker from "./MediaPicker";
 import toast from "react-hot-toast";
 
 interface ImageUploaderProps {
   value: string;
   onChange: (url: string) => void;
-  onPickMedia?: () => void;
 }
 
 export default function ImageUploader({
   value,
   onChange,
-  onPickMedia,
 }: ImageUploaderProps) {
   const [uploading, setUploading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
+  const [pickerOpen, setPickerOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const uploadFile = useCallback(
@@ -126,10 +126,13 @@ export default function ImageUploader({
         </div>
       )}
 
-      {onPickMedia && !value && (
+      {!value && (
         <button
           type="button"
-          onClick={onPickMedia}
+          onClick={(e) => {
+            e.stopPropagation();
+            setPickerOpen(true);
+          }}
           className="mt-2 inline-flex items-center gap-1.5 text-sm text-gold-500 hover:text-gold-600 font-medium"
         >
           <ImageIcon className="w-3.5 h-3.5" />
@@ -146,6 +149,15 @@ export default function ImageUploader({
           const file = e.target.files?.[0];
           if (file) uploadFile(file);
           e.target.value = "";
+        }}
+      />
+
+      <MediaPicker
+        open={pickerOpen}
+        onClose={() => setPickerOpen(false)}
+        onSelect={(url) => {
+          onChange(url);
+          setPickerOpen(false);
         }}
       />
     </div>

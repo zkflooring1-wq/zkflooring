@@ -15,7 +15,8 @@ export async function GET(
     .single();
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 404 });
+    // Page doesn't exist yet — return empty structure so editor loads cleanly
+    return NextResponse.json({ page: { slug, title: slug, sections: {}, seo_data: {} } });
   }
 
   return NextResponse.json({ page: data });

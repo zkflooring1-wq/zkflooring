@@ -1,7 +1,8 @@
-﻿'use client';
+'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Team } from '@/types/database';
+import AdminLayout from '@/components/layout/AdminLayout';
 import PageHeader from '@/components/ui/PageHeader';
 import DataTable from '@/components/ui/DataTable';
 import StatusBadge from '@/components/ui/StatusBadge';
@@ -45,7 +46,8 @@ export default function TeamPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <AdminLayout title="Team Members" breadcrumb={["Team"]}>
+      <div className="space-y-6">
       <PageHeader 
         title="Team Members" 
         description="Manage the team members displayed on the frontend."
@@ -97,5 +99,6 @@ export default function TeamPage() {
         onCancel={() => setDeleteId(null)}
       />
     </div>
+    </AdminLayout>
   );
 }

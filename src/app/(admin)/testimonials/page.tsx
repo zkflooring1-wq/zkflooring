@@ -1,7 +1,8 @@
-﻿'use client';
+'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Testimonial } from '@/types/database';
+import AdminLayout from '@/components/layout/AdminLayout';
 import PageHeader from '@/components/ui/PageHeader';
 import DataTable from '@/components/ui/DataTable';
 import StatusBadge from '@/components/ui/StatusBadge';
@@ -45,7 +46,8 @@ export default function TestimonialsPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <AdminLayout title="Testimonials" breadcrumb={["Testimonials"]}>
+      <div className="space-y-6">
       <PageHeader 
         title="Testimonials" 
         description="Manage the customer reviews shown on the frontend."
@@ -98,5 +100,6 @@ export default function TestimonialsPage() {
         onCancel={() => setDeleteId(null)}
       />
     </div>
+    </AdminLayout>
   );
 }
