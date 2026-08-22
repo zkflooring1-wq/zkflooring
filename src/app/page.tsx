@@ -2,6 +2,9 @@ import React from 'react';
 import { supabase } from '@/lib/supabase';
 import { getSetting, HeaderContact } from '@/lib/settings';
 import HeroSlider from '@/components/HeroSlider';
+import { EditModeProvider } from '@/components/editor/EditModeProvider';
+import { EditableField } from '@/components/editor/EditableField';
+import { EditableImage } from '@/components/editor/EditableImage';
 
 export default async function HomePage() {
   const { data: pageData } = await supabase
@@ -143,6 +146,7 @@ export default async function HomePage() {
   const globalPhoneLink = contactInfo?.phone_link || "tel:07903723774";
 
   return (
+    <EditModeProvider initialData={sections}>
     <main>
 
         {/* Hero Section */}
@@ -208,10 +212,10 @@ export default async function HomePage() {
                     </div>
                   </div>
                   <div className="logo mb-40">
-                    <img src="/assets/images/feature/hm1-icon01.webp" alt="icon" />
+                    <EditableImage path="features.boxes.0.icon" fallback="/assets/images/feature/hm1-icon01.webp" alt="icon" />
                   </div>
-                  <h2>Premium Carpet <br />Fitting</h2>
-                  <p>Professional fitting services with a wide selection of luxurious carpets for every room.</p>
+                  <h2><EditableField path="features.boxes.0.title" fallback="Premium Carpet <br />Fitting" isHtml /></h2>
+                  <p><EditableField path="features.boxes.0.description" fallback="Professional fitting services with a wide selection of luxurious carpets for every room." /></p>
                 </div>
               </div>
               <div className="col-lg-4 col-md-6 col-sm-6">
@@ -229,10 +233,10 @@ export default async function HomePage() {
                     </div>
                   </div>
                   <div className="logo mb-40">
-                    <img src="/assets/images/feature/hm1-icon02.webp" alt="icon" />
+                    <EditableImage path="features.boxes.1.icon" fallback="/assets/images/feature/hm1-icon02.webp" alt="icon" />
                   </div>
-                  <h2>Hardwood & LVT <br />Installations</h2>
-                  <p>Durable and stylish Luxury Vinyl Tiles (LVT) and hardwood options fitted to perfection.</p>
+                  <h2><EditableField path="features.boxes.1.title" fallback="Hardwood & LVT <br />Installations" isHtml /></h2>
+                  <p><EditableField path="features.boxes.1.description" fallback="Durable and stylish Luxury Vinyl Tiles (LVT) and hardwood options fitted to perfection." /></p>
                 </div>
               </div>
             </div>
@@ -854,5 +858,6 @@ export default async function HomePage() {
 
 
     </main>
+    </EditModeProvider>
   );
 }
