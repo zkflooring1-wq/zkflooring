@@ -113,3 +113,19 @@ export interface Testimonial {
   created_at: string;
   updated_at: string | null;
 }
+
+export interface Lead {
+  id: string;
+  name: string;
+  email: string | null;
+  phone: string;
+  service: string | null;
+  room_size: string | null;
+  estimated_cost: string | null;
+  message: string | null;
+  source: string;
+  status: "new" | "contacted" | "survey_booked" | "quote_sent" | "completed" | "cancelled";
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+}

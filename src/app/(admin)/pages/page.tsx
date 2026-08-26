@@ -71,22 +71,27 @@ export default function PagesIndex() {
 
   useEffect(() => {
     const fetchTimestamps = async () => {
-      const results: Record<string, string> = {};
-      for (const page of pages) {
-        try {
-          const res = await fetch(`/api/pages/${page.slug}`);
-          if (res.ok) {
-            const data = await res.json();
-            if (data.page?.updated_at) {
-              results[page.slug] = data.page.updated_at;
+      try {
+        const results: Record<string, string> = {};
+        await Promise.all(
+          pages.map(async (page) => {
+            try {
+              const res = await fetch(`/api/pages/${page.slug}`);
+              if (res.ok) {
+                const data = await res.json();
+                if (data.page?.updated_at) {
+                  results[page.slug] = data.page.updated_at;
+                }
+              }
+            } catch {
+              // Silently skip failed fetch
             }
-          }
-        } catch {
-          // Silently skip failed fetches
-        }
+          })
+        );
+        setTimestamps(results);
+      } finally {
+        setLoading(false);
       }
-      setTimestamps(results);
-      setLoading(false);
     };
     fetchTimestamps();
   }, []);

@@ -1,10 +1,12 @@
-﻿"use client";
+"use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase/client";
 import {
   LayoutDashboard,
+  Inbox,
   FolderKanban,
   Wrench,
   FileText,
@@ -28,6 +30,7 @@ interface SidebarProps {
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/leads", label: "Leads CRM", icon: Inbox, hasBadge: true },
   { href: "/projects", label: "Projects", icon: FolderKanban },
   { href: "/services", label: "Services", icon: Wrench },
   { href: "/blogs", label: "Blog Posts", icon: FileText },
@@ -43,6 +46,18 @@ const navItems = [
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const [newLeadsCount, setNewLeadsCount] = useState(0);
+
+  useEffect(() => {
+    fetch("/api/leads/stats")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d && typeof d.new === "number") {
+          setNewLeadsCount(d.new);
+        }
+      })
+      .catch(() => {});
+  }, [pathname]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -68,15 +83,15 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 z-50 h-screen w-[260px] bg-obsidian-900 border-r border-obsidian-700/50 flex flex-col transition-transform duration-300 lg:translate-x-0 ${
+        className={`fixed top-0 left-0 z-50 h-full w-[260px] bg-obsidian-900 border-r border-obsidian-700/50 flex flex-col transition-transform duration-200 ease-in-out lg:translate-x-0 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        {/* Brand Header */}
-        <div className="flex items-center justify-between px-5 py-5 border-b border-obsidian-700/50">
+        {/* Logo */}
+        <div className="h-[70px] flex items-center justify-between px-6 border-b border-obsidian-700/50">
           <Link href="/dashboard" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl gold-gradient flex items-center justify-center shadow-md shadow-gold-500/20">
-              <span className="text-obsidian-900 font-bold text-sm font-[var(--font-heading)]">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-gold-400 via-gold-300 to-gold-500 flex items-center justify-center shadow-md shadow-gold-500/20">
+              <span className="font-[var(--font-heading)] font-black text-obsidian-900 text-sm tracking-wider">
                 ZK
               </span>
             </div>
@@ -118,7 +133,12 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                   }`}
                 />
                 <span className="flex-1">{item.label}</span>
-                {active && (
+                {item.hasBadge && newLeadsCount > 0 && (
+                  <span className="px-2 py-0.5 rounded-full bg-amber-500 text-obsidian-950 text-[10px] font-extrabold shadow-sm animate-pulse">
+                    {newLeadsCount}
+                  </span>
+                )}
+                {active && !item.hasBadge && (
                   <ChevronRight className="w-3.5 h-3.5 text-gold-400" />
                 )}
               </Link>
@@ -133,7 +153,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-obsidian-400 hover:bg-red-500/10 hover:text-red-400 transition-all w-full"
           >
             <LogOut className="w-[18px] h-[18px]" />
-            <span>Logout</span>
+            <span>Sign Out</span>
           </button>
         </div>
       </aside>

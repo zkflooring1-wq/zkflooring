@@ -11,8 +11,11 @@ export async function GET() {
     { count: draftPostsCount },
     { count: faqsCount },
     { count: mediaCount },
+    { count: leadsCount },
+    { count: newLeadsCount },
     { data: recentProjects },
     { data: recentPosts },
+    { data: recentLeads },
   ] = await Promise.all([
     supabase.from("projects").select("*", { count: "exact", head: true }),
     supabase.from("services").select("*", { count: "exact", head: true }),
@@ -26,6 +29,8 @@ export async function GET() {
       .eq("status", "draft"),
     supabase.from("faqs").select("*", { count: "exact", head: true }),
     supabase.from("media").select("*", { count: "exact", head: true }),
+    supabase.from("leads").select("*", { count: "exact", head: true }),
+    supabase.from("leads").select("*", { count: "exact", head: true }).eq("status", "new"),
     supabase
       .from("projects")
       .select("slug, title, category, created_at")
@@ -34,6 +39,11 @@ export async function GET() {
     supabase
       .from("posts")
       .select("id, title, status, created_at")
+      .order("created_at", { ascending: false })
+      .limit(5),
+    supabase
+      .from("leads")
+      .select("id, name, phone, service, estimated_cost, status, created_at")
       .order("created_at", { ascending: false })
       .limit(5),
   ]);
@@ -46,8 +56,11 @@ export async function GET() {
       draftPosts: draftPostsCount || 0,
       faqs: faqsCount || 0,
       media: mediaCount || 0,
+      leads: leadsCount || 0,
+      newLeads: newLeadsCount || 0,
     },
     recentProjects: recentProjects || [],
     recentPosts: recentPosts || [],
+    recentLeads: recentLeads || [],
   });
 }

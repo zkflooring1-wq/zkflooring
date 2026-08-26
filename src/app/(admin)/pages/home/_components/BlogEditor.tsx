@@ -1,6 +1,8 @@
-import React from 'react';
+"use client";
+
+import React, { useState } from 'react';
 import FormField from "@/components/ui/FormField";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, Newspaper } from "lucide-react";
 import ImageUploader from "@/components/ui/ImageUploader";
 
 export interface BlogCard {
@@ -22,76 +24,209 @@ interface Props {
   onChange: (data: BlogData) => void;
 }
 
+const DEFAULT_BLOG_CARDS: BlogCard[] = [
+  {
+    image: "/assets/images/blog/blog01.webp",
+    date: "16 Aug, 2025",
+    title: "Top 10 Most Popular Tools <br /> For Marketing",
+    link: "/contact",
+    comments: "(2) Comments"
+  },
+  {
+    image: "/assets/images/blog/blog02.webp",
+    date: "17 Aug, 2025",
+    title: "Business Growing Tips for <br /> Sales Globally",
+    link: "/contact",
+    comments: "(5) Comments"
+  },
+  {
+    image: "/assets/images/blog/blog03.webp",
+    date: "29 Aug, 2025",
+    title: "Installation Sales Navigator <br />Extension on Chrome",
+    link: "/contact",
+    comments: "(7) Comments"
+  }
+];
+
 export default function BlogEditor({ data, onChange }: Props) {
-  const currentData = {
-    section_subtitle: data?.section_subtitle || "",
-    section_title: data?.section_title || "",
-    cards: data?.cards || []
+  const [activeCardIndex, setActiveCardIndex] = useState(0);
+
+  const currentData: BlogData = {
+    section_subtitle: data?.section_subtitle || "Latest Blog",
+    section_title: data?.section_title || "Read our Latest Insights from <br /> Update Blog Posts",
+    cards: data?.cards && data.cards.length > 0 ? data.cards : DEFAULT_BLOG_CARDS
   };
 
-  const updateField = (key: keyof BlogData, value: any) => {
+  const updateHeader = (key: 'section_subtitle' | 'section_title', value: string) => {
     onChange({ ...currentData, [key]: value });
   };
 
   const handleAddCard = () => {
-    updateField('cards', [...currentData.cards, { image: "", date: "", title: "", link: "", comments: "" }]);
+    const newCard: BlogCard = {
+      image: "/assets/images/blog/blog01.webp",
+      date: "01 Sep, 2025",
+      title: "New Flooring Installation Guide",
+      link: "/contact",
+      comments: "(0) Comments"
+    };
+    const updated = [...currentData.cards, newCard];
+    onChange({ ...currentData, cards: updated });
+    setActiveCardIndex(updated.length - 1);
   };
 
-  const updateCard = (index: number, key: keyof BlogCard, value: any) => {
-    const newCards = [...currentData.cards];
-    newCards[index] = { ...newCards[index], [key]: value };
-    updateField('cards', newCards);
+  const handleRemoveCard = (index: number) => {
+    if (currentData.cards.length <= 1) {
+      alert("At least one blog card is required.");
+      return;
+    }
+    const updated = currentData.cards.filter((_, i) => i !== index);
+    onChange({ ...currentData, cards: updated });
+    setActiveCardIndex(Math.max(0, index - 1));
   };
 
-  const removeCard = (index: number) => {
-    const newCards = [...currentData.cards];
-    newCards.splice(index, 1);
-    updateField('cards', newCards);
+  const updateCurrentCard = (key: keyof BlogCard, value: any) => {
+    const updated = [...currentData.cards];
+    if (!updated[activeCardIndex]) return;
+    updated[activeCardIndex] = {
+      ...updated[activeCardIndex],
+      [key]: value,
+    };
+    onChange({ ...currentData, cards: updated });
   };
+
+  const currentCard = currentData.cards[activeCardIndex] || currentData.cards[0];
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h3 className="text-lg font-semibold text-obsidian-700 font-[var(--font-heading)] mb-4">Section Header</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FormField label="Section Subtitle"><input type="text" value={currentData.section_subtitle} onChange={e => updateField('section_subtitle', e.target.value)} className="w-full px-3 py-2 bg-white border border-obsidian-200 rounded-[var(--radius-input)] text-sm focus:outline-none focus:border-gold-400" /></FormField>
-          <FormField label="Section Title (HTML allowed)"><input type="text" value={currentData.section_title} onChange={e => updateField('section_title', e.target.value)} className="w-full px-3 py-2 bg-white border border-obsidian-200 rounded-[var(--radius-input)] text-sm focus:outline-none focus:border-gold-400" /></FormField>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="p-4 rounded-xl border border-obsidian-200/80 bg-white space-y-3">
+        <div className="flex items-center justify-between border-b border-obsidian-100 pb-2">
+          <h3 className="text-sm font-bold text-obsidian-800 flex items-center gap-2">
+            <Newspaper className="w-4 h-4 text-gold-600" />
+            Blog Articles Header
+          </h3>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <FormField label="Section Subtitle">
+            <input
+              type="text"
+              value={currentData.section_subtitle}
+              onChange={(e) => updateHeader('section_subtitle', e.target.value)}
+              placeholder="Latest Blog"
+              className="w-full px-3 py-2 bg-obsidian-50/50 border border-obsidian-200 rounded-lg text-sm text-obsidian-800 font-semibold focus:bg-white focus:outline-none focus:border-gold-500"
+            />
+          </FormField>
+
+          <FormField label="Section Title (HTML allowed)">
+            <input
+              type="text"
+              value={currentData.section_title}
+              onChange={(e) => updateHeader('section_title', e.target.value)}
+              placeholder="Read our Latest Insights from <br /> Update Blog Posts"
+              className="w-full px-3 py-2 bg-obsidian-50/50 border border-obsidian-200 rounded-lg text-sm text-obsidian-900 font-bold focus:bg-white focus:outline-none focus:border-gold-500 font-mono"
+            />
+          </FormField>
         </div>
       </div>
 
-      <hr className="border-obsidian-100" />
-
-      <div>
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-obsidian-700 font-[var(--font-heading)]">Blog Highlights</h3>
-          <button onClick={handleAddCard} className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-white bg-obsidian-700 rounded-lg hover:bg-obsidian-600 transition-colors">
-            <Plus className="w-4 h-4" /> Add Highlight
-          </button>
+      {/* Card Selector Bar */}
+      <div className="flex items-center justify-between border-b border-obsidian-100 pb-3">
+        <div>
+          <h3 className="text-base font-bold text-obsidian-800 flex items-center gap-2">
+            Blog Posts ({currentData.cards.length})
+          </h3>
+          <p className="text-xs text-obsidian-500">Edit featured blog cards on the home page.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {currentData.cards.map((card, index) => (
-            <div key={index} className="p-4 border border-obsidian-100 rounded-[var(--radius-card)] bg-white shadow-sm space-y-4 relative group">
-              <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                 <button onClick={() => removeCard(index)} className="p-1.5 text-red-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"><Trash2 className="w-4 h-4" /></button>
-              </div>
-
-              <FormField label="Title (HTML allowed)"><input type="text" value={card.title} onChange={e => updateCard(index, 'title', e.target.value)} className="w-full px-3 py-2 bg-white border border-obsidian-200 rounded-[var(--radius-input)] text-sm focus:outline-none focus:border-gold-400" /></FormField>
-              
-              <div className="grid grid-cols-2 gap-2">
-                <FormField label="Date"><input type="text" value={card.date} onChange={e => updateCard(index, 'date', e.target.value)} className="w-full px-3 py-2 bg-white border border-obsidian-200 rounded-[var(--radius-input)] text-sm focus:outline-none focus:border-gold-400" /></FormField>
-                <FormField label="Comments (e.g. (2) Comments)"><input type="text" value={card.comments} onChange={e => updateCard(index, 'comments', e.target.value)} className="w-full px-3 py-2 bg-white border border-obsidian-200 rounded-[var(--radius-input)] text-sm focus:outline-none focus:border-gold-400" /></FormField>
-              </div>
-              
-              <FormField label="Link URL"><input type="text" value={card.link} onChange={e => updateCard(index, 'link', e.target.value)} className="w-full px-3 py-2 bg-white border border-obsidian-200 rounded-[var(--radius-input)] text-sm focus:outline-none focus:border-gold-400" /></FormField>
-
-              <FormField label="Blog Image">
-                <ImageUploader value={card.image} onChange={url => updateCard(index, 'image', url)} />
-              </FormField>
-            </div>
-          ))}
-        </div>
+        <button
+          onClick={handleAddCard}
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-obsidian-900 bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#AA771C] rounded-lg shadow-sm hover:brightness-105 transition-all"
+        >
+          <Plus className="w-3.5 h-3.5" /> Add Post
+        </button>
       </div>
+
+      {/* Tabs */}
+      <div className="flex items-center gap-1.5 overflow-x-auto pb-1 custom-scrollbar">
+        {currentData.cards.map((c, idx) => {
+          const isActive = idx === activeCardIndex;
+          return (
+            <button
+              key={idx}
+              onClick={() => setActiveCardIndex(idx)}
+              className={`flex-shrink-0 flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold transition-all border ${
+                isActive
+                  ? 'bg-obsidian-900 text-gold-300 border-obsidian-900 shadow-sm'
+                  : 'bg-obsidian-50/70 text-obsidian-600 border-obsidian-200/60 hover:bg-white hover:border-gold-300'
+              }`}
+            >
+              <span className={`w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-extrabold ${
+                isActive ? 'bg-gold-400 text-obsidian-950' : 'bg-obsidian-200 text-obsidian-700'
+              }`}>
+                {String(idx + 1).padStart(2, '0')}
+              </span>
+              <span className="max-w-[120px] truncate">{c.title.replace(/<[^>]+>/g, '') || `Post ${idx + 1}`}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {currentCard && (
+        <div className="p-4 rounded-xl border border-obsidian-200/80 bg-white space-y-4">
+          <div className="flex items-center justify-between border-b border-obsidian-100 pb-2">
+            <span className="text-xs font-mono font-bold text-gold-700">
+              EDITING POST 0{activeCardIndex + 1}
+            </span>
+            <button
+              type="button"
+              onClick={() => handleRemoveCard(activeCardIndex)}
+              className="p-1.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 transition-colors text-xs font-semibold flex items-center gap-1"
+            >
+              <Trash2 className="w-3.5 h-3.5" /> Delete Post
+            </button>
+          </div>
+
+          <FormField label="Post Title (HTML allowed)">
+            <input
+              type="text"
+              value={currentCard.title}
+              onChange={(e) => updateCurrentCard('title', e.target.value)}
+              placeholder="Top 10 Most Popular Tools <br /> For Marketing"
+              className="w-full px-3 py-2 bg-obsidian-50/50 border border-obsidian-200 rounded-lg text-sm text-obsidian-900 font-bold focus:bg-white focus:outline-none focus:border-gold-500 font-mono"
+            />
+          </FormField>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <FormField label="Date Tag">
+              <input
+                type="text"
+                value={currentCard.date}
+                onChange={(e) => updateCurrentCard('date', e.target.value)}
+                placeholder="16 Aug, 2025"
+                className="w-full px-3 py-2 bg-obsidian-50/50 border border-obsidian-200 rounded-lg text-sm text-obsidian-800 font-semibold focus:bg-white focus:outline-none focus:border-gold-500"
+              />
+            </FormField>
+
+            <FormField label="Comments Count Text">
+              <input
+                type="text"
+                value={currentCard.comments}
+                onChange={(e) => updateCurrentCard('comments', e.target.value)}
+                placeholder="(2) Comments"
+                className="w-full px-3 py-2 bg-obsidian-50/50 border border-obsidian-200 rounded-lg text-sm text-obsidian-800 font-semibold focus:bg-white focus:outline-none focus:border-gold-500"
+              />
+            </FormField>
+          </div>
+
+          <FormField label="Featured Thumbnail Image">
+            <ImageUploader
+              value={currentCard.image}
+              onChange={(url) => updateCurrentCard('image', url)}
+            />
+          </FormField>
+        </div>
+      )}
     </div>
   );
 }

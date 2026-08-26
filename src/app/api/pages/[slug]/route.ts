@@ -8,13 +8,16 @@ export async function GET(
   const { slug } = await params;
   const supabase = createServerClient();
 
+  const searchSlugs = (slug === "home" || slug === "") ? ["home", "/"] : [slug];
+
   const { data, error } = await supabase
     .from("pages")
     .select("*")
-    .eq("slug", slug)
-    .single();
+    .in("slug", searchSlugs)
+    .limit(1)
+    .maybeSingle();
 
-  if (error) {
+  if (error || !data) {
     // Page doesn't exist yet — return empty structure so editor loads cleanly
     return NextResponse.json({ page: { slug, title: slug, sections: {}, seo_data: {} } });
   }
@@ -30,22 +33,23 @@ export async function PUT(
   const supabase = createServerClient();
   const body = await request.json();
 
-  // Upsert: create if not exists
-  const { data, error } = await supabase
-    .from("pages")
-    .upsert({
-      slug,
-      title: body.title || slug,
-      sections: body.sections || {},
-      seo_data: body.seo_data || {},
-      updated_at: new Date().toISOString(),
-    }, { onConflict: "slug" })
-    .select()
-    .single();
+  const slugsToUpdate = (slug === "home" || slug === "") ? ["home", "/"] : [slug];
 
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  let lastData: any = null;
+  for (const s of slugsToUpdate) {
+    const { data } = await supabase
+      .from("pages")
+      .upsert({
+        slug: s,
+        title: body.title || s,
+        sections: body.sections || {},
+        seo_data: body.seo_data || {},
+        updated_at: new Date().toISOString(),
+      }, { onConflict: "slug" })
+      .select()
+      .single();
+    if (data) lastData = data;
   }
 
-  return NextResponse.json({ page: data });
+  return NextResponse.json({ page: lastData || { slug, sections: body.sections } });
 }

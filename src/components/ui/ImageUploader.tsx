@@ -74,6 +74,11 @@ export default function ImageUploader({
           <img
             src={value}
             alt="Preview"
+            onError={(e) => {
+              if (value.startsWith('/') && !e.currentTarget.src.includes(':3000')) {
+                e.currentTarget.src = `http://localhost:3000${value}`;
+              }
+            }}
             className="w-full h-48 object-cover"
           />
           <div className="absolute top-2 right-2 flex gap-1.5">
