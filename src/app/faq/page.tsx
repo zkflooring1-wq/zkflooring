@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import { EditModeProvider } from '@/components/editor/EditModeProvider';
+import { EditableField } from '@/components/editor/EditableField';
 
 interface FaqItem {
   id: number;
@@ -10,78 +12,118 @@ interface FaqItem {
   category?: string;
 }
 
-const defaultFaqs: FaqItem[] = [
-  {
-    id: 1,
-    category: 'Surveys & Quotes',
-    question: 'Do you offer free home surveys and measurements in Birmingham?',
-    answer: 'Yes, 100% free with zero obligation. We visit your home or business with our mobile showroom featuring hundreds of carpet, LVT, hardwood, and laminate samples. We take laser-accurate measurements and provide a transparent, fixed quote.',
+const DEFAULT_FAQ_DATA = {
+  breadcrumb: {
+    title: "Frequently Asked Questions",
+    subtitle: "FAQ"
   },
-  {
-    id: 2,
-    category: 'Installation & Prep',
-    question: 'Do I need to prepare my subfloor or remove old flooring?',
-    answer: 'Our team handles complete end-to-end preparation. We test for moisture (DPM), remove and responsibly dispose of old flooring, repair uneven surfaces, install ply boarding, and apply latex self-levelling screed to guarantee a mirror-flat, durable base.',
+  header: {
+    badge: "Got Questions?",
+    title: "Everything You Need to Know",
+    description: "Clear, transparent answers about our flooring materials, subfloor levelling, free in-home sample visits, and trade guarantees."
   },
-  {
-    id: 3,
-    category: 'Materials & LVT',
-    question: 'What is the difference between LVT (Luxury Vinyl Tile) and laminate flooring?',
-    answer: 'LVT is 100% waterproof, exceptionally durable, and ideal for moisture-prone areas like kitchens, bathrooms, and hallways. It can be installed in custom patterns like herringbone. Laminate provides the authentic look of real timber at a cost-effective price point, offering superior scratch resistance for living areas and bedrooms.',
-  },
-  {
-    id: 4,
-    category: 'Timing & Process',
-    question: 'How long does a typical flooring installation take?',
-    answer: 'Most single-room or staircase carpet/laminate installations are completed within 1 working day. Full house installations or commercial projects typically take 2 to 4 days depending on required subfloor preparation and curing times.',
-  },
-  {
-    id: 5,
-    category: 'Guarantees & Insurance',
-    question: 'Do you provide a guarantee on your workmanship?',
-    answer: 'Yes, all ZK Flooring installations are backed by our comprehensive 10-Year Trade Workmanship Guarantee alongside manufacturer product warranties. We are also fully covered by £5,000,000 Public Liability Insurance for complete peace of mind.',
-  },
-  {
-    id: 6,
-    category: 'White-Glove Care',
-    question: 'Will your fitters help move furniture and trim doors?',
-    answer: 'Yes, we offer white-glove property care. Our certified fitters can assist with moving heavy furniture, cleanly undercutting door bottoms to clear new carpet and underlay heights, and performing full post-installation vacuuming and waste removal.',
-  },
-  {
-    id: 7,
-    category: 'Coverage Areas',
-    question: 'What areas across Birmingham and the West Midlands do you cover?',
-    answer: 'We cover all areas of Birmingham (Solihull, Sutton Coldfield, Edgbaston, Harborne, Moseley, Small Heath, Yardley, Hall Green, etc.) and extend throughout the entire West Midlands for residential and commercial flooring contracts.',
-  },
-];
+  items: [
+    {
+      id: 1,
+      category: 'Surveys & Quotes',
+      question: 'Do you offer free home surveys and measurements in Birmingham?',
+      answer: 'Yes, 100% free with zero obligation. We visit your home or business with our mobile showroom featuring hundreds of carpet, LVT, hardwood, and laminate samples. We take laser-accurate measurements and provide a transparent, fixed quote.',
+    },
+    {
+      id: 2,
+      category: 'Installation & Prep',
+      question: 'Do I need to prepare my subfloor or remove old flooring?',
+      answer: 'Our team handles complete end-to-end preparation. We test for moisture (DPM), remove and responsibly dispose of old flooring, repair uneven surfaces, install ply boarding, and apply latex self-levelling screed to guarantee a mirror-flat, durable base.',
+    },
+    {
+      id: 3,
+      category: 'Materials & LVT',
+      question: 'What is the difference between LVT (Luxury Vinyl Tile) and laminate flooring?',
+      answer: 'LVT is 100% waterproof, exceptionally durable, and ideal for moisture-prone areas like kitchens, bathrooms, and hallways. It can be installed in custom patterns like herringbone. Laminate provides the authentic look of real timber at a cost-effective price point, offering superior scratch resistance for living areas and bedrooms.',
+    },
+    {
+      id: 4,
+      category: 'Timing & Process',
+      question: 'How long does a typical flooring installation take?',
+      answer: 'Most single-room or staircase carpet/laminate installations are completed within 1 working day. Full house installations or commercial projects typically take 2 to 4 days depending on required subfloor preparation and curing times.',
+    },
+    {
+      id: 5,
+      category: 'Guarantees & Insurance',
+      question: 'Do you provide a guarantee on your workmanship?',
+      answer: 'Yes, all ZK Flooring installations are backed by our comprehensive 10-Year Trade Workmanship Guarantee alongside manufacturer product warranties. We are also fully covered by £5,000,000 Public Liability Insurance for complete peace of mind.',
+    },
+    {
+      id: 6,
+      category: 'White-Glove Care',
+      question: 'Will your fitters help move furniture and trim doors?',
+      answer: 'Yes, we offer white-glove property care. Our certified fitters can assist with moving heavy furniture, cleanly undercutting door bottoms to clear new carpet and underlay heights, and performing full post-installation vacuuming and waste removal.',
+    },
+    {
+      id: 7,
+      category: 'Coverage Areas',
+      question: 'What areas across Birmingham and the West Midlands do you cover?',
+      answer: 'We cover all areas of Birmingham (Solihull, Sutton Coldfield, Edgbaston, Harborne, Moseley, Small Heath, Yardley, Hall Green, etc.) and extend throughout the entire West Midlands for residential and commercial flooring contracts.',
+    },
+  ],
+  callout: {
+    subtitle: "Still Have A Specific Question?",
+    phone: "07903 723 774",
+    cta_text: "Ask Our Specialists",
+    cta_link: "/contact"
+  }
+};
 
 export default function FAQPage() {
-  const [faqs, setFaqs] = useState<FaqItem[]>(defaultFaqs);
+  const [data, setData] = useState<any>(DEFAULT_FAQ_DATA);
   const [activeId, setActiveId] = useState<number | null>(1);
   const [activeCategory, setActiveCategory] = useState<string>('All');
 
   useEffect(() => {
-    async function fetchFaqs() {
-      const { data } = await supabase.from('faqs').select('*').order('id', { ascending: true });
-      if (data && data.length > 0) {
-        setFaqs(data);
-        setActiveId(data[0].id);
+    async function fetchData() {
+      try {
+        const [pageRes, faqRes] = await Promise.all([
+          supabase.from('pages').select('sections').eq('slug', 'faq').maybeSingle(),
+          supabase.from('faqs').select('*').order('id', { ascending: true })
+        ]);
+
+        const pageSections = pageRes.data?.sections || {};
+        const items = (faqRes.data && faqRes.data.length > 0) 
+          ? faqRes.data 
+          : (pageSections.items || DEFAULT_FAQ_DATA.items);
+
+        setData({
+          breadcrumb: { ...DEFAULT_FAQ_DATA.breadcrumb, ...(pageSections.breadcrumb || {}) },
+          header: { ...DEFAULT_FAQ_DATA.header, ...(pageSections.header || {}) },
+          items: items,
+          callout: { ...DEFAULT_FAQ_DATA.callout, ...(pageSections.callout || {}) },
+        });
+
+        if (items.length > 0) setActiveId(items[0].id);
+      } catch {
+        // fallback to defaults
       }
     }
-    fetchFaqs();
+    fetchData();
   }, []);
 
   const toggleAccordion = (id: number) => {
     setActiveId(activeId === id ? null : id);
   };
 
-  const categories = ['All', ...Array.from(new Set(faqs.map(f => f.category || 'General').filter(Boolean)))];
+  const faqs = data.items || DEFAULT_FAQ_DATA.items;
+  const breadcrumb = data.breadcrumb || DEFAULT_FAQ_DATA.breadcrumb;
+  const header = data.header || DEFAULT_FAQ_DATA.header;
+  const callout = data.callout || DEFAULT_FAQ_DATA.callout;
+
+  const categories = ['All', ...Array.from(new Set(faqs.map((f: any) => f.category || 'General').filter(Boolean)))];
 
   const filteredFaqs = activeCategory === 'All' 
     ? faqs 
-    : faqs.filter(f => (f.category || 'General') === activeCategory);
+    : faqs.filter((f: any) => (f.category || 'General') === activeCategory);
 
   return (
+    <EditModeProvider initialData={data}>
     <main>
       <style>{`
         .zk-faq-card {
@@ -198,10 +240,10 @@ export default function FAQPage() {
               <div className="col-12">
                 <div className="title-outer">
                   <div className="page-title">
-                    <h2 className="title">Frequently Asked Questions</h2>
+                    <h2 className="title"><EditableField path="breadcrumb.title" fallback={breadcrumb.title || "Frequently Asked Questions"} /></h2>
                     <ul className="page-breadcrumb">
                       <li><a href="/"><i className="fa-solid fa-house-chimney"></i>Home</a></li>
-                      <li><span>/</span> FAQ</li>
+                      <li><span>/</span> <EditableField path="breadcrumb.subtitle" fallback={breadcrumb.subtitle || "FAQ"} /></li>
                     </ul>
                   </div>
                   <div className="image-box md-d-none">
@@ -225,20 +267,20 @@ export default function FAQPage() {
           {/* Header */}
           <div className="title-wrap text-center three mb-40">
             <div className="sub-title-2 text-theme">
-              <i className="fa-solid fa-circle-check"></i>Got Questions?
+              <i className="fa-solid fa-circle-check"></i><EditableField path="header.badge" fallback={header.badge || "Got Questions?"} />
             </div>
             <h2 className="sec-title" style={{ fontSize: 'clamp(26px, 3.5vw, 40px)', lineHeight: 1.25 }}>
-              Everything You Need to Know
+              <EditableField path="header.title" fallback={header.title || "Everything You Need to Know"} isHtml />
             </h2>
             <p className="text-secondary mx-auto" style={{ maxWidth: '640px', fontSize: '15px', lineHeight: 1.65 }}>
-              Clear, transparent answers about our flooring materials, subfloor levelling, free in-home sample visits, and trade guarantees.
+              <EditableField path="header.description" fallback={header.description || "Clear, transparent answers about our flooring materials, subfloor levelling, free in-home sample visits, and trade guarantees."} />
             </p>
           </div>
 
-          {/* Category Filter Pills (if categories exist) */}
+          {/* Category Filter Pills */}
           {categories.length > 2 && (
             <div className="d-flex flex-wrap justify-content-center gap-2 mb-40">
-              {categories.map((cat, idx) => (
+              {(categories as string[]).map((cat: string, idx: number) => (
                 <button
                   key={idx}
                   className={`zk-cat-pill ${activeCategory === cat ? 'active' : ''}`}
@@ -254,10 +296,13 @@ export default function FAQPage() {
           <div className="row justify-content-center">
             <div className="col-lg-9 col-md-11">
               <div className="zk-faq-list">
-                {filteredFaqs.map((faq, index) => {
+                {filteredFaqs.map((faq: any, index: number) => {
                   const isOpen = activeId === faq.id;
+                  const itemIndex = faqs.findIndex((f: any) => f.id === faq.id);
+                  const pathPrefix = itemIndex !== -1 ? `items.${itemIndex}` : `items.${index}`;
+
                   return (
-                    <div key={faq.id} className={`zk-faq-card ${isOpen ? 'active' : ''}`}>
+                    <div key={faq.id || index} className={`zk-faq-card ${isOpen ? 'active' : ''}`}>
                       <button
                         className="zk-faq-btn"
                         onClick={() => toggleAccordion(faq.id)}
@@ -275,7 +320,7 @@ export default function FAQPage() {
                             {String(index + 1).padStart(2, '0')}.
                           </span>
                           <span style={{ fontSize: '16px', lineHeight: 1.35 }}>
-                            {faq.question}
+                            <EditableField path={`${pathPrefix}.question`} fallback={faq.question} />
                           </span>
                         </div>
                         <div className="zk-faq-icon">
@@ -285,7 +330,9 @@ export default function FAQPage() {
 
                       {isOpen && (
                         <div className="zk-faq-body">
-                          <p style={{ margin: 0 }}>{faq.answer}</p>
+                          <p style={{ margin: 0 }}>
+                            <EditableField path={`${pathPrefix}.answer`} fallback={faq.answer} />
+                          </p>
                         </div>
                       )}
                     </div>
@@ -324,19 +371,19 @@ export default function FAQPage() {
                   </div>
                   <div>
                     <span style={{ fontSize: '11px', color: '#FCF6BA', textTransform: 'uppercase', letterSpacing: '0.6px', display: 'block' }}>
-                      Still Have A Specific Question?
+                      <EditableField path="callout.subtitle" fallback={callout.subtitle || "Still Have A Specific Question?"} />
                     </span>
                     <a
-                      href="tel:07903723774"
+                      href={`tel:${(callout.phone || "07903 723 774").replace(/\s+/g, '')}`}
                       style={{ fontSize: '18px', fontWeight: 800, color: '#FFFFFF', textDecoration: 'none' }}
                     >
-                      07903 723 774
+                      <EditableField path="callout.phone" fallback={callout.phone || "07903 723 774"} />
                     </a>
                   </div>
                 </div>
 
                 <a
-                  href="/contact"
+                  href={callout.cta_link || "/contact"}
                   className="theme-btn br-30"
                   style={{
                     background: 'linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C)',
@@ -350,8 +397,8 @@ export default function FAQPage() {
                   }}
                 >
                   <span className="link-effect">
-                    <span className="effect-1">Ask Our Specialists</span>
-                    <span className="effect-1">Ask Our Specialists</span>
+                    <span className="effect-1"><EditableField path="callout.cta_text" fallback={callout.cta_text || "Ask Our Specialists"} /></span>
+                    <span className="effect-1"><EditableField path="callout.cta_text" fallback={callout.cta_text || "Ask Our Specialists"} /></span>
                   </span>
                 </a>
               </div>
@@ -360,6 +407,8 @@ export default function FAQPage() {
         </div>
       </section>
     </main>
+    </EditModeProvider>
   );
 }
+
 

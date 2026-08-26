@@ -1,19 +1,25 @@
 'use client';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
-const NewsletterLottie = dynamic(() => import('@/components/NewsletterLottie'));
+const NewsletterLottie = dynamic(() => import('@/components/NewsletterLottie'), { ssr: false });
 
 export default function Newsletter() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
-    <section className="newsletter-section mb--75">
-        <div className="container">
-            <div className="row">
-                <div className="col-lg-12">
-                    <div className="newsletter br-30" style={{ background: '#16120B', boxShadow: '0 14px 35px rgba(0, 0, 0, 0.35)' }}>
+    <section className="newsletter-section mb--75" suppressHydrationWarning>
+        <div className="container" suppressHydrationWarning>
+            <div className="row" suppressHydrationWarning>
+                <div className="col-lg-12" suppressHydrationWarning>
+                    <div className="newsletter br-30" style={{ background: '#16120B', boxShadow: '0 14px 35px rgba(0, 0, 0, 0.35)' }} suppressHydrationWarning>
                         <div className="arrow-shape md-d-none"><img src="/assets/images/newsletter/arrow-shape.webp" alt="" /></div>
                         <div className="thumb d-none d-xl-block">
-                            <NewsletterLottie />
+                            {mounted ? <NewsletterLottie /> : null}
                         </div>
                         <div className="image-text">
                             <img src="/assets/images/icons/check-circle2.png" alt="" />

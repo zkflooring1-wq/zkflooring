@@ -8,7 +8,6 @@ import StickyHeader from '@/components/layout/StickyHeader';
 import HeaderSearch from '@/components/layout/HeaderSearch';
 import Sidebar from '@/components/layout/Sidebar';
 import Footer from '@/components/layout/Footer';
-import Newsletter from '@/components/Newsletter';
 import LayoutWrapper from "@/components/layout/LayoutWrapper";
 
 const manrope = Manrope({
@@ -77,7 +76,6 @@ export default function RootLayout({
             headerSearch={<HeaderSearch />}
             sidebar={<Sidebar />}
             footer={<Footer />}
-            newsletter={<Newsletter />}
           >
             {children}
           </LayoutWrapper>

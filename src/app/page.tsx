@@ -108,10 +108,76 @@ export default async function HomePage() {
     },
   ];
 
-  const firstRow = reviews.slice(0, Math.ceil(reviews.length / 2));
-  const secondRow = reviews.slice(Math.ceil(reviews.length / 2));
+  const defaultMarqueeItems = [
+    "Carpet Flooring",
+    "Carpet Tile",
+    "Vinyl Flooring",
+    "LVT Flooring",
+    "Professional Installation",
+    "Self Levelling",
+    "Floor Preparation"
+  ];
+  const marqueeItems = (Array.isArray(sections.marquee) && sections.marquee.length > 0) ? sections.marquee : defaultMarqueeItems;
 
-  const heroSlides = defaultSliderImages;
+  const defaultProcessSteps = [
+    {
+      step_text: "STEP 01",
+      icon: "https://img.icons8.com/plumpy/24/tape-measure-sewing.png",
+      title: "Site Consultation",
+      description: "Understand the space, assess the flooring requirements, and recommend the right solution."
+    },
+    {
+      step_text: "STEP 02",
+      icon: "https://img.icons8.com/plumpy/24/wallpaper-roll.png",
+      title: "Product Selection",
+      description: "Explore the right carpets, carpet tiles, vinyl, LVT, and flooring options for your space."
+    },
+    {
+      step_text: "STEP 03",
+      icon: "https://img.icons8.com/plumpy/24/cut-paper.png",
+      title: "Professional Installation",
+      description: "Prepare the surface and install your selected flooring with precision and professional workmanship."
+    },
+    {
+      step_text: "STEP 04",
+      icon: "https://img.icons8.com/plumpy/24/best-seller.png",
+      title: "Final Inspection & Support",
+      description: "Complete the final checks and provide reliable support after your flooring installation."
+    }
+  ];
+  const processData = {
+    section_title: sections.process?.section_title || 'PR<span className="text-theme">O</span>CESS',
+    steps: (sections.process?.steps && sections.process.steps.length > 0) ? sections.process.steps : defaultProcessSteps
+  };
+
+  const defaultTeamMembers = [
+    {
+      name: "Jobaer Khanom",
+      role: "UI/UX Designer",
+      image: "/Our Team/1.jpg"
+    },
+    {
+      name: "Sayma D. Farna",
+      role: "App Developer",
+      image: "/Our Team/2.jpg"
+    },
+    {
+      name: "Jubin E. Nawtail",
+      role: "SEO Marketer",
+      image: "/Our Team/3.jpg"
+    }
+  ];
+  const teamData = {
+    section_subtitle: sections.team?.section_subtitle || "Our Team",
+    section_title: sections.team?.section_title || "Meet the Expert Team Powering Our <br />Goals and Ambitions",
+    members: (sections.team?.members && sections.team.members.length > 0) ? sections.team.members : defaultTeamMembers
+  };
+
+  const activeReviews = (sections.testimonials?.reviews && sections.testimonials.reviews.length > 0) ? sections.testimonials.reviews : reviews;
+  const firstRow = activeReviews.slice(0, Math.ceil(activeReviews.length / 2));
+  const secondRow = activeReviews.slice(Math.ceil(activeReviews.length / 2));
+
+  const heroSlides = (Array.isArray(sections.hero) && sections.hero.length > 0) ? sections.hero : defaultSliderImages;
 
   const features = sections.features || {
     social_proof_count: "3,600",
@@ -131,6 +197,127 @@ export default async function HomePage() {
     side_image: "/assets/images/about/hm1-img03.webp",
     since_text: "Since 2007",
     description: "ZK Flooring is Birmingham's trusted contractor for carpets, laminate, engineered wood, vinyl, and subfloor preparation. We service a 100-200 mile radius from Hobmoor Road, Small Heath."
+  };
+
+  const services = sections.services || {
+    section_subtitle: "Our Services",
+    section_title: "Specialist Flooring Solutions & <br />Precision Installation",
+    cards: [
+      {
+        number: "01.",
+        sub_heading: "PREPARATION",
+        title: "Expert Self Levelling & <br /> Subfloor Preparation",
+        description: "Ensure a perfectly smooth and durable foundation for your new floors. Our professional self-levelling services guarantee a flawless finish with moisture testing and DPM barrier protection.",
+        image: "/services/Self Levelling.webp",
+        link: "/contact",
+        tags: ["Latex Screed", "Plywood", "DPM", "Moisture Testing"]
+      },
+      {
+        number: "02.",
+        sub_heading: "INSTALLATION",
+        title: "Premium Carpet & <br /> Carpet Tile Fitting",
+        description: "From luxurious domestic carpets to heavy-duty commercial tiles, we provide expert installation tailored to your space with premium underlays and master gripper stretching.",
+        image: "/services/Carpet, Carpet Tile.webp",
+        link: "/contact",
+        tags: ["Broadloom", "Carpet Tiles", "Underlay", "Stair Runners"]
+      },
+      {
+        number: "03.",
+        sub_heading: "INSTALLATION",
+        title: "Luxury Vinyl Tile (LVT) & <br /> Sheet Vinyl Flooring",
+        description: "Transform your interiors with versatile, 100% water-resistant vinyl solutions. We specialize in precision fitting for stunning LVT herringbone layouts and seamless commercial sheets.",
+        image: "/services/Vinyl, Vinyl Tile.webp",
+        link: "/contact",
+        tags: ["LVT", "Sheet Vinyl", "Amtico", "Karndean"]
+      }
+    ]
+  };
+
+  const defaultPricingPlans = [
+    {
+      name: "Starter",
+      price: "29 USD",
+      cycle: "/ month",
+      description: "Organize Daily Task by free",
+      cta_text: "Join this Plan",
+      cta_link: "/contact",
+      is_popular: false,
+      features: [
+        { text: "3 Users available", isActive: true },
+        { text: "Limited tools", isActive: true },
+        { text: "Unlimited Supports", isActive: true },
+        { text: "API Access", isActive: false },
+        { text: "Premium apps", isActive: false },
+      ]
+    },
+    {
+      name: "Starter",
+      price: "39 USD",
+      cycle: "/ month",
+      description: "Organize Daily Task by free",
+      cta_text: "Join this Plan",
+      cta_link: "/contact",
+      is_popular: true,
+      features: [
+        { text: "3 Users available", isActive: true },
+        { text: "Limited tools", isActive: true },
+        { text: "Unlimited Supports", isActive: true },
+        { text: "API Access", isActive: true },
+        { text: "Premium apps", isActive: false },
+      ]
+    },
+    {
+      name: "Business",
+      price: "39 USD",
+      cycle: "/ month",
+      description: "Organize Daily Task by free",
+      cta_text: "Join this Plan",
+      cta_link: "/contact",
+      is_popular: false,
+      features: [
+        { text: "3 Users available", isActive: true },
+        { text: "Limited tools", isActive: true },
+        { text: "Unlimited Supports", isActive: true },
+        { text: "API Access", isActive: true },
+        { text: "Premium apps", isActive: true },
+      ]
+    }
+  ];
+
+  const pricingData = {
+    section_subtitle: sections.pricing?.section_subtitle || "Pricing Plans",
+    section_title: sections.pricing?.section_title || "Choose the Perfect Plans for <br /> Your Business Growth",
+    plans: (sections.pricing?.plans && sections.pricing.plans.length > 0) ? sections.pricing.plans : defaultPricingPlans
+  };
+
+  const defaultBlogCards = [
+    {
+      image: "/assets/images/blog/blog01.webp",
+      date: "16 Aug, 2025",
+      title: "Top 10 Most Popular Tools <br /> For Marketing",
+      link: "/contact",
+      comments: "(2) Comments"
+    },
+    {
+      image: "/assets/images/blog/blog02.webp",
+      date: "17 Aug, 2025",
+      title: "Business Growing Tips for <br /> Sales Globally",
+      link: "/contact",
+      comments: "(5) Comments"
+    },
+    {
+      image: "/assets/images/blog/blog03.webp",
+      date: "29 Aug, 2025",
+      title: "Installation Sales Navigator <br />Extension on Chrome",
+      link: "/contact",
+      comments: "(7) Comments"
+    }
+  ];
+
+  const blogData = {
+    section_subtitle: sections.blog?.section_subtitle || "Latest Blog",
+    section_title: sections.blog?.section_title || "Read our Latest Insights from <br /> Update Blog Posts",
+    cards: (sections.blog?.cards && sections.blog.cards.length > 0) ? sections.blog.cards : defaultBlogCards
   };
 
   const contactCallback = sections.contact_callback || {
@@ -161,7 +348,7 @@ export default async function HomePage() {
                   <div className="client-social-proof">
                     <div className="social">
                       {features.social_proof_images?.map((img: string, i: number) => (
-                        <img key={i} src={img} alt={`Client ${i + 1}`} />
+                        <EditableImage key={i} path={`features.social_proof_images.${i}`} fallback={img} alt={`Client ${i + 1}`} />
                       )) || (
                         <>
                           <img src="/assets/images/social/social-img01.webp" alt="Client 01" />
@@ -172,9 +359,9 @@ export default async function HomePage() {
                       <h4>+3K</h4>
                     </div>
                     <div className="count-box mt-30">
-                      <span className="count-number odometer" data-count={features.social_proof_count || "3,600"}>0</span>
+                      <span className="count-number"><EditableField path="features.social_proof_count" fallback={features.social_proof_count || "3,600"} /></span>
                     </div>
-                    <div className="rating-viewers">{features.social_proof_label || "active customers"}</div>
+                    <div className="rating-viewers"><EditableField path="features.social_proof_label" fallback={features.social_proof_label || "active customers"} /></div>
                     <a href="/about" className="theme-btn style2 mt-20 br-30">
                       <span className="link-effect">
                         <span className="effect-1">Explore More</span>
@@ -272,8 +459,13 @@ export default async function HomePage() {
                     <div className="row mb-50">
                         <div className="col-lg-12 text-center">
                             <div className="title-wrap two" data-wow-duration="2s" data-wow-delay=".0s">
-                                <div className="sub-title-2 text-theme two"><i className="fa-solid fa-circle-check"></i>Our Services</div>
-                                <h2 className="sec-title text-dark">Empowering Companies with Reliable <br />and Scalable IT Services</h2>
+                                <div className="sub-title-2 text-theme two">
+                                  <i className="fa-solid fa-circle-check"></i>
+                                  <EditableField path="services.section_subtitle" fallback={services.section_subtitle || "Our Services"} />
+                                </div>
+                                <h2 className="sec-title text-dark">
+                                  <EditableField path="services.section_title" fallback={services.section_title || "Specialist Flooring Solutions & <br />Precision Installation"} isHtml={true} />
+                                </h2>
                             </div>
                         </div>
                     </div>
@@ -281,99 +473,57 @@ export default async function HomePage() {
                     <div className="row gy-30">
                         <div className="col-lg-12">
                             <div className="tv-service-item-inner">
-                                <div className="service-item-wrap service-item-pin">
+                              {(services.cards || []).map((card: any, idx: number) => {
+                                const isPinned = idx < (services.cards.length - 1);
+                                return (
+                                  <div key={idx} className={`service-item-wrap ${isPinned ? 'service-item-pin' : ''}`}>
                                     <div className="tv-service-item">
-                                        <div className="service-number">01.</div>
-                                        <div className="service-left">
-                                            <div className="overlay-anim4 overflow-hidden">
-                                                <img
-                                                    src="/services/Self Levelling.webp"
-                                                    alt="Self Levelling"
-                                                    width={700}
-                                                    height={479}
-                                                    style={{ width: '700px', height: '479px', maxWidth: '100%', objectFit: 'cover', display: 'block' }}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="service-right">
-                                            <h6>PREPARATION</h6>
-                                            <h2>Expert Self Levelling & <br /> Subfloor Preparation</h2>
-                                            <p> Ensure a perfectly smooth and durable foundation for your new floors. <br /> Our professional self-levelling services guarantee a flawless finish...
-                                            </p>
-                                            <a href="/contact" className="learn-more">Learn More <i className="fa-solid fa-arrow-up-right"></i></a>
-
-                                            <div className="border my-40"></div>
-                                            <div className="tags">
-                                                <span>Latex Screed</span>
-                                                <span>Plywood</span>
-                                                <span>DPM</span>
-                                                <span>Moisture Testing</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="service-item-wrap service-item-pin">
-                                    <div className="tv-service-item">
-                                    <div className="service-number">02.</div>
-                                    <div className="service-left">
+                                      <div className="service-number">
+                                        <EditableField path={`services.cards.${idx}.number`} fallback={card.number || `0${idx + 1}.`} />
+                                      </div>
+                                      <div className="service-left">
                                         <div className="overlay-anim4 overflow-hidden">
-                                            <img
-                                                src="/services/Carpet, Carpet Tile.webp"
-                                                alt="Carpet & Carpet Tile"
-                                                width={700}
-                                                height={479}
-                                                style={{ width: '700px', height: '479px', maxWidth: '100%', objectFit: 'cover', display: 'block' }}
-                                            />
+                                          <EditableImage
+                                            path={`services.cards.${idx}.image`}
+                                            fallback={card.image || "/services/Self Levelling.webp"}
+                                            alt={card.title || "Service"}
+                                            width={700}
+                                            height={479}
+                                            style={{ width: '700px', height: '479px', maxWidth: '100%', objectFit: 'cover', display: 'block' }}
+                                          />
                                         </div>
-                                    </div>
-                                    <div className="service-right">
-                                        <h6>INSTALLATION</h6>
-                                        <h2>Premium Carpet & <br /> Carpet Tile Fitting</h2>
-                                        <p> From luxurious domestic carpets to heavy-duty commercial tiles, <br /> we provide expert installation tailored to your space...
+                                      </div>
+                                      <div className="service-right">
+                                        <h6>
+                                          <EditableField path={`services.cards.${idx}.sub_heading`} fallback={card.sub_heading || "FLOORING"} />
+                                        </h6>
+                                        <h2>
+                                          <EditableField path={`services.cards.${idx}.title`} fallback={card.title || ""} isHtml />
+                                        </h2>
+                                        <p>
+                                          <EditableField path={`services.cards.${idx}.description`} fallback={card.description} />
                                         </p>
-                                        <a href="/contact" className="learn-more">Learn More <i className="fa-solid fa-arrow-up-right"></i></a>
+                                        <a href={card.link || "/contact"} className="learn-more">
+                                          Learn More <i className="fa-solid fa-arrow-up-right"></i>
+                                        </a>
 
-                                        <div className="border my-40"></div>
-                                        <div className="tags">
-                                            <span>Broadloom</span>
-                                            <span>Carpet Tiles</span>
-                                            <span>Underlay</span>
-                                            <span>Stair Runners</span>
-                                        </div>
-                                    </div>
-                                    </div>                                
-                                </div>
-                                <div className="service-item-wrap">
-                                    <div className="tv-service-item">
-                                        <div className="service-number">03.</div>
-                                        <div className="service-left">
-                                            <div className="overlay-anim4 overflow-hidden">
-                                                <img
-                                                    src="/services/Vinyl, Vinyl Tile.webp"
-                                                    alt="Vinyl & LVT"
-                                                    width={700}
-                                                    height={479}
-                                                    style={{ width: '700px', height: '479px', maxWidth: '100%', objectFit: 'cover', display: 'block' }}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="service-right">
-                                            <h6>INSTALLATION</h6>
-                                            <h2>Luxury Vinyl Tile (LVT) & <br /> Sheet Vinyl Flooring</h2>
-                                            <p> Transform your interiors with versatile, water-resistant vinyl solutions. <br /> We specialize in precision fitting for stunning LVT and seamless sheets...
-                                            </p>
-                                            <a href="/contact" className="learn-more">Learn More <i className="fa-solid fa-arrow-up-right"></i></a>
-
+                                        {Array.isArray(card.tags) && card.tags.filter(Boolean).length > 0 && (
+                                          <>
                                             <div className="border my-40"></div>
                                             <div className="tags">
-                                                <span>LVT</span>
-                                                <span>Sheet Vinyl</span>
-                                                <span>Amtico</span>
-                                                <span>Karndean</span>
+                                              {card.tags.filter(Boolean).map((t: string, tIdx: number) => (
+                                                <span key={tIdx}>
+                                                  <EditableField path={`services.cards.${idx}.tags.${tIdx}`} fallback={t} />
+                                                </span>
+                                              ))}
                                             </div>
-                                        </div>
+                                          </>
+                                        )}
+                                      </div>
                                     </div>
-                                </div>
+                                  </div>
+                                );
+                              })}
                             </div>
                         </div>
                     </div>
@@ -381,38 +531,22 @@ export default async function HomePage() {
             </div>
         </section>
 
-
-
-
-
-        
-
-
-
-
-
-        
-        <div className="tv-marquee-section bg-light position-relative">
+          <div className="tv-marquee-section bg-light position-relative">
             <div className="tv-marquee-inner mx-30 ml-mx-0 position-relative">
                 <div className="container-fluid p-0 overflow-hidden">
                     <div className="slider__marquee clearfix marquee-wrap">
                         <ul className="marquee_mode marquee__group">
-                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> Carpet Flooring</li>
-                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> Carpet Tile</li>
-                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> Vinyl Flooring</li>
-                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> LVT Flooring</li>
-                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> Professional Installation</li>
-                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> Self Levelling</li>
-                            <li className="item m-item"><img className="icon" src="assets/images/icons/marquee-icon.png" alt="" /> Floor Preparation</li>
+                            {marqueeItems.map((item: string, i: number) => (
+                              <li key={i} className="item m-item">
+                                <img className="icon" src="assets/images/icons/marquee-icon.png" alt="" />
+                                <EditableField path={`marquee.${i}`} fallback={item} />
+                              </li>
+                            ))}
                         </ul>
                     </div>
                  </div>
             </div>
         </div>
-
-
-
-
         
         <section className="tv-process-section bg-light position-relative">
             <style>{`
@@ -452,117 +586,58 @@ export default async function HomePage() {
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="process-title mt--25">
-                                <h2 className="text-white text-center">PR<span className="text-theme">O</span>CESS</h2>
+                                <h2 className="text-white text-center">
+                                  <EditableField path="process.section_title" fallback='PR<span className="text-theme">O</span>CESS' isHtml />
+                                </h2>
                             </div>
                         </div>
                     </div>
                     <div className="row gy-30">
-                        <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                            <div className="tv-process-item wow fadeInRightBig" data-wow-delay=".2s">
-                                <h4 className="title-text">STEP 01</h4>
-                                <div className="process-box">
-                                    <div className="icon"><img width="24" height="24" src="https://img.icons8.com/plumpy/24/tape-measure-sewing.png" alt="tape-measure-sewing" /></div>
-                                    <h3 className="title">Site Consultation</h3>
-                                    <p>Understand the space, assess the flooring requirements, and recommend the right solution.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                            <div className="tv-process-item wow fadeInRightBig" data-wow-delay=".3s">
-                                <h4 className="title-text">STEP 02</h4>
-                                <div className="process-box">
-                                    <div className="icon"><img width="24" height="24" src="https://img.icons8.com/plumpy/24/wallpaper-roll.png" alt="wallpaper-roll" /></div>
-                                    <h3 className="title">Product Selection</h3>
-                                    <p>Explore the right carpets, carpet tiles, vinyl, LVT, and flooring options for your space.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                            <div className="tv-process-item  wow fadeInRightBig" data-wow-delay=".4s">
-                                <h4 className="title-text">STEP 03</h4>
-                                <div className="process-box">
-                                    <div className="icon"><img width="24" height="24" src="https://img.icons8.com/plumpy/24/cut-paper.png" alt="cut-paper" /></div>
-                                    <h3 className="title">Professional Installation</h3>
-                                    <p>Prepare the surface and install your selected flooring with precision and professional workmanship.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                            <div className="tv-process-item wow fadeInRightBig" data-wow-delay=".5s">
-                                <h4 className="title-text">STEP 04</h4>
-                                <div className="process-box">
-                                    <div className="icon"><img width="24" height="24" src="https://img.icons8.com/plumpy/24/best-seller.png" alt="best-seller" /></div>
-                                    <h3 className="title">Final Inspection &amp; Support</h3>
-                                    <p>Complete the final checks and provide reliable support after your flooring installation.</p>
-                                </div>
-                            </div>
-                        </div>
+                        {processData.steps?.map((step: any, idx: number) => (
+                          <div key={idx} className="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                              <div className="tv-process-item wow fadeInRightBig" data-wow-delay={`${0.2 + idx * 0.1}s`}>
+                                  <h4 className="title-text"><EditableField path={`process.steps.${idx}.step_text`} fallback={step.step_text || `STEP 0${idx + 1}`} /></h4>
+                                  <div className="process-box">
+                                      <div className="icon">
+                                        <EditableImage path={`process.steps.${idx}.icon`} fallback={step.icon || "https://img.icons8.com/plumpy/24/tape-measure-sewing.png"} alt="icon" width={24} height={24} />
+                                      </div>
+                                      <h3 className="title"><EditableField path={`process.steps.${idx}.title`} fallback={step.title} /></h3>
+                                      <p><EditableField path={`process.steps.${idx}.description`} fallback={step.description} /></p>
+                                  </div>
+                              </div>
+                          </div>
+                        ))}
                     </div>
                 </div>
             </div>
         </section>
-
-
-
-
-
-
         
         <section className="tv-team-section bg-light space">
             <div className="container">
                 
                 <div className="title-wrap three text-center">
-                    <div className="sub-title-2 text-theme"><i className="fa-solid fa-circle-check"></i>Our Team</div>
-                    <h2 className="sec-title">Meet the Expert Team Powering Our <br />Goals and Ambitions</h2>
+                    <div className="sub-title-2 text-theme"><i className="fa-solid fa-circle-check"></i><EditableField path="team.section_subtitle" fallback="Our Team" /></div>
+                    <h2 className="sec-title"><EditableField path="team.section_title" fallback="Meet the Expert Team Powering Our <br />Goals and Ambitions" isHtml /></h2>
                 </div>
                 <div className="row gy-30">
-                    <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6">
-                        <div className="tv-team-card wow fadeInUp" data-wow-delay=".2s">
-                            <div className="team-photo">
-                                <img src="/Our Team/1.jpg" alt="Jobaer Khanom" style={{ width: '100%', height: '420px', objectFit: 'cover' }} />
-                            </div>
-                            <div className="team-info">
-                                <div className="info-inner">
-                                    <h3 className="team-name"><a href="#">Jobaer Khanom</a></h3>
-                                    <p className="team-role">UI/UX Designer</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6">
-                        <div className="tv-team-card wow fadeInUp" data-wow-delay=".4s">
-                            <div className="team-photo">
-                                <img src="/Our Team/2.jpg" alt="Sayma D. Farna" style={{ width: '100%', height: '420px', objectFit: 'cover' }} />
-                            </div>
-                            <div className="team-info">
-                                <div className="info-inner">
-                                    <h3 className="team-name"><a href="#">Sayma D. Farna</a></h3>
-                                    <p className="team-role">App Developer</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6">
-                        <div className="tv-team-card wow fadeInUp" data-wow-delay=".6s">
-                            <div className="team-photo">
-                                <img src="/Our Team/3.jpg" alt="Jubin E. Nawtail" style={{ width: '100%', height: '420px', objectFit: 'cover' }} />
-                            </div>
-                            <div className="team-info">
-                                <div className="info-inner">
-                                    <h3 className="team-name"><a href="#">Jubin E. Nawtail</a></h3>
-                                    <p className="team-role">SEO Marketer</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {teamData.members?.map((member: any, idx: number) => (
+                      <div key={idx} className="col-xl-4 col-lg-6 col-md-6 col-sm-6">
+                          <div className="tv-team-card wow fadeInUp" data-wow-delay={`${0.2 + idx * 0.2}s`}>
+                              <div className="team-photo">
+                                  <EditableImage path={`team.members.${idx}.image`} fallback={member.image || `/Our Team/${idx + 1}.jpg`} alt={member.name} style={{ width: '100%', height: '420px', objectFit: 'cover' }} />
+                              </div>
+                              <div className="team-info">
+                                  <div className="info-inner">
+                                      <h3 className="team-name"><a href="#"><EditableField path={`team.members.${idx}.name`} fallback={member.name} /></a></h3>
+                                      <p className="team-role"><EditableField path={`team.members.${idx}.role`} fallback={member.role} /></p>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                    ))}
                 </div>
             </div>
         </section>
-
-
-
-
-
         
         <section className="tv-testimonial-section bg-light overflow-hidden">
             <div className="tv-testi-inner br-30 ml-br-0 space position-relative mx-30 xxl-mx-0 overflow-hidden" style={{ background: 'linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%)', borderRadius: '30px' }}>
@@ -572,8 +647,10 @@ export default async function HomePage() {
                             <div className="col-lg-12">
                                 <div className="testimonial-content-wrap d-flex justify-content-between sm-flex-column">
                                     <div className="title-wrap two">
-                                        <div className="sub-title-2 two" style={{ background: '#16120B', color: '#FCF6BA' }}><i className="fa-solid fa-circle-check"></i>Testimonials</div>
-                                        <h2 className="sec-title" style={{ color: '#16120B', fontWeight: 800 }}>Helping Business in 3,000+ <br /> Different Industries</h2>
+                                        <div className="sub-title-2 two" style={{ background: '#16120B', color: '#FCF6BA' }}><i className="fa-solid fa-circle-check"></i><EditableField path="testimonials.section_subtitle" fallback="Testimonials" /></div>
+                                        <h2 className="sec-title" style={{ color: '#16120B', fontWeight: 800 }}>
+                                          <EditableField path="testimonials.section_title" fallback="Helping Business in 3,000+ <br /> Different Industries" isHtml />
+                                        </h2>
                                     </div>
                                     <div className="testimonial-btn-wrapper">
                                         <div className="scribble-shape scribble md-d-none">
@@ -581,17 +658,18 @@ export default async function HomePage() {
                                         </div>
                                         <div className="client-social-proof">
                                             <div className="social">
-                                                <img src="/assets/images/social/social-img02.webp" alt="Client 02" />
-                                                <img src="/assets/images/social/social-img03.webp" alt="Client 03" />
+                                                <EditableImage path="testimonials.social_images.0" fallback={sections.testimonials?.social_images?.[0] || "/assets/images/social/social-img02.webp"} alt="Client 02" />
+                                                <EditableImage path="testimonials.social_images.1" fallback={sections.testimonials?.social_images?.[1] || "/assets/images/social/social-img03.webp"} alt="Client 03" />
                                                 <h4 style={{ background: '#16120B', color: '#FCF6BA' }}>+3K</h4>
                                             </div>
-                                            <h4 className="text" style={{ color: '#16120B', fontWeight: 700 }}>Trusted Clients <br /> Worldwide</h4>
+                                            <h4 className="text" style={{ color: '#16120B', fontWeight: 700 }}>
+                                              <EditableField path="testimonials.trusted_text" fallback="Trusted Clients <br /> Worldwide" isHtml />
+                                            </h4>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
 
                         <div className="row">
                             <div className="col-lg-12">
@@ -630,7 +708,9 @@ export default async function HomePage() {
                                     `}} />
                                     
                                     <div className="custom-marquee-content-left" style={{ marginBottom: '1.5rem' }}>
-                                        {[...firstRow, ...firstRow].map((review, index) => (
+                                        {[...firstRow, ...firstRow].map((review, index) => {
+                                          const realIdx = index % activeReviews.length;
+                                          return (
                                             <div key={`first-${index}`} style={{ width: '20rem', flexShrink: 0 }}>
                                                 <div style={{
                                                     height: '100%', width: '100%', cursor: 'pointer', overflow: 'hidden',
@@ -639,19 +719,28 @@ export default async function HomePage() {
                                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                                                         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.75rem' }}>
                                                             <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                                                <p style={{ margin: 0, fontSize: '0.875rem', fontWeight: 600, color: '#1f2937' }}>{review.name}</p>
-                                                                <p style={{ margin: 0, fontSize: '0.75rem', fontWeight: 500, color: '#6b7280' }}>{review.username}</p>
+                                                                <p style={{ margin: 0, fontSize: '0.875rem', fontWeight: 600, color: '#1f2937' }}>
+                                                                  <EditableField path={`testimonials.reviews.${realIdx}.name`} fallback={review.name} />
+                                                                </p>
+                                                                <p style={{ margin: 0, fontSize: '0.75rem', fontWeight: 500, color: '#6b7280' }}>
+                                                                  <EditableField path={`testimonials.reviews.${realIdx}.username`} fallback={review.username} />
+                                                                </p>
                                                             </div>
                                                         </div>
-                                                        <p style={{ margin: 0, fontSize: '0.875rem', color: '#374151', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', lineHeight: 1.6 }}>{review.body}</p>
+                                                        <p style={{ margin: 0, fontSize: '0.875rem', color: '#374151', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', lineHeight: 1.6 }}>
+                                                          <EditableField path={`testimonials.reviews.${realIdx}.body`} fallback={review.body} />
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
-                                        ))}
+                                          );
+                                        })}
                                     </div>
                                     
                                     <div className="custom-marquee-content-right">
-                                        {[...secondRow, ...secondRow].map((review, index) => (
+                                        {[...secondRow, ...secondRow].map((review, index) => {
+                                          const realIdx = (index % secondRow.length) + firstRow.length;
+                                          return (
                                             <div key={`second-${index}`} style={{ width: '20rem', flexShrink: 0 }}>
                                                 <div style={{
                                                     height: '100%', width: '100%', cursor: 'pointer', overflow: 'hidden',
@@ -660,15 +749,22 @@ export default async function HomePage() {
                                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                                                         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.75rem' }}>
                                                             <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                                                <p style={{ margin: 0, fontSize: '0.875rem', fontWeight: 600, color: '#1f2937' }}>{review.name}</p>
-                                                                <p style={{ margin: 0, fontSize: '0.75rem', fontWeight: 500, color: '#6b7280' }}>{review.username}</p>
+                                                                <p style={{ margin: 0, fontSize: '0.875rem', fontWeight: 600, color: '#1f2937' }}>
+                                                                  <EditableField path={`testimonials.reviews.${realIdx}.name`} fallback={review.name} />
+                                                                </p>
+                                                                <p style={{ margin: 0, fontSize: '0.75rem', fontWeight: 500, color: '#6b7280' }}>
+                                                                  <EditableField path={`testimonials.reviews.${realIdx}.username`} fallback={review.username} />
+                                                                </p>
                                                             </div>
                                                         </div>
-                                                        <p style={{ margin: 0, fontSize: '0.875rem', color: '#374151', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', lineHeight: 1.6 }}>{review.body}</p>
+                                                        <p style={{ margin: 0, fontSize: '0.875rem', color: '#374151', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', lineHeight: 1.6 }}>
+                                                          <EditableField path={`testimonials.reviews.${realIdx}.body`} fallback={review.body} />
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
-                                        ))}
+                                          );
+                                        })}
                                     </div>
 
                                 </div>
@@ -678,6 +774,7 @@ export default async function HomePage() {
             </div>
         </section>
 
+        {/* Pricing Section */}
         <section className="tv-pricing-section space bg-light">
             <div className="shape-mockup z-1 spin d-none d-xxl-block" data-left="15%" data-bottom="69%"><img src="/assets/images/pricing/eart.webp" alt="..." /></div>
             <div className="shape-mockup z-1 spin2 d-none d-xxl-block" data-right="15%" data-bottom="69%"><img src="/assets/images/pricing/spin-shape.webp" alt="..." /></div>
@@ -686,182 +783,91 @@ export default async function HomePage() {
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="title-wrap text-center three">
-                            <div className="sub-title-2  text-theme"><i className="fa-solid fa-circle-check"></i>Pricing Plans</div>
-                            <h2 className="sec-title">Choose the Perfect Plans for <br /> Your Business Growth</h2>
+                            <div className="sub-title-2 text-theme"><i className="fa-solid fa-circle-check"></i><EditableField path="pricing.section_subtitle" fallback={pricingData.section_subtitle} /></div>
+                            <h2 className="sec-title"><EditableField path="pricing.section_title" fallback={pricingData.section_title} isHtml /></h2>
                         </div>
                     </div>
                 </div>
                 <div className="row gy-30 align-items-end">
-                    <div className="col-lg-4 col-md-6 col-sm-6">
-                        <div className="tv-pricing-card wow fadeInUp" data-wow-delay=".5s">
-                            <div className="pricing-inner-box">
-                                <div className="pricing-inner">
-                                    <div className="pricing-plan">
-                                        <h5 className="plan">Starter</h5>
-                                        <div className="price">
-                                            <h2>29 USD</h2>
-                                            <span className="billing-cycle">/ month</span>
-                                        </div>
-                                        <p>Organize Daily Task by free</p>
-                                        <a href="pricing.html" className="theme-btn mt-25 w-100 br-25">
-                                            <span className="link-effect">
-                                                <span className="effect-1">Join this Plan</span>
-                                                <span className="effect-1">Join this Plan</span>
-                                            </span>
-                                            <span className="arrow1"><i className="fa-solid fa-arrow-right"></i></span>
-                                        </a>
-                                        <h4>Key Features</h4>
-                                    </div>
-                                        <ul className="features">
-                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> 3 Users availble</li>
-                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> Limited tools</li>
-                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> Unlimited Supports</li>
-                                            <li className="disabled"><span className="checkmark"><i className="fa-solid fa-circle-x"></i></span> API Access</li>
-                                            <li className="disabled"><span className="checkmark"><i className="fa-solid fa-circle-x"></i></span> Premium apps</li>
-                                        </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-lg-4 col-md-6 col-sm-6">
-                        <div className="tv-pricing-card style2 wow fadeInUp" data-wow-delay=".7s">
-                            <div className="popular-badge"><i className="fa-solid fa-fire"></i> Most Popular</div>
-                            <div className="pricing-inner-box">
-                                <div className="top-icon spin"><img src="/assets/images/pricing/spin-shape02.webp" alt="" /></div>
-                                <div className="pricing-inner">
-                                    <div className="pricing-plan">
-                                        <h5 className="plan">Starter</h5>
-                                        <div className="price">
-                                            <h2>39 USD</h2>
-                                            <span className="billing-cycle">/ month</span>
-                                        </div>
-                                        <p>Organize Daily Task by free</p>
-                                        <a href="pricing.html" className="theme-btn mt-25 w-100 br-25">
-                                            <span className="link-effect">
-                                                <span className="effect-1">Join this Plan</span>
-                                                <span className="effect-1">Join this Plan</span>
-                                            </span>
-                                            <span className="arrow1"><i className="fa-solid fa-arrow-right"></i></span>
-                                        </a>
-                                        <h4>Key Features</h4>
-                                    </div>
-                                        <ul className="features">
-                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> 3 Users availble</li>
-                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> Limited tools</li>
-                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> Unlimited Supports</li>
-                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> API Access</li>
-                                            <li className="disabled"><span className="checkmark"><i className="fa-solid fa-circle-x"></i></span> Premium apps</li>
-                                        </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-lg-4 col-md-6 col-sm-6">
-                        <div className="tv-pricing-card wow fadeInUp" data-wow-delay=".9s">
-                            <div className="pricing-inner-box">
-                                <div className="pricing-inner">
-                                    <div className="pricing-plan">
-                                        <h5 className="plan">Business</h5>
-                                        <div className="price">
-                                            <h2>39 USD</h2>
-                                            <span className="billing-cycle">/ month</span>
-                                        </div>
-                                        <p>Organize Daily Task by free</p>
-                                        <a href="pricing.html" className="theme-btn mt-25 w-100 br-25">
-                                            <span className="link-effect">
-                                                <span className="effect-1">Join this Plan</span>
-                                                <span className="effect-1">Join this Plan</span>
-                                            </span>
-                                            <span className="arrow1"><i className="fa-solid fa-arrow-right"></i></span>
-                                        </a>
-                                        <h4>Key Features</h4>
-                                    </div>
-                                        <ul className="features">
-                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> 3 Users availble</li>
-                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> Limited tools</li>
-                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> Unlimited Supports</li>
-                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> API Access</li>
-                                            <li><span className="checkmark"><i className="fa-solid fa-circle-check"></i></span> Premium apps</li>
-                                        </ul>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
+                    {pricingData.plans.map((plan: any, pIdx: number) => (
+                      <div key={pIdx} className="col-lg-4 col-md-6 col-sm-6">
+                          <div className={`tv-pricing-card ${plan.is_popular ? 'style2' : ''} wow fadeInUp`} data-wow-delay={`${0.5 + pIdx * 0.2}s`}>
+                              {plan.is_popular && (
+                                <div className="popular-badge"><i className="fa-solid fa-fire"></i> Most Popular</div>
+                              )}
+                              <div className="pricing-inner-box">
+                                  {plan.is_popular && (
+                                    <div className="top-icon spin"><img src="/assets/images/pricing/spin-shape02.webp" alt="" /></div>
+                                  )}
+                                  <div className="pricing-inner">
+                                      <div className="pricing-plan">
+                                          <h5 className="plan"><EditableField path={`pricing.plans.${pIdx}.name`} fallback={plan.name} /></h5>
+                                          <div className="price">
+                                              <h2><EditableField path={`pricing.plans.${pIdx}.price`} fallback={plan.price} /></h2>
+                                              <span className="billing-cycle"><EditableField path={`pricing.plans.${pIdx}.cycle`} fallback={plan.cycle || "/ month"} /></span>
+                                          </div>
+                                          <p><EditableField path={`pricing.plans.${pIdx}.description`} fallback={plan.description} /></p>
+                                          <a href={plan.cta_link || "/contact"} className="theme-btn mt-25 w-100 br-25">
+                                              <span className="link-effect">
+                                                  <span className="effect-1"><EditableField path={`pricing.plans.${pIdx}.cta_text`} fallback={plan.cta_text || "Join this Plan"} /></span>
+                                                  <span className="effect-1"><EditableField path={`pricing.plans.${pIdx}.cta_text`} fallback={plan.cta_text || "Join this Plan"} /></span>
+                                              </span>
+                                              <span className="arrow1"><i className="fa-solid fa-arrow-right"></i></span>
+                                          </a>
+                                          <h4>Key Features</h4>
+                                      </div>
+                                      <ul className="features">
+                                          {plan.features?.map((feat: any, fIdx: number) => (
+                                            <li key={fIdx} className={feat.isActive ? "" : "disabled"}>
+                                              <span className="checkmark"><i className={`fa-solid ${feat.isActive ? 'fa-circle-check' : 'fa-circle-x'}`}></i></span>
+                                              <EditableField path={`pricing.plans.${pIdx}.features.${fIdx}.text`} fallback={feat.text} />
+                                            </li>
+                                          ))}
+                                      </ul>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                    ))}
                 </div>
             </div>
         </section>
 
-
-
+        {/* Latest Blog Section */}
         <section className="tv-blog-section space bg-color2">
             <div className="container">
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="title-wrap text-center">
-                            <div className="sub-title-2 text-theme"><i className="fa-solid fa-circle-check"></i>Latest Blog</div>
-                            <h2 className="sec-title">Read our Latest Insights from <br /> Update Blog Posts</h2>
+                            <div className="sub-title-2 text-theme"><i className="fa-solid fa-circle-check"></i><EditableField path="blog.section_subtitle" fallback={blogData.section_subtitle} /></div>
+                            <h2 className="sec-title"><EditableField path="blog.section_title" fallback={blogData.section_title} isHtml /></h2>
                         </div>
                     </div>
                 </div>
                 <div className="row gy-25">
-                    <div className="col-lg-4 col-md-6 col-sm-6">
-                        <article className="blog-single-box">
-                            <div className="inner-box">
-                                <div className="blog-image">
-                                    <img src="/assets/images/blog/blog01.webp" alt="Blog Image" />
-                                    <div className="category-tag"><span></span>16 Aug, 2025</div>
-                                </div>
-                                <div className="blog-content">
-                                    <h4 className="title"><a href="blog-details.html">Top 10 Most Popular Tools <br /> For Marketing</a></h4>
-                                    <div className="pt-25 pb-30"><div className="border dark"></div></div>
-                                    <div className="blog-meta">
-                                        <a href="blog-details.html" className="continue-reading">Explore More</a>
-                                        <span>(2) Comments</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                    <div className="col-lg-4 col-md-6 col-sm-6">
-                        <article className="blog-single-box">
-                            <div className="inner-box">
-                                <div className="blog-image">
-                                    <img src="/assets/images/blog/blog02.webp" alt="Blog Image" />
-                                    <div className="category-tag"><span></span>17 Aug, 2025</div>
-                                </div>
-                                <div className="blog-content">
-                                    <h4 className="title"><a href="blog-details.html">Business Growing Tips for <br /> Sales Globally</a></h4>
-                                    <div className="pt-25 pb-30"><div className="border dark"></div></div>
-                                    <div className="blog-meta">
-                                        <a href="blog-details.html" className="continue-reading">Explore More</a>
-                                        <span>(5) Comments</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                    <div className="col-lg-4 col-md-6 col-sm-6">
-                        <article className="blog-single-box">
-                            <div className="inner-box">
-                                <div className="blog-image">
-                                    <img src="/assets/images/blog/blog03.webp" alt="Blog Image" />
-                                    <div className="category-tag"><span></span>29 Aug, 2025</div>
-                                </div>
-                                <div className="blog-content">
-                                    <h4 className="title"><a href="blog-details.html">Installation Sales Navigator <br />Extension on Chrome</a></h4>
-                                    <div className="pt-25 pb-30"><div className="border dark"></div></div>
-                                    <div className="blog-meta">
-                                        <a href="blog-details.html" className="continue-reading">Explore More</a>
-                                        <span>(7) Comments</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
+                    {blogData.cards.map((card: any, bIdx: number) => (
+                      <div key={bIdx} className="col-lg-4 col-md-6 col-sm-6">
+                          <article className="blog-single-box">
+                              <div className="inner-box">
+                                  <div className="blog-image">
+                                      <EditableImage path={`blog.cards.${bIdx}.image`} fallback={card.image || "/assets/images/blog/blog01.webp"} alt="Blog Image" />
+                                      <div className="category-tag"><span></span><EditableField path={`blog.cards.${bIdx}.date`} fallback={card.date || "16 Aug, 2025"} /></div>
+                                  </div>
+                                  <div className="blog-content">
+                                      <h4 className="title"><a href={card.link || "/contact"}><EditableField path={`blog.cards.${bIdx}.title`} fallback={card.title} isHtml /></a></h4>
+                                      <div className="pt-25 pb-30"><div className="border dark"></div></div>
+                                      <div className="blog-meta">
+                                          <a href={card.link || "/contact"} className="continue-reading">Explore More</a>
+                                          <span><EditableField path={`blog.cards.${bIdx}.comments`} fallback={card.comments || "(0) Comments"} /></span>
+                                      </div>
+                                  </div>
+                              </div>
+                          </article>
+                      </div>
+                    ))}
                 </div>
             </div>
         </section>
-
 
     </main>
     </EditModeProvider>

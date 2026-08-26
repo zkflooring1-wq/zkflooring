@@ -3,14 +3,45 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import { defaultProjects, FlooringProject } from '@/data/projectsData';
+import { EditModeProvider } from '@/components/editor/EditModeProvider';
+import { EditableField } from '@/components/editor/EditableField';
 
 export const metadata: Metadata = {
   title: "Our Flooring Projects | ZK Flooring Birmingham",
   description: "Explore ZK Flooring's completed residential & commercial flooring projects across Birmingham: LVT herringbone, carpet tile fitting, engineered hardwood, and safety vinyl.",
 };
 
+const DEFAULT_PROJECTS_PAGE_DATA = {
+  breadcrumb: {
+    title: "Our Projects",
+    subtitle: "Projects"
+  },
+  header: {
+    badge: "Completed Installations",
+    title: "Our Flooring Projects",
+    description: "Browse our portfolio of completed residential and commercial flooring installations across Birmingham and the West Midlands."
+  },
+  callout: {
+    subtitle: "Have a Project in Mind?",
+    title: "Speak Directly With Our Master Flooring Fitters",
+    phone: "07903 723 774",
+    cta_text: "Request Free Project Survey",
+    cta_link: "/contact"
+  }
+};
+
 export default async function ProjectsPage() {
-  const { data: dbProjects } = await supabase.from('projects').select('*').order('created_at', { ascending: false });
+  const [projectsRes, pageRes] = await Promise.all([
+    supabase.from('projects').select('*').order('created_at', { ascending: false }),
+    supabase.from('pages').select('sections').eq('slug', 'projects').maybeSingle()
+  ]);
+
+  const dbProjects = projectsRes.data;
+  const sections = pageRes.data?.sections || DEFAULT_PROJECTS_PAGE_DATA;
+  const breadcrumb = sections.breadcrumb || DEFAULT_PROJECTS_PAGE_DATA.breadcrumb;
+  const header = sections.header || DEFAULT_PROJECTS_PAGE_DATA.header;
+  const callout = sections.callout || DEFAULT_PROJECTS_PAGE_DATA.callout;
+
   const projects: FlooringProject[] = dbProjects && dbProjects.length > 0
     ? dbProjects.map((p: any) => ({
         slug: p.slug,
@@ -31,6 +62,7 @@ export default async function ProjectsPage() {
   const remaining = projects.slice(1);
 
   return (
+    <EditModeProvider initialData={sections}>
     <main>
       <style>{`
         .zk-proj-hero-card {
@@ -100,10 +132,10 @@ export default async function ProjectsPage() {
               <div className="col-12">
                 <div className="title-outer">
                   <div className="page-title">
-                    <h2 className="title">Our Projects</h2>
+                    <h2 className="title"><EditableField path="breadcrumb.title" fallback={breadcrumb.title || "Our Projects"} /></h2>
                     <ul className="page-breadcrumb">
                       <li><a href="/"><i className="fa-solid fa-house-chimney"></i>Home</a></li>
-                      <li><span>/</span> Projects</li>
+                      <li><span>/</span> <EditableField path="breadcrumb.subtitle" fallback={breadcrumb.subtitle || "Projects"} /></li>
                     </ul>
                   </div>
                   <div className="image-box md-d-none">
@@ -126,11 +158,11 @@ export default async function ProjectsPage() {
         <div className="container">
           <div className="title-wrap text-center three mb-50">
             <div className="sub-title-2 text-theme">
-              <i className="fa-solid fa-circle-check"></i>Completed Installations
+              <i className="fa-solid fa-circle-check"></i><EditableField path="header.badge" fallback={header.badge || "Completed Installations"} />
             </div>
-            <h2 className="sec-title">Our Flooring Projects</h2>
+            <h2 className="sec-title"><EditableField path="header.title" fallback={header.title || "Our Flooring Projects"} isHtml /></h2>
             <p className="text-muted mt-2" style={{ maxWidth: '680px', margin: '0 auto', fontSize: '15px' }}>
-              Browse our portfolio of completed residential and commercial flooring installations across Birmingham and the West Midlands.
+              <EditableField path="header.description" fallback={header.description || "Browse our portfolio of completed residential and commercial flooring installations across Birmingham and the West Midlands."} />
             </p>
           </div>
 
@@ -431,8 +463,72 @@ export default async function ProjectsPage() {
               </div>
             ))}
           </div>
+
+          {/* Direct Project Consultation Callout */}
+          <div
+            className="mt-5 p-4 d-flex flex-wrap align-items-center justify-content-between gap-3"
+            style={{
+              backgroundColor: '#16120B',
+              borderRadius: '24px',
+              border: '1px solid rgba(212, 175, 55, 0.35)',
+              boxShadow: '0 12px 30px rgba(0,0,0,0.15)',
+              overflow: 'hidden',
+            }}
+          >
+            <div className="d-flex align-items-center gap-3">
+              <div
+                style={{
+                  width: '50px',
+                  height: '50px',
+                  borderRadius: '50%',
+                  background: 'linear-gradient(135deg, #BF953F, #FCF6BA, #B38728)',
+                  color: '#16120B',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '20px',
+                  fontWeight: 700,
+                  flexShrink: 0,
+                }}
+              >
+                <i className="fa-solid fa-phone"></i>
+              </div>
+              <div>
+                <span style={{ fontSize: '11px', color: '#FCF6BA', textTransform: 'uppercase', letterSpacing: '0.6px', display: 'block' }}>
+                  <EditableField path="callout.subtitle" fallback={callout.subtitle || "Have a Project in Mind?"} />
+                </span>
+                <a
+                  href={`tel:${(callout.phone || "07903 723 774").replace(/\s+/g, '')}`}
+                  style={{ fontSize: '18px', fontWeight: 800, color: '#FFFFFF', textDecoration: 'none' }}
+                >
+                  <EditableField path="callout.phone" fallback={callout.phone || "07903 723 774"} />
+                </a>
+              </div>
+            </div>
+
+            <a
+              href={callout.cta_link || "/contact"}
+              className="theme-btn br-30"
+              style={{
+                background: 'linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C)',
+                color: '#16120B',
+                fontWeight: 700,
+                fontSize: '14px',
+                padding: '12px 26px',
+                border: 'none',
+                borderRadius: '30px',
+                textDecoration: 'none',
+              }}
+            >
+              <span className="link-effect">
+                <span className="effect-1"><EditableField path="callout.cta_text" fallback={callout.cta_text || "Request Free Project Survey"} /></span>
+                <span className="effect-1"><EditableField path="callout.cta_text" fallback={callout.cta_text || "Request Free Project Survey"} /></span>
+              </span>
+            </a>
+          </div>
         </div>
       </section>
     </main>
+    </EditModeProvider>
   );
 }

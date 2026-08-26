@@ -1,9 +1,11 @@
-
 'use client';
 
 import React from 'react';
 import { usePathname } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import InitClientScripts from '@/components/InitClientScripts';
+
+const Newsletter = dynamic(() => import('@/components/Newsletter'), { ssr: false });
 
 interface LayoutWrapperProps {
   children: React.ReactNode;
@@ -13,7 +15,7 @@ interface LayoutWrapperProps {
   headerSearch: React.ReactNode;
   sidebar: React.ReactNode;
   footer: React.ReactNode;
-  newsletter: React.ReactNode;
+  newsletter?: React.ReactNode;
 }
 
 export default function LayoutWrapper({ 
@@ -24,7 +26,6 @@ export default function LayoutWrapper({
   headerSearch,
   sidebar,
   footer,
-  newsletter
 }: LayoutWrapperProps) {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith('/admin') || pathname.startsWith('/admin-login.php');
@@ -42,7 +43,7 @@ export default function LayoutWrapper({
       {headerSearch}
       {sidebar}
       {children}
-      {newsletter}
+      <Newsletter />
       {footer}
     </>
   );

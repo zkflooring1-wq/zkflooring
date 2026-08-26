@@ -1,4 +1,5 @@
 import React from 'react';
+import { EditableField } from '@/components/editor/EditableField';
 
 export interface FlooringServiceItem {
   slug: string;
@@ -154,13 +155,14 @@ export default function ServicesSection({ flooringServices }: ServicesSectionPro
           <div className="col-lg-12 text-center">
             <div className="title-wrap two">
               <div className="sub-title-2 text-theme two">
-                <i className="fa-solid fa-circle-check"></i>Our Services
+                <i className="fa-solid fa-circle-check"></i>
+                <EditableField path="services_header.badge" fallback="Our Services" />
               </div>
               <h2 className="sec-title text-dark" style={{ fontSize: 'clamp(26px, 3.5vw, 42px)', lineHeight: 1.25 }}>
-                Premium Flooring Services for <br className="d-none d-sm-block" />Residential &amp; Commercial Spaces
+                <EditableField path="services_header.title" fallback={"Premium Flooring Services for <br class=\"d-none d-sm-block\" />Residential & Commercial Spaces"} isHtml />
               </h2>
               <p className="text-muted mt-2" style={{ maxWidth: '650px', margin: '0 auto', fontSize: '15px', lineHeight: 1.65 }}>
-                Expert supply, subfloor preparation, and certified installation across Birmingham and the West Midlands.
+                <EditableField path="services_header.description" fallback="Expert supply, subfloor preparation, and certified installation across Birmingham and the West Midlands." />
               </p>
             </div>
           </div>

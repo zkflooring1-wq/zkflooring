@@ -1,8 +1,41 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabase';
+import { EditModeProvider } from '@/components/editor/EditModeProvider';
+import { EditableField } from '@/components/editor/EditableField';
+
+const DEFAULT_CONTACT_DATA = {
+  breadcrumb: {
+    title: "Contact Us",
+    subtitle: "Contact Us"
+  },
+  header: {
+    badge: "Get In Touch",
+    title: "Connect with ZK Flooring Birmingham",
+    description: "Ready to upgrade your home or commercial premises? Contact our certified fitters for a free estimate or to book an in-home sample survey."
+  },
+  details: {
+    address_title: "Our Headquarters",
+    address_text: "B10 9HH, Hobmoor Road, Small Heath,\nBirmingham, West Midlands, UK",
+    phone_title: "Call Us Directly",
+    phone_number: "07903 723 774",
+    phone_hours: "Mon – Sat: 8:00 AM – 6:30 PM (Sunday Closed)",
+    email_title: "Send An Email",
+    email_address: "zkflooring1@gmail.com"
+  },
+  form: {
+    badge: "Free Measuring & Samples",
+    title: "Request a Free Home Survey & Quote",
+    description: "Fill out the details below and our lead specialist will confirm your appointment within 2 hours."
+  },
+  map: {
+    embed_url: "https://maps.google.com/maps?q=Hobmoor%20Road%2C%20Small%20Heath%2C%20Birmingham%20B10%209HH&t=m&z=14&output=embed&iwloc=near"
+  }
+};
 
 export default function ContactPage() {
+  const [data, setData] = useState<any>(DEFAULT_CONTACT_DATA);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -14,16 +47,63 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const { data: pageData } = await supabase
+          .from('pages')
+          .select('sections')
+          .eq('slug', 'contact')
+          .maybeSingle();
+
+        if (pageData?.sections) {
+          setData({
+            breadcrumb: { ...DEFAULT_CONTACT_DATA.breadcrumb, ...(pageData.sections.breadcrumb || {}) },
+            header: { ...DEFAULT_CONTACT_DATA.header, ...(pageData.sections.header || {}) },
+            details: { ...DEFAULT_CONTACT_DATA.details, ...(pageData.sections.details || {}) },
+            form: { ...DEFAULT_CONTACT_DATA.form, ...(pageData.sections.form || {}) },
+            map: { ...DEFAULT_CONTACT_DATA.map, ...(pageData.sections.map || {}) },
+          });
+        }
+      } catch {
+        // fallback
+      }
+    }
+    fetchData();
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate brief network submission
-    await new Promise((resolve) => setTimeout(resolve, 800));
-    setLoading(false);
-    setSubmitted(true);
+    try {
+      await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          service: formData.service || 'General Inquiry',
+          message: formData.msg,
+          source: 'contact_form',
+        }),
+      });
+    } catch {
+      // Continue gracefully
+    } finally {
+      setLoading(false);
+      setSubmitted(true);
+    }
   };
 
+  const breadcrumb = data.breadcrumb || DEFAULT_CONTACT_DATA.breadcrumb;
+  const header = data.header || DEFAULT_CONTACT_DATA.header;
+  const details = data.details || DEFAULT_CONTACT_DATA.details;
+  const form = data.form || DEFAULT_CONTACT_DATA.form;
+  const map = data.map || DEFAULT_CONTACT_DATA.map;
+
   return (
+    <EditModeProvider initialData={data}>
     <main>
       <style>{`
         .zk-contact-card {
@@ -156,10 +236,10 @@ export default function ContactPage() {
               <div className="col-12">
                 <div className="title-outer">
                   <div className="page-title">
-                    <h2 className="title">Contact Us</h2>
+                    <h2 className="title"><EditableField path="breadcrumb.title" fallback={breadcrumb.title || "Contact Us"} /></h2>
                     <ul className="page-breadcrumb">
                       <li><a href="/"><i className="fa-solid fa-house-chimney"></i>Home</a></li>
-                      <li><span>/</span> Contact Us</li>
+                      <li><span>/</span> <EditableField path="breadcrumb.subtitle" fallback={breadcrumb.subtitle || "Contact Us"} /></li>
                     </ul>
                   </div>
                   <div className="image-box md-d-none">
@@ -186,13 +266,13 @@ export default function ContactPage() {
               <div className="contact-content-wrap pe-lg-2">
                 <div className="title-wrap mb-40">
                   <div className="sub-title-2 text-theme mb-2">
-                    <i className="fa-solid fa-circle-check"></i>Get In Touch
+                    <i className="fa-solid fa-circle-check"></i><EditableField path="header.badge" fallback={header.badge || "Get In Touch"} />
                   </div>
                   <h2 className="sec-title mb-3" style={{ fontSize: 'clamp(26px, 3.5vw, 40px)', lineHeight: 1.25 }}>
-                    Connect with ZK Flooring Birmingham
+                    <EditableField path="header.title" fallback={header.title || "Connect with ZK Flooring Birmingham"} isHtml />
                   </h2>
                   <p className="text-secondary" style={{ fontSize: '15px', lineHeight: 1.65 }}>
-                    Ready to upgrade your home or commercial premises? Contact our certified fitters for a free estimate or to book an in-home sample survey.
+                    <EditableField path="header.description" fallback={header.description || "Ready to upgrade your home or commercial premises? Contact our certified fitters."} />
                   </p>
                 </div>
 
@@ -204,11 +284,10 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h4 style={{ fontSize: '16px', fontWeight: 700, color: '#16120B', marginBottom: '4px' }}>
-                        Our Headquarters
+                        <EditableField path="details.address_title" fallback={details.address_title || "Our Headquarters"} />
                       </h4>
-                      <p style={{ fontSize: '14px', color: '#635E57', lineHeight: 1.5, margin: 0 }}>
-                        B10 9HH, Hobmoor Road, Small Heath,<br />
-                        Birmingham, West Midlands, UK
+                      <p style={{ fontSize: '14px', color: '#635E57', lineHeight: 1.5, margin: 0, whiteSpace: 'pre-line' }}>
+                        <EditableField path="details.address_text" fallback={details.address_text || "B10 9HH, Hobmoor Road, Small Heath,\nBirmingham, West Midlands, UK"} />
                       </p>
                     </div>
                   </div>
@@ -220,16 +299,16 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h4 style={{ fontSize: '16px', fontWeight: 700, color: '#16120B', marginBottom: '4px' }}>
-                        Call Us Directly
+                        <EditableField path="details.phone_title" fallback={details.phone_title || "Call Us Directly"} />
                       </h4>
                       <a
-                        href="tel:07903723774"
+                        href={`tel:${(details.phone_number || "07903 723 774").replace(/\s+/g, '')}`}
                         style={{ fontSize: '16px', fontWeight: 800, color: '#16120B', textDecoration: 'none', display: 'block' }}
                       >
-                        07903 723 774
+                        <EditableField path="details.phone_number" fallback={details.phone_number || "07903 723 774"} />
                       </a>
                       <span style={{ fontSize: '12px', color: '#8C867D' }}>
-                        Mon – Sat: 8:00 AM – 6:30 PM (Sunday Closed)
+                        <EditableField path="details.phone_hours" fallback={details.phone_hours || "Mon – Sat: 8:00 AM – 6:30 PM (Sunday Closed)"} />
                       </span>
                     </div>
                   </div>
@@ -241,13 +320,13 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h4 style={{ fontSize: '16px', fontWeight: 700, color: '#16120B', marginBottom: '4px' }}>
-                        Send An Email
+                        <EditableField path="details.email_title" fallback={details.email_title || "Send An Email"} />
                       </h4>
                       <a
-                        href="mailto:zkflooring1@gmail.com"
+                        href={`mailto:${details.email_address || "zkflooring1@gmail.com"}`}
                         style={{ fontSize: '14px', color: '#635E57', textDecoration: 'none' }}
                       >
-                        zkflooring1@gmail.com
+                        <EditableField path="details.email_address" fallback={details.email_address || "zkflooring1@gmail.com"} />
                       </a>
                     </div>
                   </div>
@@ -270,13 +349,13 @@ export default function ContactPage() {
               <div className="zk-contact-card">
                 <div className="mb-4">
                   <span style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', color: '#AA771C' }}>
-                    Free Measuring &amp; Samples
+                    <EditableField path="form.badge" fallback={form.badge || "Free Measuring & Samples"} />
                   </span>
                   <h3 style={{ fontSize: '24px', fontWeight: 800, color: '#16120B', marginTop: '4px', marginBottom: '8px' }}>
-                    Request a Free Home Survey &amp; Quote
+                    <EditableField path="form.title" fallback={form.title || "Request a Free Home Survey & Quote"} />
                   </h3>
                   <p style={{ fontSize: '14px', color: '#736E67', margin: 0 }}>
-                    Fill out the details below and our lead specialist will confirm your appointment within 2 hours.
+                    <EditableField path="form.description" fallback={form.description || "Fill out the details below and our lead specialist will confirm your appointment within 2 hours."} />
                   </p>
                 </div>
 
@@ -452,6 +531,7 @@ export default function ContactPage() {
         ></iframe>
       </div>
     </main>
+    </EditModeProvider>
   );
 }
 

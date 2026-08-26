@@ -2,15 +2,43 @@ import React from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import { blogPosts, BlogPost } from '@/data/blogPosts';
+import { EditModeProvider } from '@/components/editor/EditModeProvider';
+import { EditableField } from '@/components/editor/EditableField';
 
 export const metadata = {
   title: 'Flooring Insights & Buying Guides Birmingham | ZK Flooring Blog',
   description: 'Expert flooring advice, technical buying guides, and British Standards installation tips for LVT, Laminate, Carpet Underlays, and Hardwood in Birmingham & West Midlands.',
 };
 
+const DEFAULT_BLOG_PAGE_DATA = {
+  breadcrumb: {
+    title: "Flooring Insights",
+    subtitle: "Blog"
+  },
+  header: {
+    badge: "Expert Knowledge",
+    title: "Flooring Guides & Articles",
+    description: "Professional advice, technical guides, and buying insights from our certified flooring specialists in Birmingham."
+  },
+  callout: {
+    subtitle: "Need Expert Advice?",
+    phone: "07903 723 774",
+    cta_text: "Contact Our Flooring Specialists",
+    cta_link: "/contact"
+  }
+};
+
 export default async function BlogIndexPage() {
-  // Fetch from Supabase; fall back to local blogPosts data
-  const { data: dbPosts } = await supabase.from('posts').select('*').eq('status', 'published').order('created_at', { ascending: false });
+  const [postsRes, pageRes] = await Promise.all([
+    supabase.from('posts').select('*').eq('status', 'published').order('created_at', { ascending: false }),
+    supabase.from('pages').select('sections').eq('slug', 'blog').maybeSingle()
+  ]);
+
+  const dbPosts = postsRes.data;
+  const sections = pageRes.data?.sections || DEFAULT_BLOG_PAGE_DATA;
+  const breadcrumb = sections.breadcrumb || DEFAULT_BLOG_PAGE_DATA.breadcrumb;
+  const header = sections.header || DEFAULT_BLOG_PAGE_DATA.header;
+  const callout = sections.callout || DEFAULT_BLOG_PAGE_DATA.callout;
 
   // Normalize posts into a unified shape
   const posts: {
@@ -58,6 +86,7 @@ export default async function BlogIndexPage() {
   ];
 
   return (
+    <EditModeProvider initialData={sections}>
     <main>
       <style>{`
         .zk-blog-feat {
@@ -127,10 +156,10 @@ export default async function BlogIndexPage() {
               <div className="col-12">
                 <div className="title-outer">
                   <div className="page-title">
-                    <h2 className="title">Flooring Insights</h2>
+                    <h2 className="title"><EditableField path="breadcrumb.title" fallback={breadcrumb.title || "Flooring Insights"} /></h2>
                     <ul className="page-breadcrumb">
                       <li><a href="/"><i className="fa-solid fa-house-chimney"></i>Home</a></li>
-                      <li><span>/</span> Blog</li>
+                      <li><span>/</span> <EditableField path="breadcrumb.subtitle" fallback={breadcrumb.subtitle || "Blog"} /></li>
                     </ul>
                   </div>
                   <div className="image-box md-d-none">
@@ -154,11 +183,11 @@ export default async function BlogIndexPage() {
           {/* Section Header */}
           <div className="text-center mb-50">
             <div className="sub-title-2 text-theme">
-              <i className="fa-solid fa-circle-check"></i>Expert Knowledge
+              <i className="fa-solid fa-circle-check"></i><EditableField path="header.badge" fallback={header.badge || "Expert Knowledge"} />
             </div>
-            <h2 className="sec-title">Flooring Guides & Articles</h2>
+            <h2 className="sec-title"><EditableField path="header.title" fallback={header.title || "Flooring Guides & Articles"} isHtml /></h2>
             <p style={{ maxWidth: '640px', margin: '8px auto 0', fontSize: '15px', color: '#777' }}>
-              Professional advice, technical guides, and buying insights from our certified flooring specialists in Birmingham.
+              <EditableField path="header.description" fallback={header.description || "Professional advice, technical guides, and buying insights from our certified flooring specialists in Birmingham."} />
             </p>
           </div>
 
@@ -556,8 +585,72 @@ export default async function BlogIndexPage() {
               <p style={{ color: '#999', fontSize: '15px' }}>Check back soon for expert flooring guides and insights.</p>
             </div>
           )}
+
+          {/* Direct Consultation / Advice Banner */}
+          <div
+            className="mt-5 p-4 d-flex flex-wrap align-items-center justify-content-between gap-3"
+            style={{
+              backgroundColor: '#16120B',
+              borderRadius: '24px',
+              border: '1px solid rgba(212, 175, 55, 0.35)',
+              boxShadow: '0 12px 30px rgba(0,0,0,0.15)',
+              overflow: 'hidden',
+            }}
+          >
+            <div className="d-flex align-items-center gap-3">
+              <div
+                style={{
+                  width: '50px',
+                  height: '50px',
+                  borderRadius: '50%',
+                  background: 'linear-gradient(135deg, #BF953F, #FCF6BA, #B38728)',
+                  color: '#16120B',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '20px',
+                  fontWeight: 700,
+                  flexShrink: 0,
+                }}
+              >
+                <i className="fa-solid fa-phone"></i>
+              </div>
+              <div>
+                <span style={{ fontSize: '11px', color: '#FCF6BA', textTransform: 'uppercase', letterSpacing: '0.6px', display: 'block' }}>
+                  <EditableField path="callout.subtitle" fallback={callout.subtitle || "Need Expert Advice?"} />
+                </span>
+                <a
+                  href={`tel:${(callout.phone || "07903 723 774").replace(/\s+/g, '')}`}
+                  style={{ fontSize: '18px', fontWeight: 800, color: '#FFFFFF', textDecoration: 'none' }}
+                >
+                  <EditableField path="callout.phone" fallback={callout.phone || "07903 723 774"} />
+                </a>
+              </div>
+            </div>
+
+            <a
+              href={callout.cta_link || "/contact"}
+              className="theme-btn br-30"
+              style={{
+                background: 'linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C)',
+                color: '#16120B',
+                fontWeight: 700,
+                fontSize: '14px',
+                padding: '12px 26px',
+                border: 'none',
+                borderRadius: '30px',
+                textDecoration: 'none',
+              }}
+            >
+              <span className="link-effect">
+                <span className="effect-1"><EditableField path="callout.cta_text" fallback={callout.cta_text || "Contact Our Flooring Specialists"} /></span>
+                <span className="effect-1"><EditableField path="callout.cta_text" fallback={callout.cta_text || "Contact Our Flooring Specialists"} /></span>
+              </span>
+            </a>
+          </div>
         </div>
       </section>
     </main>
+    </EditModeProvider>
   );
 }
