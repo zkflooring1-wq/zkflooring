@@ -357,9 +357,13 @@ export default async function BlogPostPage({ params }: PageProps) {
           }
           @media (max-width: 991px) {
             .zk-post-sidebar { margin-top: 40px !important; }
+            .zk-post-hero-wrap { height: 340px !important; }
           }
           @media (max-width: 575px) {
-            .zk-post-hero-wrap { height: 260px !important; }
+            .zk-post-hero-wrap { height: 230px !important; border-radius: 16px !important; }
+            .zk-post-author-bar { flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; padding: 14px 16px !important; }
+            .zk-post-article-title { font-size: 26px !important; }
+            .zk-post-aeo-box { padding: 18px 16px !important; }
           }
         `}</style>
 
@@ -408,7 +412,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                   style={{
                     padding: '5px 16px',
                     borderRadius: '30px',
-                    background: 'linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #B38728 100%)',
+                    background: '#FAF6EE',
                     color: '#16120B',
                     fontSize: '12px',
                     fontWeight: 700,
@@ -430,6 +434,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
               {/* Title */}
               <h1
+                className="zk-post-article-title"
                 style={{
                   fontSize: '38px',
                   fontWeight: 800,
@@ -479,6 +484,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
             {/* Author Bar */}
             <div
+              className="zk-post-author-bar"
               style={{
                 maxWidth: '860px',
                 margin: '0 auto 44px',
@@ -498,7 +504,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                     width: '44px',
                     height: '44px',
                     borderRadius: '12px',
-                    background: 'linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #B38728 100%)',
+                    background: '#D4AF37',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -527,6 +533,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                 {/* AEO Quick Answer Box */}
                 {post.aeoQuickAnswer && (
                   <div
+                    className="zk-post-aeo-box"
                     style={{
                       padding: '24px 28px',
                       marginBottom: '36px',
@@ -581,7 +588,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                           width: '36px',
                           height: '36px',
                           borderRadius: '10px',
-                          background: 'linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #B38728 100%)',
+                          background: '#D4AF37',
                         }}
                       >
                         <i className="fa-solid fa-circle-question" style={{ color: '#16120B', fontSize: '15px' }}></i>
@@ -631,7 +638,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                         width: '52px',
                         height: '52px',
                         borderRadius: '14px',
-                        background: 'linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #B38728 100%)',
+                        background: '#D4AF37',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -671,12 +678,12 @@ export default async function BlogPostPage({ params }: PageProps) {
                         textAlign: 'center',
                         padding: '13px 24px',
                         borderRadius: '12px',
-                        background: 'linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #B38728 100%)',
+                        background: '#D4AF37',
                         color: '#16120B',
                         fontWeight: 700,
                         fontSize: '14px',
                         textDecoration: 'none',
-                        boxShadow: '0 4px 15px rgba(179, 135, 40, 0.35)',
+                        boxShadow: '0 4px 15px rgba(212, 175, 55, 0.35)',
                       }}
                     >
                       Get Free Quote <i className="fa-solid fa-arrow-right" style={{ fontSize: '12px', marginLeft: '4px' }}></i>

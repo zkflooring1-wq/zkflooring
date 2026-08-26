@@ -113,22 +113,38 @@ export default function ServicesSection({ flooringServices }: ServicesSectionPro
     <section className="tv-service-section bg-light position-relative overflow-hidden space">
       <style>{`
         .zk-card-wrapper {
-          transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+          transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
         }
         .zk-card-wrapper:hover {
-          transform: translateY(-8px);
-          box-shadow: 0 22px 45px rgba(191, 149, 63, 0.22) !important;
+          transform: translateY(-6px);
+          border-color: rgba(212, 175, 55, 0.6) !important;
+          box-shadow: 0 18px 40px rgba(179, 135, 40, 0.18) !important;
         }
         .zk-card-wrapper:hover .zk-card-img {
-          transform: scale(1.06);
+          transform: scale(1.05);
         }
         .zk-card-btn {
           transition: all 0.25s ease;
         }
         .zk-card-btn:hover {
-          filter: brightness(1.12);
+          filter: brightness(1.1);
           transform: translateY(-2px);
-          box-shadow: 0 6px 22px rgba(212, 175, 55, 0.45) !important;
+          box-shadow: 0 6px 20px rgba(179, 135, 40, 0.45) !important;
+        }
+        @media (max-width: 575px) {
+          .zk-card-img-wrap {
+            height: 200px !important;
+          }
+          .zk-card-body-wrap {
+            padding: 18px 16px 16px 16px !important;
+          }
+          .zk-card-title {
+            font-size: 18px !important;
+          }
+          .zk-card-footer {
+            flex-wrap: wrap !important;
+            gap: 12px !important;
+          }
         }
       `}</style>
 
@@ -140,10 +156,10 @@ export default function ServicesSection({ flooringServices }: ServicesSectionPro
               <div className="sub-title-2 text-theme two">
                 <i className="fa-solid fa-circle-check"></i>Our Services
               </div>
-              <h2 className="sec-title text-dark">
-                Premium Flooring Services for <br />Residential and Commercial Spaces
+              <h2 className="sec-title text-dark" style={{ fontSize: 'clamp(26px, 3.5vw, 42px)', lineHeight: 1.25 }}>
+                Premium Flooring Services for <br className="d-none d-sm-block" />Residential &amp; Commercial Spaces
               </h2>
-              <p className="text-muted mt-2" style={{ maxWidth: '650px', margin: '0 auto', fontSize: '15px' }}>
+              <p className="text-muted mt-2" style={{ maxWidth: '650px', margin: '0 auto', fontSize: '15px', lineHeight: 1.65 }}>
                 Expert supply, subfloor preparation, and certified installation across Birmingham and the West Midlands.
               </p>
             </div>
@@ -158,23 +174,25 @@ export default function ServicesSection({ flooringServices }: ServicesSectionPro
                 className="zk-card-wrapper"
                 style={{
                   position: 'relative',
-                  borderRadius: '20px',
+                  borderRadius: '22px',
                   overflow: 'hidden',
-                  background: 'linear-gradient(#FFFFFF, #FFFFFF) padding-box, linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #B38728 100%) border-box',
-                  border: '2px solid transparent',
-                  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.07)',
+                  background: '#FFFFFF',
+                  border: '1px solid rgba(212, 175, 55, 0.25)',
+                  boxShadow: '0 8px 25px rgba(0, 0, 0, 0.04)',
                   display: 'flex',
                   flexDirection: 'column',
                   height: '100%',
                 }}
               >
-                {/* Top Image Container (Filled, No empty space, exact 240px container height) */}
+                {/* Top Image Container */}
                 <div
+                  className="zk-card-img-wrap"
                   style={{
                     position: 'relative',
-                    height: '240px',
+                    height: '230px',
                     width: '100%',
                     overflow: 'hidden',
+                    backgroundColor: '#EAE5DC',
                   }}
                 >
                   <img
@@ -186,7 +204,7 @@ export default function ServicesSection({ flooringServices }: ServicesSectionPro
                       height: '100%',
                       objectFit: 'cover',
                       display: 'block',
-                      transition: 'transform 0.4s ease',
+                      transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
                     }}
                   />
 
@@ -199,14 +217,14 @@ export default function ServicesSection({ flooringServices }: ServicesSectionPro
                       width: '36px',
                       height: '36px',
                       borderRadius: '50%',
-                      background: 'rgba(22, 18, 11, 0.65)',
-                      backdropFilter: 'blur(12px)',
-                      WebkitBackdropFilter: 'blur(12px)',
+                      background: 'rgba(22, 18, 11, 0.75)',
+                      backdropFilter: 'blur(10px)',
+                      WebkitBackdropFilter: 'blur(10px)',
                       border: '1px solid rgba(212, 175, 55, 0.5)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      color: '#D4AF37',
+                      color: '#FCF6BA',
                       boxShadow: '0 4px 12px rgba(0, 0, 0, 0.25)',
                     }}
                   >
@@ -214,8 +232,9 @@ export default function ServicesSection({ flooringServices }: ServicesSectionPro
                   </div>
                 </div>
 
-                {/* Card Body on White Background */}
+                {/* Card Body */}
                 <div
+                  className="zk-card-body-wrap"
                   style={{
                     padding: '24px 22px 20px 22px',
                     display: 'flex',
@@ -226,6 +245,7 @@ export default function ServicesSection({ flooringServices }: ServicesSectionPro
                 >
                   {/* CardTitle */}
                   <h3
+                    className="zk-card-title"
                     style={{
                       fontSize: '20px',
                       fontWeight: 700,
@@ -237,7 +257,7 @@ export default function ServicesSection({ flooringServices }: ServicesSectionPro
                     {service.title}
                   </h3>
 
-                  {/* CardDescription / Badges */}
+                  {/* Card Badges */}
                   <div
                     style={{
                       display: 'flex',
@@ -254,12 +274,12 @@ export default function ServicesSection({ flooringServices }: ServicesSectionPro
                           display: 'inline-flex',
                           alignItems: 'center',
                           padding: '3px 10px',
-                          borderRadius: '9999px',
+                          borderRadius: '20px',
                           fontSize: '11px',
                           fontWeight: 600,
-                          color: '#AA771C',
-                          background: 'rgba(212, 175, 55, 0.08)',
-                          border: '1px solid rgba(212, 175, 55, 0.35)',
+                          color: '#8F6B1E',
+                          background: 'rgba(212, 175, 55, 0.1)',
+                          border: '1px solid rgba(212, 175, 55, 0.22)',
                           letterSpacing: '0.2px',
                         }}
                       >
@@ -268,10 +288,10 @@ export default function ServicesSection({ flooringServices }: ServicesSectionPro
                     ))}
                   </div>
 
-                  {/* CardContent (Short description) */}
+                  {/* Card Description */}
                   <p
                     style={{
-                      color: '#555555',
+                      color: '#55524E',
                       fontSize: '13.5px',
                       lineHeight: '1.6',
                       marginBottom: '20px',
@@ -281,10 +301,11 @@ export default function ServicesSection({ flooringServices }: ServicesSectionPro
                     {service.summary}
                   </p>
 
-                  {/* CardFooter (Info highlight + CTA Button) */}
+                  {/* Card Footer (Info + Luxury Button) */}
                   <div
+                    className="zk-card-footer"
                     style={{
-                      borderTop: '1px solid rgba(212, 175, 55, 0.2)',
+                      borderTop: '1px solid rgba(212, 175, 55, 0.18)',
                       paddingTop: '16px',
                       display: 'flex',
                       alignItems: 'center',
@@ -299,7 +320,7 @@ export default function ServicesSection({ flooringServices }: ServicesSectionPro
                           fontSize: '10.5px',
                           fontWeight: 600,
                           textTransform: 'uppercase',
-                          color: '#8c8273',
+                          color: '#8C867D',
                           letterSpacing: '0.5px',
                         }}
                       >
@@ -307,7 +328,7 @@ export default function ServicesSection({ flooringServices }: ServicesSectionPro
                       </span>
                       <span
                         style={{
-                          fontSize: '15px',
+                          fontSize: '14px',
                           fontWeight: 700,
                           color: '#16120B',
                         }}
@@ -320,21 +341,22 @@ export default function ServicesSection({ flooringServices }: ServicesSectionPro
                       href={service.ctaLink || '/contact'}
                       className="zk-card-btn"
                       style={{
-                        background: 'linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #B38728 100%)',
+                        background: 'linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C)',
                         color: '#16120B',
                         fontWeight: 700,
                         fontSize: '13px',
                         padding: '9px 18px',
-                        borderRadius: '10px',
+                        borderRadius: '30px',
                         textDecoration: 'none',
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '6px',
-                        boxShadow: '0 4px 15px rgba(179, 135, 40, 0.35)',
+                        border: 'none',
+                        boxShadow: '0 4px 15px rgba(179, 135, 40, 0.28)',
                         whiteSpace: 'nowrap',
                       }}
                     >
-                      {service.ctaText || 'Get a Quote'} <i className="fa-solid fa-arrow-up-right" style={{ fontSize: '11px' }}></i>
+                      {service.ctaText || 'Get a Quote'} <i className="fa-solid fa-arrow-right" style={{ fontSize: '11px' }}></i>
                     </a>
                   </div>
                 </div>

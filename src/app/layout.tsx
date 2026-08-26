@@ -60,7 +60,7 @@ export default function RootLayout({
         <link href="/assets/css/select2.min.css" rel="stylesheet" />
         <link href="/assets/css/jquery-ui.min.css" rel="stylesheet" />
         <link href="/assets/css/odometer.css" rel="stylesheet" />
-        <link href="/assets/css/style.css?v=2" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=metallic-gold-v21" rel="stylesheet" />
       </head>
       <body id="body" suppressHydrationWarning>
         <div className="page-wrapper bg-light">

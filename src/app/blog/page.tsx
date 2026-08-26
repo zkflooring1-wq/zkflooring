@@ -61,52 +61,57 @@ export default async function BlogIndexPage() {
     <main>
       <style>{`
         .zk-blog-feat {
-          transition: box-shadow 0.4s ease;
+          transition: box-shadow 0.4s ease, border-color 0.35s ease;
         }
         .zk-blog-feat:hover {
-          box-shadow: 0 30px 60px rgba(0, 0, 0, 0.16) !important;
+          box-shadow: 0 24px 55px rgba(0, 0, 0, 0.18) !important;
+          border-color: rgba(212, 175, 55, 0.6) !important;
         }
         .zk-blog-feat:hover .zk-blog-feat-img {
           transform: scale(1.04);
         }
         .zk-blog-card {
-          transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+          transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
         }
         .zk-blog-card:hover {
           transform: translateY(-6px);
-          box-shadow: 0 22px 45px rgba(0, 0, 0, 0.12) !important;
+          border-color: rgba(212, 175, 55, 0.6) !important;
+          box-shadow: 0 18px 40px rgba(179, 135, 40, 0.15) !important;
         }
         .zk-blog-card:hover .zk-blog-card-img {
-          transform: scale(1.06);
+          transform: scale(1.05);
         }
         .zk-blog-card:hover .zk-blog-card-title {
-          color: #D4AF37 !important;
+          color: #AA771C !important;
         }
         .zk-blog-read-link {
           transition: all 0.2s ease;
         }
         .zk-blog-read-link:hover {
-          color: #BF953F !important;
-          gap: 12px !important;
+          color: #AA771C !important;
+          transform: translateX(3px);
         }
         .zk-blog-cat-pill {
           transition: all 0.2s ease;
           cursor: pointer;
         }
-        .zk-blog-cat-pill:hover {
+        .zk-blog-cat-pill:hover, .zk-blog-cat-pill.active {
           background: #16120B !important;
-          color: #D4AF37 !important;
+          color: #FCF6BA !important;
           border-color: #16120B !important;
         }
         @media (max-width: 991px) {
           .zk-blog-feat-inner { flex-direction: column !important; }
           .zk-blog-feat-img-wrap { height: 300px !important; min-height: 300px !important; }
-          .zk-blog-feat-content { padding: 28px 24px !important; }
+          .zk-blog-feat-content { padding: 30px 24px !important; }
         }
         @media (max-width: 575px) {
-          .zk-blog-feat-img-wrap { height: 220px !important; min-height: 220px !important; }
-          .zk-blog-cat-row { overflow-x: auto; flex-wrap: nowrap !important; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
-          .zk-blog-cat-pill { flex-shrink: 0 !important; }
+          .zk-blog-feat-img-wrap { height: 210px !important; min-height: 210px !important; }
+          .zk-blog-feat-content { padding: 22px 18px !important; }
+          .zk-blog-card-img-wrap { height: 190px !important; }
+          .zk-blog-card-body { padding: 18px 16px 16px 16px !important; }
+          .zk-blog-cat-row { gap: 8px !important; margin-bottom: 30px !important; }
+          .zk-blog-cat-pill { padding: 6px 14px !important; font-size: 12px !important; }
         }
       `}</style>
 
@@ -239,7 +244,7 @@ export default async function BlogIndexPage() {
                       left: '18px',
                       padding: '5px 14px',
                       borderRadius: '30px',
-                      background: 'linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #B38728 100%)',
+                      background: '#D4AF37',
                       color: '#16120B',
                       fontSize: '11px',
                       fontWeight: 700,
@@ -323,7 +328,7 @@ export default async function BlogIndexPage() {
                           width: '36px',
                           height: '36px',
                           borderRadius: '50%',
-                          background: 'linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #B38728 100%)',
+                          background: '#D4AF37',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
@@ -375,11 +380,13 @@ export default async function BlogIndexPage() {
                   {/* Image Container */}
                   <Link
                     href={`/blog/${post.slug}`}
+                    className="zk-blog-card-img-wrap"
                     style={{
                       display: 'block',
                       position: 'relative',
-                      height: '240px',
+                      height: '230px',
                       overflow: 'hidden',
+                      backgroundColor: '#EAE5DC',
                     }}
                   >
                     <img
@@ -391,7 +398,7 @@ export default async function BlogIndexPage() {
                         height: '100%',
                         objectFit: 'cover',
                         display: 'block',
-                        transition: 'transform 0.5s ease',
+                        transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
                       }}
                     />
                     {/* Category badge */}
@@ -402,10 +409,11 @@ export default async function BlogIndexPage() {
                         left: '16px',
                         padding: '5px 14px',
                         borderRadius: '20px',
-                        background: 'rgba(22, 18, 11, 0.8)',
+                        background: 'rgba(22, 18, 11, 0.82)',
                         backdropFilter: 'blur(8px)',
                         WebkitBackdropFilter: 'blur(8px)',
-                        color: '#D4AF37',
+                        color: '#FCF6BA',
+                        border: '1px solid rgba(212, 175, 55, 0.3)',
                         fontSize: '11px',
                         fontWeight: 600,
                         letterSpacing: '0.3px',
@@ -417,8 +425,9 @@ export default async function BlogIndexPage() {
 
                   {/* Content */}
                   <div
+                    className="zk-blog-card-body"
                     style={{
-                      padding: '24px 24px 22px',
+                      padding: '24px 22px 20px',
                       display: 'flex',
                       flexDirection: 'column',
                       flexGrow: 1,
@@ -502,7 +511,7 @@ export default async function BlogIndexPage() {
                             width: '30px',
                             height: '30px',
                             borderRadius: '50%',
-                            background: 'linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #B38728 100%)',
+                            background: '#D4AF37',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',

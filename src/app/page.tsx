@@ -266,14 +266,14 @@ export default async function HomePage() {
                     font-size: 13px !important;
                 }
             `}</style>
-            <div className="tv-service-inner space bg-theme3 mx-30 ml-mx-0 overflow-hidden">
+            <div className="tv-service-inner space mx-30 ml-mx-0 overflow-hidden">
                 <div className="container">
                     
-                    <div className="row">
+                    <div className="row mb-50">
                         <div className="col-lg-12 text-center">
-                            <div className="title-wrap two white" data-wow-duration="2s" data-wow-delay=".0s">
-                                <div className="sub-title-2 text-white two"><i className="fa-solid fa-circle-check"></i>Services</div>
-                                <h2 className="sec-title">Empowering Companies with Reliable <br />and Scalable IT Services</h2>
+                            <div className="title-wrap two" data-wow-duration="2s" data-wow-delay=".0s">
+                                <div className="sub-title-2 text-theme two"><i className="fa-solid fa-circle-check"></i>Our Services</div>
+                                <h2 className="sec-title text-dark">Empowering Companies with Reliable <br />and Scalable IT Services</h2>
                             </div>
                         </div>
                     </div>
@@ -446,7 +446,7 @@ export default async function HomePage() {
             <div className="p-top-center z-1 wow slideInTop">
                 <img src="assets/images/process/hm1-shape01.png" alt="" />
             </div>
-            <div className="process-inner bg-theme3 mx-30 ml-mx-0 space  overflow-hidden xxl-br-0 position-relative">
+            <div className="process-inner mx-30 ml-mx-0 space overflow-hidden xxl-br-0 position-relative" style={{ background: 'linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%)', borderRadius: '0 0 30px 30px' }}>
                 <div className="container position-relative">
                     
                     <div className="row">
@@ -565,16 +565,15 @@ export default async function HomePage() {
 
         
         <section className="tv-testimonial-section bg-light overflow-hidden">
-            <div className="tv-testi-inner br-30 ml-br-0 space position-relative mx-30 xxl-mx-0 overflow-hidden">
-                <div className="bg image"><img src="/assets/images/testimonial/hm1-bg01.webp" alt="" /></div>
+            <div className="tv-testi-inner br-30 ml-br-0 space position-relative mx-30 xxl-mx-0 overflow-hidden" style={{ background: 'linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%)', borderRadius: '30px' }}>
                     <div className="container">
                         
                         <div className="row">
                             <div className="col-lg-12">
                                 <div className="testimonial-content-wrap d-flex justify-content-between sm-flex-column">
-                                    <div className="title-wrap two white">
-                                        <div className="sub-title-2 two text-white"><i className="fa-solid fa-circle-check"></i>Testimonial</div>
-                                        <h2 className="sec-title">Helping Business in 3,000+ <br /> Different Industries</h2>
+                                    <div className="title-wrap two">
+                                        <div className="sub-title-2 two" style={{ background: '#16120B', color: '#FCF6BA' }}><i className="fa-solid fa-circle-check"></i>Testimonials</div>
+                                        <h2 className="sec-title" style={{ color: '#16120B', fontWeight: 800 }}>Helping Business in 3,000+ <br /> Different Industries</h2>
                                     </div>
                                     <div className="testimonial-btn-wrapper">
                                         <div className="scribble-shape scribble md-d-none">
@@ -584,9 +583,9 @@ export default async function HomePage() {
                                             <div className="social">
                                                 <img src="/assets/images/social/social-img02.webp" alt="Client 02" />
                                                 <img src="/assets/images/social/social-img03.webp" alt="Client 03" />
-                                                <h4>+3K</h4>
+                                                <h4 style={{ background: '#16120B', color: '#FCF6BA' }}>+3K</h4>
                                             </div>
-                                            <h4 className="text">Trusted Clients <br /> Worldwide</h4>
+                                            <h4 className="text" style={{ color: '#16120B', fontWeight: 700 }}>Trusted Clients <br /> Worldwide</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -596,7 +595,14 @@ export default async function HomePage() {
 
                         <div className="row">
                             <div className="col-lg-12">
-                                <div style={{ overflow: 'hidden', width: '100%', position: 'relative', padding: '1rem 0' }}>
+                                <div style={{
+                                    overflow: 'hidden',
+                                    width: '100%',
+                                    position: 'relative',
+                                    padding: '1rem 0',
+                                    WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 1) 7%, rgba(0, 0, 0, 1) 93%, transparent 100%)',
+                                    maskImage: 'linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 1) 7%, rgba(0, 0, 0, 1) 93%, transparent 100%)',
+                                }}>
                                     <style dangerouslySetInnerHTML={{__html: `
                                         @keyframes customMarqueeLeft {
                                             0% { transform: translateX(0); }

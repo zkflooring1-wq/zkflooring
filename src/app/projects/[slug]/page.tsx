@@ -66,6 +66,24 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         }
         @media (max-width: 991px) {
           .zk-detail-meta-sidebar { margin-top: 40px !important; }
+          .zk-detail-hero-wrap { height: 380px !important; }
+          .zk-detail-hero-content { padding: 30px 26px !important; }
+        }
+        @media (max-width: 767px) {
+          .zk-detail-stats-bar {
+            flex-wrap: wrap !important;
+          }
+          .zk-detail-stat-col {
+            flex: 1 1 50% !important;
+            border-right: none !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+            padding: 16px 12px !important;
+          }
+        }
+        @media (max-width: 575px) {
+          .zk-detail-hero-wrap { height: 290px !important; border-radius: 18px !important; }
+          .zk-detail-hero-content { padding: 20px 16px !important; }
+          .zk-detail-hero-title { font-size: 24px !important; }
         }
       `}</style>
 
@@ -129,12 +147,13 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'linear-gradient(0deg, rgba(22,18,11,0.85) 0%, rgba(22,18,11,0.3) 40%, transparent 100%)',
+                background: 'linear-gradient(0deg, rgba(22,18,11,0.88) 0%, rgba(22,18,11,0.35) 40%, transparent 100%)',
                 zIndex: 1,
               }}
             ></div>
             {/* Title and meta on the hero */}
             <div
+              className="zk-detail-hero-content"
               style={{
                 position: 'absolute',
                 bottom: 0,
@@ -150,7 +169,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                     display: 'inline-block',
                     padding: '5px 16px',
                     borderRadius: '30px',
-                    background: 'linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #B38728 100%)',
+                    background: '#FAF6EE',
                     color: '#16120B',
                     fontSize: '12px',
                     fontWeight: 700,
@@ -175,8 +194,9 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                 </span>
               </div>
               <h1
+                className="zk-detail-hero-title"
                 style={{
-                  fontSize: '36px',
+                  fontSize: 'clamp(24px, 4vw, 36px)',
                   fontWeight: 800,
                   color: '#FFFFFF',
                   lineHeight: 1.2,
@@ -190,14 +210,16 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
 
           {/* Quick Stats Bar */}
           <div
+            className="zk-detail-stats-bar"
             style={{
               display: 'flex',
               justifyContent: 'center',
-              gap: '0',
               background: '#16120B',
               borderRadius: '0 0 20px 20px',
               overflow: 'hidden',
               marginBottom: '50px',
+              border: '1px solid rgba(212, 175, 55, 0.25)',
+              borderTop: 'none',
             }}
           >
             {[
@@ -208,6 +230,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             ].map((stat, i) => (
               <div
                 key={i}
+                className="zk-detail-stat-col"
                 style={{
                   flex: 1,
                   padding: '22px 20px',
@@ -281,7 +304,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                           width: '36px',
                           height: '36px',
                           borderRadius: '10px',
-                          background: 'linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #B38728 100%)',
+                          background: '#D4AF37',
                         }}
                       >
                         <i className="fa-solid fa-list-check" style={{ color: '#16120B', fontSize: '15px' }}></i>
@@ -343,7 +366,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                       width: '56px',
                       height: '56px',
                       borderRadius: '14px',
-                      background: 'linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #B38728 100%)',
+                      background: '#D4AF37',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -383,12 +406,12 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                       textAlign: 'center',
                       padding: '14px 24px',
                       borderRadius: '12px',
-                      background: 'linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #B38728 100%)',
+                      background: '#D4AF37',
                       color: '#16120B',
                       fontWeight: 700,
                       fontSize: '15px',
                       textDecoration: 'none',
-                      boxShadow: '0 4px 15px rgba(179, 135, 40, 0.35)',
+                      boxShadow: '0 4px 15px rgba(212, 175, 55, 0.35)',
                     }}
                   >
                     Get Free Quote <i className="fa-solid fa-arrow-right" style={{ fontSize: '13px', marginLeft: '6px' }}></i>

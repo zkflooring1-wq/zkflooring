@@ -40,7 +40,7 @@ export function EditableImage({ path, fallback, style, ...rest }: Props) {
       onClick={(e: React.MouseEvent) => handleElementClick(path, e)}
       style={{
         ...style,
-        outline: '2px dashed #00bcd4',
+        outline: '2px dashed #D4AF37',
         cursor: 'pointer',
         outlineOffset: '-2px'
       }}

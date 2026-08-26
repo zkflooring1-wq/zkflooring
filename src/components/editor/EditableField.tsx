@@ -41,13 +41,13 @@ export function EditableField({ path, fallback, isHtml = false }: Props) {
   const editProps = {
     onClick: (e: React.MouseEvent) => handleElementClick(path, e),
     style: {
-      outline: '2px dashed #00bcd4',
+      outline: '2px dashed #D4AF37',
       cursor: 'pointer',
       display: 'inline-block',
       position: 'relative' as const,
       zIndex: 10,
       outlineOffset: '2px',
-      backgroundColor: 'rgba(0, 188, 212, 0.05)'
+      backgroundColor: 'rgba(212, 175, 55, 0.05)'
     },
     title: `Edit ${path}`
   };

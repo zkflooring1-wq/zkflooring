@@ -10,9 +10,8 @@ export default function Newsletter() {
         <div className="container">
             <div className="row">
                 <div className="col-lg-12">
-                    <div className="newsletter">
+                    <div className="newsletter br-30" style={{ background: '#16120B', boxShadow: '0 14px 35px rgba(0, 0, 0, 0.35)' }}>
                         <div className="arrow-shape md-d-none"><img src="/assets/images/newsletter/arrow-shape.webp" alt="" /></div>
-                        <div className="bg image"><img className="br-30" src="/assets/images/newsletter/hm1-bg01.webp" alt="" /></div>
                         <div className="thumb d-none d-xl-block">
                             <NewsletterLottie />
                         </div>

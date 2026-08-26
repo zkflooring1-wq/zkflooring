@@ -34,50 +34,57 @@ export default async function ProjectsPage() {
     <main>
       <style>{`
         .zk-proj-hero-card {
-          transition: box-shadow 0.4s ease;
+          transition: box-shadow 0.4s ease, border-color 0.35s ease;
         }
         .zk-proj-hero-card:hover {
-          box-shadow: 0 30px 60px rgba(0, 0, 0, 0.18) !important;
+          box-shadow: 0 24px 55px rgba(0, 0, 0, 0.2) !important;
+          border-color: rgba(212, 175, 55, 0.6) !important;
         }
         .zk-proj-hero-card:hover .zk-proj-hero-img {
           transform: scale(1.04);
         }
         .zk-proj-grid-card {
-          transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+          transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
         }
         .zk-proj-grid-card:hover {
           transform: translateY(-6px);
-          box-shadow: 0 24px 48px rgba(0, 0, 0, 0.14) !important;
+          border-color: rgba(212, 175, 55, 0.6) !important;
+          box-shadow: 0 20px 45px rgba(0, 0, 0, 0.16) !important;
         }
         .zk-proj-grid-card:hover .zk-proj-grid-img {
           transform: scale(1.06);
         }
         .zk-proj-overlay {
-          background: linear-gradient(0deg, rgba(22, 18, 11, 0.92) 0%, rgba(22, 18, 11, 0.5) 50%, rgba(22, 18, 11, 0.05) 100%);
+          background: linear-gradient(0deg, rgba(22, 18, 11, 0.95) 0%, rgba(22, 18, 11, 0.55) 55%, rgba(22, 18, 11, 0.05) 100%);
         }
         .zk-proj-view-btn {
           transition: all 0.25s ease;
         }
         .zk-proj-view-btn:hover {
-          background: #FFFFFF !important;
+          background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C) !important;
           color: #16120B !important;
+          border-color: transparent !important;
           transform: translateY(-2px);
-          box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3) !important;
+          box-shadow: 0 8px 24px rgba(179, 135, 40, 0.35) !important;
         }
         .zk-proj-stat-pill {
-          background: rgba(255, 255, 255, 0.12);
-          backdrop-filter: blur(6px);
-          -webkit-backdrop-filter: blur(6px);
-          border: 1px solid rgba(255, 255, 255, 0.15);
+          background: rgba(255, 255, 255, 0.08);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          border: 1px solid rgba(212, 175, 55, 0.25);
         }
         @media (max-width: 991px) {
           .zk-proj-hero-inner { flex-direction: column !important; }
-          .zk-proj-hero-img-wrap { height: 320px !important; }
-          .zk-proj-hero-content { padding: 30px 24px !important; }
+          .zk-proj-hero-img-wrap { min-height: 320px !important; height: 320px !important; }
+          .zk-proj-hero-content { padding: 32px 26px !important; }
         }
         @media (max-width: 575px) {
-          .zk-proj-hero-img-wrap { height: 240px !important; }
-          .zk-proj-stats-row { flex-direction: column !important; gap: 12px !important; }
+          .zk-proj-hero-img-wrap { min-height: 220px !important; height: 220px !important; }
+          .zk-proj-hero-content { padding: 24px 18px !important; }
+          .zk-proj-stats-row { flex-wrap: wrap !important; gap: 10px !important; }
+          .zk-proj-stat-pill { flex: 1 1 calc(50% - 10px) !important; padding: 8px 12px !important; }
+          .zk-proj-grid-card { height: 300px !important; }
+          .zk-proj-view-btn { width: 100% !important; justify-content: center !important; text-align: center !important; }
         }
       `}</style>
 
@@ -172,7 +179,7 @@ export default async function ProjectsPage() {
                       left: '20px',
                       padding: '6px 16px',
                       borderRadius: '30px',
-                      background: 'linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #B38728 100%)',
+                      background: '#FAF6EE',
                       color: '#16120B',
                       fontSize: '12px',
                       fontWeight: 700,
