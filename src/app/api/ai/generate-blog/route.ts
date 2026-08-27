@@ -58,6 +58,7 @@ You MUST output valid JSON ONLY with the exact following schema:
 {
   "title": "Clean, captivating human title",
   "content": "Full formatted HTML article with <h2>, <h3>, <p>, <ul>, <li>, <strong>, <a> tags (1200+ words)",
+  "markdown": "Complete raw Markdown version of the article (# Title, ## Headings, lists, bold text, links) (1200+ words)",
   "excerpt": "A compelling 2-sentence hook summary for preview cards",
   "categories": ["Category1", "Category2"],
   "tags": ["Tag1", "Tag2", "Tag3", "Tag4"],

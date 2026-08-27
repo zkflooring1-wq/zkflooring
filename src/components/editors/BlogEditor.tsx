@@ -12,7 +12,7 @@ import SaveBar from "@/components/ui/SaveBar";
 import ConfirmDialog from "@/components/ui/ConfirmDialog";
 import LoadingState from "@/components/ui/LoadingState";
 import type { Post } from "@/types/database";
-import { Sparkles, Wand2, X, Check, Loader2, BookOpen } from "lucide-react";
+import { Sparkles, Wand2, X, Check, Loader2, Download, Copy } from "lucide-react";
 import toast from "react-hot-toast";
 
 const RichTextEditor = dynamic(() => import("@/components/ui/RichTextEditor"), { ssr: false });
@@ -34,6 +34,7 @@ export default function BlogEditor({ postId }: BlogEditorProps) {
   const [aiTopic, setAiTopic] = useState("");
   const [aiGenerating, setAiGenerating] = useState(false);
   const [aiStep, setAiStep] = useState("");
+  const [rawMarkdown, setRawMarkdown] = useState("");
 
   const [form, setForm] = useState({
     title: "",
@@ -44,7 +45,7 @@ export default function BlogEditor({ postId }: BlogEditorProps) {
     categories: [] as string[],
     tags: [] as string[],
     excerpt: "",
-    author: "ZK Flooring",
+    author: "ZK Flooring Specialist",
     seo_data: { seoTitle: "", seoDescription: "" },
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -65,7 +66,7 @@ export default function BlogEditor({ postId }: BlogEditorProps) {
               categories: p.categories || [],
               tags: p.tags || [],
               excerpt: p.excerpt || "",
-              author: p.author || "ZK Flooring",
+              author: p.author || "ZK Flooring Specialist",
               seo_data: {
                 seoTitle: p.seo_data?.seoTitle || "",
                 seoDescription: p.seo_data?.seoDescription || "",
@@ -133,11 +134,11 @@ export default function BlogEditor({ postId }: BlogEditorProps) {
     }
 
     setAiGenerating(true);
-    setAiStep("Crafting human perspective & hook (1200+ words)...");
+    setAiStep("Writing human perspective & hook (1200+ words)...");
 
     try {
-      setTimeout(() => setAiStep("Applying AdSense structure & step-by-step guidance..."), 4000);
-      setTimeout(() => setAiStep("Formatting headings, tags & SEO meta..."), 9000);
+      setTimeout(() => setAiStep("Applying AdSense structure, step-by-step tips & links..."), 4000);
+      setTimeout(() => setAiStep("Formatting headings, tags & SEO meta..."), 8000);
 
       const res = await fetch("/api/ai/generate-blog", {
         method: "POST",
@@ -154,11 +155,15 @@ export default function BlogEditor({ postId }: BlogEditorProps) {
         .replace(/[^a-z0-9\s-]/g, "")
         .replace(/\s+/g, "-");
 
+      const generatedHtml = data.content || "";
+      const generatedMd = data.markdown || `# ${data.title}\n\n${data.excerpt}\n\n${generatedHtml}`;
+      setRawMarkdown(generatedMd);
+
       setForm((prev) => ({
         ...prev,
         title: data.title || topicToUse,
         slug: autoSlug,
-        content: data.content || "",
+        content: generatedHtml,
         excerpt: data.excerpt || "",
         categories: data.categories?.length ? data.categories : ["Flooring Tips", "Guides"],
         tags: data.tags?.length ? data.tags : ["Flooring", "LVT", "Home Improvement"],
@@ -178,6 +183,33 @@ export default function BlogEditor({ postId }: BlogEditorProps) {
       setAiGenerating(false);
       setAiStep("");
     }
+  };
+
+  // Download .MD File with same title
+  const handleDownloadMarkdown = () => {
+    const titleForFile = (form.title || "article").replace(/[^a-zA-Z0-9_-]/g, "_");
+    const contentToDownload =
+      rawMarkdown ||
+      `# ${form.title}\n\n${form.excerpt}\n\n${form.content.replace(/<[^>]*>?/gm, "")}`;
+
+    const blob = new Blob([contentToDownload], { type: "text/markdown;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${titleForFile}.md`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    toast.success(`📥 Downloaded ${titleForFile}.md`);
+  };
+
+  const handleCopyMarkdown = () => {
+    const contentToCopy =
+      rawMarkdown ||
+      `# ${form.title}\n\n${form.excerpt}\n\n${form.content.replace(/<[^>]*>?/gm, "")}`;
+    navigator.clipboard.writeText(contentToCopy);
+    toast.success("📋 Markdown copied to clipboard!");
   };
 
   if (loading) {
@@ -205,7 +237,7 @@ export default function BlogEditor({ postId }: BlogEditorProps) {
                 1-Click AI Blog & SEO Content Generator
               </h4>
               <p className="text-xs text-obsidian-300 mt-0.5">
-                Generate 100% unique, human-grade, AdSense-ready 1200+ word articles with SEO titles & tags.
+                Generate 100% unique, human-grade, AdSense-ready 1200+ word articles with SEO titles, tags & .md export.
               </p>
             </div>
           </div>
@@ -303,9 +335,34 @@ export default function BlogEditor({ postId }: BlogEditorProps) {
           />
         </div>
 
-        {/* Article Content (Rich Text) */}
+        {/* Article Content (Rich Text) + Markdown Export */}
         <div className="bg-white rounded-[var(--radius-card)] border border-obsidian-100/50 shadow-sm p-6 space-y-5">
-          <h3 className="text-sm font-semibold text-obsidian-700 font-[var(--font-heading)]">Article Content</h3>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <h3 className="text-sm font-semibold text-obsidian-700 font-[var(--font-heading)]">Article Content</h3>
+              <p className="text-xs text-obsidian-400">Full rich-text formatted article with headings, lists & links.</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={handleCopyMarkdown}
+                disabled={!form.content}
+                className="px-3 py-1.5 rounded-lg border border-obsidian-200 text-xs font-semibold text-obsidian-600 hover:bg-obsidian-50 flex items-center gap-1.5 disabled:opacity-40"
+              >
+                <Copy className="w-3.5 h-3.5" />
+                Copy .MD
+              </button>
+              <button
+                type="button"
+                onClick={handleDownloadMarkdown}
+                disabled={!form.content}
+                className="px-3 py-1.5 rounded-lg bg-gold-50 border border-gold-300 text-xs font-bold text-gold-800 hover:bg-gold-100 flex items-center gap-1.5 disabled:opacity-40"
+              >
+                <Download className="w-3.5 h-3.5" />
+                Download .MD File
+              </button>
+            </div>
+          </div>
           <RichTextEditor value={form.content} onChange={(v) => update("content", v)} placeholder="Start writing or generate with AI..." />
         </div>
 
@@ -385,7 +442,7 @@ export default function BlogEditor({ postId }: BlogEditorProps) {
                   <li><strong>1200+ Words:</strong> Human tone, real scenarios & step-by-step guidance.</li>
                   <li><strong>AdSense Compliant:</strong> Zero robotic jargon & proper keyword flow.</li>
                   <li><strong>Full SEO Meta:</strong> Optimized Title, Description, Excerpt & Tags.</li>
-                  <li><strong>Featured Image:</strong> Auto-curated high-res flooring image.</li>
+                  <li><strong>.MD Export:</strong> 1-click download as <code className="text-gold-700 font-mono">title.md</code>.</li>
                 </ul>
               </div>
 
@@ -393,7 +450,7 @@ export default function BlogEditor({ postId }: BlogEditorProps) {
                 <div className="p-4 rounded-xl bg-obsidian-900 text-white space-y-2 border border-gold-500/30">
                   <div className="flex items-center gap-2.5 text-xs text-gold-300 font-bold">
                     <Loader2 className="w-4 h-4 animate-spin text-gold-400" />
-                    Generating Full Article...
+                    Generating Full 1200+ Word Article...
                   </div>
                   <p className="text-[11px] text-obsidian-300 animate-pulse">{aiStep}</p>
                 </div>

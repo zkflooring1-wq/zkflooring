@@ -46,8 +46,14 @@ export default function RichTextEditor({
       attributes: {
         class: "prose prose-sm max-w-none focus:outline-none",
       },
-    },
   });
+
+  // Sync external value changes (e.g. from AI Generator or async fetch) to Tiptap
+  useEffect(() => {
+    if (editor && value !== undefined && value !== editor.getHTML()) {
+      editor.commands.setContent(value || "");
+    }
+  }, [value, editor]);
 
   if (!editor) return null;
 
