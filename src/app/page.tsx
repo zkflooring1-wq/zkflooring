@@ -290,34 +290,52 @@ export default async function HomePage() {
     plans: (sections.pricing?.plans && sections.pricing.plans.length > 0) ? sections.pricing.plans : defaultPricingPlans
   };
 
+  // Fetch dynamic published blog posts from Supabase
+  const { data: dbPublishedPosts } = await supabase
+    .from('posts')
+    .select('id, title, slug, featured_image, created_at')
+    .eq('status', 'published')
+    .order('created_at', { ascending: false })
+    .limit(3);
+
   const defaultBlogCards = [
     {
-      image: "/assets/images/blog/blog01.webp",
+      image: "/slider/Carpet.webp",
       date: "16 Aug, 2025",
-      title: "Top 10 Most Popular Tools <br /> For Marketing",
-      link: "/contact",
-      comments: "(2) Comments"
+      title: "Top 10 Most Popular Flooring Trends for UK Homes",
+      link: "/blog",
+      comments: "Flooring Guide"
     },
     {
-      image: "/assets/images/blog/blog02.webp",
+      image: "/slider/Laminate Flooring.webp",
       date: "17 Aug, 2025",
-      title: "Business Growing Tips for <br /> Sales Globally",
-      link: "/contact",
-      comments: "(5) Comments"
+      title: "How to Choose Between LVT and Real Hardwood Flooring",
+      link: "/blog",
+      comments: "Flooring Guide"
     },
     {
-      image: "/assets/images/blog/blog03.webp",
+      image: "/slider/Vinyl Tile.webp",
       date: "29 Aug, 2025",
-      title: "Installation Sales Navigator <br />Extension on Chrome",
-      link: "/contact",
-      comments: "(7) Comments"
+      title: "Complete Guide to Subfloor Preparation and Screeding",
+      link: "/blog",
+      comments: "Flooring Guide"
     }
   ];
 
+  const dynamicBlogCards = (dbPublishedPosts && dbPublishedPosts.length > 0)
+    ? dbPublishedPosts.map((p) => ({
+        image: p.featured_image || "/slider/Carpet.webp",
+        date: new Date(p.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+        title: p.title,
+        link: `/blog/${p.slug}`,
+        comments: "Flooring Guide"
+      }))
+    : defaultBlogCards;
+
   const blogData = {
     section_subtitle: sections.blog?.section_subtitle || "Latest Blog",
-    section_title: sections.blog?.section_title || "Read our Latest Insights from <br /> Update Blog Posts",
-    cards: (sections.blog?.cards && sections.blog.cards.length > 0) ? sections.blog.cards : defaultBlogCards
+    section_title: sections.blog?.section_title || "Read our Latest Insights & Flooring Guides",
+    cards: dynamicBlogCards
   };
 
   const contactCallback = sections.contact_callback || {

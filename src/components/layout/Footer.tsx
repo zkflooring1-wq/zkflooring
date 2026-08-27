@@ -1,5 +1,6 @@
 import React from 'react';
 import { getSetting, SocialLink, HeaderContact } from '@/lib/settings';
+import { supabase } from '@/lib/supabase';
 
 export interface FooterSettings {
   company_description?: string;
@@ -11,6 +12,14 @@ export default async function Footer() {
   const socialLinks = await getSetting<SocialLink[]>('social_links');
   const contactInfo = await getSetting<HeaderContact>('header_contact');
   const footerSettings = await getSetting<FooterSettings>('footer');
+
+  // Fetch latest 2 published blog posts
+  const { data: latestPosts } = await supabase
+    .from('posts')
+    .select('id, title, slug, featured_image, created_at')
+    .eq('status', 'published')
+    .order('created_at', { ascending: false })
+    .limit(2);
 
   const email = contactInfo?.email || "example@gmail.com";
   const phone = contactInfo?.phone || "07903723774";
@@ -93,24 +102,54 @@ export default async function Footer() {
             <div className="col-lg-3 col-md-4">
               <div className="footer-widget ml-0 mb-0 wow fadeInUp" data-wow-delay="0.8s">
                 <h4 className="title" style={{ color: '#16120B', fontWeight: 800 }}>Latest Blog</h4>
-                <div className="recent-post-item">
-                  <figure className="image">
-                    <a href="/blog"><img src="/assets/images/footer/gallery-1.webp" alt="" loading="lazy" decoding="async" /></a>
-                  </figure>
-                  <div className="recent-post-info">
-                    <h4 className="title"><a href="/blog" style={{ color: '#16120B', fontWeight: 600 }}>Top 10 Most Popular Flooring Trends</a></h4>
-                    <span className="post-date" style={{ color: 'rgba(22, 18, 11, 0.75)', fontWeight: 600 }}>10 AUG, 2026</span>
-                  </div>
-                </div>
-                <div className="recent-post-item mb--20">
-                  <figure className="image">
-                    <a href="/blog"><img src="/assets/images/footer/gallery-2.webp" alt="" loading="lazy" decoding="async" /></a>
-                  </figure>
-                  <div className="recent-post-info">
-                    <h4 className="title"><a href="/blog" style={{ color: '#16120B', fontWeight: 600 }}>How to Choose the Best Carpet for Your Home</a></h4>
-                    <span className="post-date" style={{ color: 'rgba(22, 18, 11, 0.75)', fontWeight: 600 }}>10 AUG, 2026</span>
-                  </div>
-                </div>
+                {latestPosts && latestPosts.length > 0 ? (
+                  latestPosts.map((p, pIdx) => (
+                    <div key={p.id || pIdx} className={`recent-post-item ${pIdx === latestPosts.length - 1 ? 'mb--20' : ''}`}>
+                      <figure className="image" style={{ width: '70px', height: '60px', borderRadius: '8px', overflow: 'hidden', flexShrink: 0 }}>
+                        <a href={`/blog/${p.slug}`}>
+                          <img
+                            src={p.featured_image || "/slider/Carpet.webp"}
+                            alt={p.title}
+                            loading="lazy"
+                            decoding="async"
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          />
+                        </a>
+                      </figure>
+                      <div className="recent-post-info">
+                        <h4 className="title">
+                          <a href={`/blog/${p.slug}`} style={{ color: '#16120B', fontWeight: 600, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                            {p.title}
+                          </a>
+                        </h4>
+                        <span className="post-date" style={{ color: 'rgba(22, 18, 11, 0.75)', fontWeight: 600 }}>
+                          {new Date(p.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase()}
+                        </span>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <>
+                    <div className="recent-post-item">
+                      <figure className="image">
+                        <a href="/blog"><img src="/slider/Carpet.webp" alt="" loading="lazy" decoding="async" /></a>
+                      </figure>
+                      <div className="recent-post-info">
+                        <h4 className="title"><a href="/blog" style={{ color: '#16120B', fontWeight: 600 }}>Top 10 Most Popular Flooring Trends</a></h4>
+                        <span className="post-date" style={{ color: 'rgba(22, 18, 11, 0.75)', fontWeight: 600 }}>10 AUG, 2026</span>
+                      </div>
+                    </div>
+                    <div className="recent-post-item mb--20">
+                      <figure className="image">
+                        <a href="/blog"><img src="/slider/Laminate Flooring.webp" alt="" loading="lazy" decoding="async" /></a>
+                      </figure>
+                      <div className="recent-post-info">
+                        <h4 className="title"><a href="/blog" style={{ color: '#16120B', fontWeight: 600 }}>How to Choose Between LVT & Hardwood</a></h4>
+                        <span className="post-date" style={{ color: 'rgba(22, 18, 11, 0.75)', fontWeight: 600 }}>10 AUG, 2026</span>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>
