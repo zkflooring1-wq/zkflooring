@@ -111,6 +111,7 @@ export async function POST(request: Request) {
 
     const groqKey = process.env.GROQ_API_KEY;
     const deepseekKey = process.env.DEEPSEEK_API_KEY;
+    const nvidiaKey = process.env.NVIDIA_API_KEY;
     const geminiKey = process.env.GEMINI_API_KEY;
 
     const fullMessages: ChatMessage[] = [
@@ -144,6 +145,35 @@ export async function POST(request: Request) {
         }
       } catch (err) {
         console.warn("DeepSeek attempt failed, falling back:", err);
+      }
+    }
+
+    // 2. Try Nvidia NIM (Free Llama 3.3 70B / DeepSeek)
+    if (nvidiaKey) {
+      try {
+        const nvRes = await fetch("https://integrate.api.nvidia.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${nvidiaKey}`,
+          },
+          body: JSON.stringify({
+            model: "meta/llama-3.3-70b-instruct",
+            messages: fullMessages,
+            temperature: 0.5,
+            max_tokens: 300,
+          }),
+        });
+
+        if (nvRes.ok) {
+          const data = await nvRes.json();
+          const reply = data.choices?.[0]?.message?.content;
+          if (reply) {
+            return NextResponse.json({ reply, provider: "nvidia" });
+          }
+        }
+      } catch (err) {
+        console.warn("Nvidia attempt failed, falling back:", err);
       }
     }
 
