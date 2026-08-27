@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import LinkExtension from "@tiptap/extension-link";
@@ -46,6 +47,7 @@ export default function RichTextEditor({
       attributes: {
         class: "prose prose-sm max-w-none focus:outline-none",
       },
+    },
   });
 
   // Sync external value changes (e.g. from AI Generator or async fetch) to Tiptap
