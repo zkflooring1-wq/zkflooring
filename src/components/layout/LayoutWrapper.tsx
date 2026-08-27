@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import InitClientScripts from '@/components/InitClientScripts';
 
 const Newsletter = dynamic(() => import('@/components/Newsletter'), { ssr: false });
+const AIFlooringChatbot = dynamic(() => import('@/components/ai/AIFlooringChatbot'), { ssr: false });
 
 interface LayoutWrapperProps {
   children: React.ReactNode;
@@ -44,6 +45,7 @@ export default function LayoutWrapper({
       {sidebar}
       {children}
       <Newsletter />
+      <AIFlooringChatbot />
       {footer}
     </>
   );
