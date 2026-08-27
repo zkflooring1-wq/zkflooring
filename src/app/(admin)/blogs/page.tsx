@@ -13,7 +13,7 @@ import LoadingState from "@/components/ui/LoadingState";
 import ErrorState from "@/components/ui/ErrorState";
 import ConfirmDialog from "@/components/ui/ConfirmDialog";
 import type { Post } from "@/types/database";
-import { Pencil, Trash2, FileText } from "lucide-react";
+import { Pencil, Trash2, FileText, ExternalLink } from "lucide-react";
 import toast from "react-hot-toast";
 
 export default function BlogsPage() {
@@ -95,10 +95,40 @@ export default function BlogsPage() {
         <DataTable columns={columns} data={posts} keyField="id" page={page} totalPages={totalPages} onPageChange={setPage}
           onRowClick={(p) => router.push(`/blogs/${p.id}`)}
           actions={(p) => (
-            <>
-              <button onClick={() => router.push(`/blogs/${p.id}`)} className="p-1.5 rounded-lg text-obsidian-400 hover:bg-obsidian-50 hover:text-obsidian-600 transition-all"><Pencil className="w-3.5 h-3.5" /></button>
-              <button onClick={() => setDeleteId(p.id)} className="p-1.5 rounded-lg text-obsidian-400 hover:bg-red-50 hover:text-red-500 transition-all"><Trash2 className="w-3.5 h-3.5" /></button>
-            </>
+            <div className="flex items-center gap-1">
+              {p.status === "published" && (
+                <a
+                  href={`http://localhost:3000/blog/${p.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="p-1.5 rounded-lg text-obsidian-400 hover:bg-gold-50 hover:text-gold-600 transition-all"
+                  title="View live on website"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              )}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  router.push(`/blogs/${p.id}`);
+                }}
+                className="p-1.5 rounded-lg text-obsidian-400 hover:bg-obsidian-50 hover:text-obsidian-600 transition-all"
+                title="Edit Post"
+              >
+                <Pencil className="w-3.5 h-3.5" />
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDeleteId(p.id);
+                }}
+                className="p-1.5 rounded-lg text-obsidian-400 hover:bg-red-50 hover:text-red-500 transition-all"
+                title="Delete Post"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+              </button>
+            </div>
           )}
         />
       )}
