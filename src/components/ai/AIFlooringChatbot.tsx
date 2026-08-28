@@ -239,32 +239,6 @@ export default function AIFlooringChatbot() {
       {/* 1. Ultra-Clean Luxury Floating Trigger Button */}
       {!isOpen && (
         <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-          {/* Subtle Hover Tooltip */}
-          {isHovered && (
-            <div
-              style={{
-                position: 'absolute',
-                right: '70px',
-                whiteSpace: 'nowrap',
-                backgroundColor: '#ffffff',
-                border: '1px solid #e7dfd5',
-                borderRadius: '30px',
-                padding: '7px 16px',
-                fontSize: '12.5px',
-                fontWeight: 600,
-                color: '#1f2937',
-                boxShadow: '0 8px 24px rgba(0,0,0,0.08), 0 2px 6px rgba(197,168,128,0.15)',
-                pointerEvents: 'none',
-                animation: 'fadeTooltip 0.2s ease-out',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-              }}
-            >
-              <span style={{ color: '#b2894b' }}>✨</span>
-              <span>Flooring AI Estimator</span>
-            </div>
-          )}
 
           {/* Luxury White & Gold Circular Button */}
           <button
