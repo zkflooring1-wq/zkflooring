@@ -37,6 +37,7 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import QuoteInvoiceModal from "@/components/leads/QuoteInvoiceModal";
+import { supabase } from "@/lib/supabase/client";
 
 const STATUS_OPTIONS = [
   { value: "all", label: "All Leads" },
@@ -137,6 +138,62 @@ export default function LeadsCRMPage() {
   useEffect(() => {
     fetchLeads();
     fetchStats();
+
+    // 1. Supabase Realtime Live WebSocket Channel
+    const channel = supabase
+      .channel("zk-leads-realtime-crm")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "leads" },
+        (payload) => {
+          if (payload.eventType === "INSERT") {
+            const newLead = payload.new as Lead;
+            toast.success(`🔔 New Inquiry from ${newLead.name}!`, {
+              duration: 6000,
+              icon: "📥",
+              style: {
+                background: "#16120B",
+                color: "#FCF6BA",
+                border: "1px solid #BF953F",
+                fontWeight: "bold",
+              },
+            });
+            setLeads((prev) => {
+              if (prev.some((l) => l.id === newLead.id)) return prev;
+              return [newLead, ...prev];
+            });
+            setTotal((prev) => prev + 1);
+            setStats((prev) => ({
+              ...prev,
+              total: prev.total + 1,
+              new: prev.new + 1,
+            }));
+          } else if (payload.eventType === "UPDATE") {
+            const updatedLead = payload.new as Lead;
+            setLeads((prev) =>
+              prev.map((l) => (l.id === updatedLead.id ? updatedLead : l))
+            );
+            fetchStats();
+          } else if (payload.eventType === "DELETE") {
+            const deletedId = (payload.old as { id: string }).id;
+            setLeads((prev) => prev.filter((l) => l.id !== deletedId));
+            setTotal((prev) => Math.max(0, prev - 1));
+            fetchStats();
+          }
+        }
+      )
+      .subscribe();
+
+    // 2. High-reliability 5-second background polling fallback
+    const interval = setInterval(() => {
+      fetchLeads();
+      fetchStats();
+    }, 5000);
+
+    return () => {
+      supabase.removeChannel(channel);
+      clearInterval(interval);
+    };
   }, [fetchLeads, fetchStats]);
 
   const handleStatusChange = async (leadId: string, newStatus: string) => {
