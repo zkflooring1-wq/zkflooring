@@ -298,39 +298,48 @@ export default async function HomePage() {
     .order('created_at', { ascending: false })
     .limit(3);
 
+  // Fallback curated images for blog posts without an uploaded featured image
+  const fallbackCuratedImages = [
+    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80",
+  ];
+
   const defaultBlogCards = [
     {
-      image: "/slider/Carpet.webp",
-      date: "16 Aug, 2025",
+      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+      date: "16 Aug, 2026",
       title: "Top 10 Most Popular Flooring Trends for UK Homes",
       link: "/blog",
       comments: "Flooring Guide"
     },
     {
-      image: "/slider/Laminate Flooring.webp",
-      date: "17 Aug, 2025",
+      image: "https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?auto=format&fit=crop&w=1200&q=80",
+      date: "17 Aug, 2026",
       title: "How to Choose Between LVT and Real Hardwood Flooring",
       link: "/blog",
       comments: "Flooring Guide"
     },
     {
-      image: "/slider/Vinyl Tile.webp",
-      date: "29 Aug, 2025",
+      image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80",
+      date: "29 Aug, 2026",
       title: "Complete Guide to Subfloor Preparation and Screeding",
       link: "/blog",
       comments: "Flooring Guide"
     }
   ];
 
-  const dynamicBlogCards = (dbPublishedPosts && dbPublishedPosts.length > 0)
-    ? dbPublishedPosts.map((p) => ({
-        image: p.featured_image || "/slider/Carpet.webp",
-        date: new Date(p.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
-        title: p.title,
-        link: `/blog/${p.slug}`,
-        comments: "Flooring Guide"
-      }))
-    : defaultBlogCards;
+  const dbCards = (dbPublishedPosts || []).map((p, idx) => ({
+    image: p.featured_image || fallbackCuratedImages[idx % fallbackCuratedImages.length],
+    date: new Date(p.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+    title: p.title,
+    link: `/blog/${p.slug}`,
+    comments: "Flooring Guide"
+  }));
+
+  const dynamicBlogCards = dbCards.length >= 3
+    ? dbCards.slice(0, 3)
+    : [...dbCards, ...defaultBlogCards.slice(dbCards.length, 3)];
 
   const blogData = {
     section_subtitle: sections.blog?.section_subtitle || "Latest Blog",

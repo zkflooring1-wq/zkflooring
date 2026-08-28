@@ -28,6 +28,111 @@
   flex-grow: 1;
 }
 
+/* ==========================================================================
+   BLOG SECTION EQUAL SIZING & ASPECT RATIO UNIFORMITY
+   ========================================================================== */
+.tv-blog-section .row.gy-25 {
+  display: flex !important;
+  flex-wrap: wrap !important;
+}
+
+.tv-blog-section .row.gy-25 > [class*="col-"] {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.tv-blog-section .blog-single-box {
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  background: #ffffff !important;
+  border-radius: 24px !important;
+  overflow: hidden !important;
+  box-shadow: 0 10px 30px rgba(22, 18, 11, 0.04) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.tv-blog-section .blog-single-box:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 18px 40px rgba(179, 135, 40, 0.12) !important;
+}
+
+.tv-blog-section .blog-single-box .inner-box {
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto !important;
+  width: 100% !important;
+}
+
+.tv-blog-section .blog-single-box .blog-image {
+  position: relative !important;
+  width: 100% !important;
+  height: 240px !important;
+  min-height: 240px !important;
+  max-height: 240px !important;
+  overflow: hidden !important;
+  background: #f0ebe1 !important;
+  border-radius: 20px 20px 0 0 !important;
+}
+
+.tv-blog-section .blog-single-box .blog-image img,
+.tv-blog-section .blog-single-box .blog-image span,
+.tv-blog-section .blog-single-box .blog-image span img {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 240px !important;
+  max-height: 240px !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+.tv-blog-section .blog-single-box:hover .blog-image img,
+.tv-blog-section .blog-single-box:hover .blog-image span img {
+  transform: scale(1.06) !important;
+}
+
+.tv-blog-section .blog-single-box .blog-content {
+  flex: 1 1 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 24px 28px 24px !important;
+}
+
+.tv-blog-section .blog-single-box .blog-content .title {
+  min-height: 56px !important;
+  margin-bottom: 0 !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  font-size: 1.15rem !important;
+  line-height: 1.4 !important;
+}
+
+.tv-blog-section .blog-single-box .blog-content .title a {
+  color: #16120B !important;
+  font-weight: 700 !important;
+  transition: color 0.2s ease !important;
+}
+
+.tv-blog-section .blog-single-box .blog-content .title a:hover {
+  color: #B38728 !important;
+}
+
+.tv-blog-section .blog-single-box .blog-content .blog-meta {
+  margin-top: auto !important;
+  padding-top: 15px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+
 /* Services section equal tags sizing */
 .tv-service-section .tv-service-inner .tv-service-item .service-right .tags {
   display: grid;
