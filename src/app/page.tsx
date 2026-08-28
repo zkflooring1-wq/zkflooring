@@ -2,6 +2,7 @@ import React from 'react';
 import { supabase } from '@/lib/supabase';
 import { getSetting, HeaderContact } from '@/lib/settings';
 import HeroSlider from '@/components/HeroSlider';
+import PostcodeChecker from '@/components/home/PostcodeChecker';
 import { EditModeProvider } from '@/components/editor/EditModeProvider';
 import { EditableField } from '@/components/editor/EditableField';
 import { EditableImage } from '@/components/editor/EditableImage';
@@ -365,6 +366,9 @@ export default async function HomePage() {
 
         {/* Hero Section */}
         <HeroSlider slides={heroSlides} />
+
+        {/* Postcode Coverage & Mobile Showroom Checker */}
+        <PostcodeChecker />
 
         {/* Feature Section */}
         <section className="tv-feature-section bg-light space">
