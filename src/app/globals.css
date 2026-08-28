@@ -1144,69 +1144,92 @@
   bottom: 24px;
   right: 24px;
   z-index: 99999;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s ease;
 }
 
-/* Mobile Responsive Coordination for Dock and AI Chat */
+/* Mobile & Tablet Responsive Coordination (Zero Overlap with Dock) */
+@media (max-width: 1024px) {
+  .zk-clean-ai-root {
+    bottom: 78px !important;
+    right: 16px !important;
+  }
+  
+  .zk-clean-ai-root button {
+    width: 48px !important;
+    height: 48px !important;
+  }
+}
+
 @media (max-width: 768px) {
   .zk-sticky-dock-bar-wrap {
     bottom: 12px;
     left: 50%;
     transform: translateX(-50%);
     width: calc(100% - 20px);
-    max-width: 420px;
+    max-width: 440px;
     z-index: 998;
   }
+  
   .zk-sticky-dock-pill {
     height: 46px;
     padding: 3px 6px 3px 10px;
     gap: 6px;
     border-radius: 9999px;
   }
+  
   .zk-dock-part-brand {
     gap: 6px;
   }
+  
   .zk-dock-van-circle {
     width: 26px;
     height: 26px;
     font-size: 10px;
   }
+  
   .zk-dock-brand-labels span {
     display: none;
   }
+  
   .zk-dock-brand-labels strong {
     font-size: 11px;
   }
+  
   .zk-dock-part-search {
     width: auto;
     flex: 1;
     height: 32px;
     padding: 0 4px 0 8px;
   }
+  
   .zk-dock-input {
     font-size: 11px !important;
   }
+  
   .zk-dock-check-action {
     height: 24px;
     padding: 0 8px;
     font-size: 10px;
   }
+  
   .zk-dock-book-btn {
     height: 32px;
     padding: 0 10px;
     font-size: 10.5px;
   }
+  
   .zk-dock-close-btn {
     width: 22px;
     height: 22px;
     font-size: 9px;
   }
 
-  /* Chat button placed cleanly ABOVE the dock on mobile (ZERO overlap) */
+  /* Chat button placed safely above the dock */
   .zk-clean-ai-root {
-    bottom: 68px !important;
+    bottom: 74px !important;
     right: 14px !important;
   }
+  
   .zk-clean-ai-root button {
     width: 46px !important;
     height: 46px !important;
