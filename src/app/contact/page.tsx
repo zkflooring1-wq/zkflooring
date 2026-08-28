@@ -48,6 +48,25 @@ export default function ContactPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // Read query parameters (?sample=, ?service=) on mount
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const sample = params.get('sample');
+      const service = params.get('service');
+      if (sample) {
+        setFormData(prev => ({
+          ...prev,
+          service: `Sample Request: ${sample}`,
+          msg: `Hello, I would like to request a free sample pack and in-home survey for ${sample} flooring.`
+        }));
+      } else if (service) {
+        setFormData(prev => ({
+          ...prev,
+          service: service
+        }));
+      }
+    }
+
     async function fetchData() {
       try {
         const { data: pageData } = await supabase
@@ -452,13 +471,25 @@ export default function ContactPage() {
                           onChange={(e) => setFormData({ ...formData, service: e.target.value })}
                           required
                         >
-                          <option value="" disabled>Select Flooring Type</option>
-                          <option value="carpet">Carpet &amp; Underlay Fitting</option>
-                          <option value="lvt">Luxury Vinyl Tile (LVT) &amp; Sheet Vinyl</option>
-                          <option value="hardwood">Solid &amp; Engineered Hardwood</option>
-                          <option value="laminate">Laminate Flooring Installation</option>
-                          <option value="commercial">Commercial Safety Flooring</option>
-                          <option value="subfloor">Self-Levelling Screed &amp; Subfloor Prep</option>
+                          <option value="" disabled>Select Flooring Type / Service</option>
+                          {formData.service && ![
+                            'Carpet & Underlay Fitting',
+                            'Luxury Vinyl Tile (LVT) & Herringbone',
+                            'Solid & Engineered Hardwood',
+                            'Laminate Flooring Installation',
+                            'Commercial Safety Flooring',
+                            'Self-Levelling Screed & Subfloor Prep',
+                            'Free Mobile Showroom Survey'
+                          ].includes(formData.service) && (
+                            <option value={formData.service}>{formData.service}</option>
+                          )}
+                          <option value="Carpet & Underlay Fitting">Carpet &amp; Underlay Fitting</option>
+                          <option value="Luxury Vinyl Tile (LVT) & Herringbone">Luxury Vinyl Tile (LVT) &amp; Herringbone</option>
+                          <option value="Solid & Engineered Hardwood">Solid &amp; Engineered Hardwood</option>
+                          <option value="Laminate Flooring Installation">Laminate Flooring Installation</option>
+                          <option value="Commercial Safety Flooring">Commercial Safety Flooring</option>
+                          <option value="Self-Levelling Screed & Subfloor Prep">Self-Levelling Screed &amp; Subfloor Prep</option>
+                          <option value="Free Mobile Showroom Survey">Free Mobile Showroom Survey</option>
                         </select>
                       </div>
                     </div>
