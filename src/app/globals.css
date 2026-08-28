@@ -880,18 +880,25 @@
   .zk-visualizer-controls { padding: 24px 20px; }
 }
 
-/* ==========================================================================
-   STICKY BOTTOM FLOATING PILL DOCK (ZERO OVERFLOW, PERFECT ALIGNMENT)
-   ========================================================================== */
 .zk-sticky-dock-bar-wrap {
   position: fixed;
   bottom: 20px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(0) scale(1);
+  opacity: 1;
   z-index: 999;
   width: auto;
   max-width: 96vw;
-  animation: fadeInDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, visibility 0.35s ease;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.zk-sticky-dock-bar-wrap.is-dock-minimized {
+  transform: translateX(-50%) translateY(36px) scale(0.88);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .zk-sticky-dock-pill {
@@ -1124,8 +1131,18 @@
   font-weight: 800;
   cursor: pointer;
   box-shadow: 0 6px 22px rgba(0, 0, 0, 0.28);
-  animation: fadeInDown 0.25s ease;
-  transition: all 0.2s ease;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, visibility 0.35s ease, background 0.2s ease;
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.zk-dock-reopen-chip.is-chip-hidden {
+  transform: translateY(24px) scale(0.65);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .zk-dock-reopen-chip i {
@@ -1135,7 +1152,7 @@
 
 .zk-dock-reopen-chip:hover {
   background: #2b2417;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
 /* Base Floating AI Chatbot Root */
@@ -1189,6 +1206,19 @@
     background: #16120B !important;
     border: 1.5px solid #BF953F !important;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important;
+  }
+
+  .zk-dock-reopen-chip.is-chip-hidden {
+    transform: translateY(16px) scale(0.5) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+
+  .zk-dock-reopen-chip.is-chip-visible {
+    transform: translateY(0) scale(1) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
   }
 
   .zk-dock-reopen-text {

@@ -144,127 +144,129 @@ export default function PostcodeChecker() {
       {/* =========================================================================
           STICKY BOTTOM FLOATING DOCK (SLIM & BALANCED)
           ========================================================================= */}
-      {!isMinimized && (
-        <aside aria-label="Mobile showroom booking" className="zk-sticky-dock-bar-wrap">
-          <div className="zk-sticky-dock-pill">
-            
-            {/* Left: Van Icon & Title */}
-            <div className="zk-dock-part-brand">
-              <span className="zk-dock-van-circle">
-                <i className="fa-solid fa-van-shuttle"></i>
-              </span>
-              <div className="zk-dock-brand-labels">
-                <strong>Free Home Survey</strong>
-                <span>Birmingham &amp; West Midlands</span>
-              </div>
+      {/* =========================================================================
+          STICKY BOTTOM FLOATING DOCK (BUTTERY SMOOTH SLIDE/SCALE TRANSITIONS)
+          ========================================================================= */}
+      <aside
+        aria-label="Mobile showroom booking"
+        className={`zk-sticky-dock-bar-wrap ${isMinimized ? 'is-dock-minimized' : 'is-dock-visible'}`}
+      >
+        <div className="zk-sticky-dock-pill">
+          
+          {/* Left: Van Icon & Title */}
+          <div className="zk-dock-part-brand">
+            <span className="zk-dock-van-circle">
+              <i className="fa-solid fa-van-shuttle"></i>
+            </span>
+            <div className="zk-dock-brand-labels">
+              <strong>Free Home Survey</strong>
+              <span>Birmingham &amp; West Midlands</span>
             </div>
+          </div>
 
-            {/* Middle: Input with Check */}
-            <div className="zk-dock-part-search">
-              <i className="fa-solid fa-location-dot zk-dock-search-pin"></i>
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => {
-                  setInput(e.target.value);
-                  if (!e.target.value) setCheckedArea(null);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault();
-                    handleCheck(input);
-                  }
-                }}
-                placeholder="Enter UK Postcode (e.g. B10, B91)..."
-                className="zk-dock-input"
-              />
-              <button
-                type="button"
-                onClick={() => handleCheck(input)}
-                className="zk-dock-check-action"
-              >
-                Check
-              </button>
-            </div>
-
-            {/* Quick Area Pills */}
-            <div className="zk-dock-part-pills d-none d-xl-flex">
-              {[
-                { code: 'B10', label: 'B10' },
-                { code: 'B91', label: 'B91 Solihull' },
-                { code: 'B13', label: 'B13' },
-                { code: 'B73', label: 'B73' },
-              ].map((pill) => (
-                <button
-                  key={pill.code}
-                  type="button"
-                  onClick={() => handlePillClick(pill.code)}
-                  className={`zk-dock-quick-pill ${
-                    checkedArea?.postcode === pill.code ? 'active' : ''
-                  }`}
-                >
-                  {pill.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Right: Book Survey Button (Appears Only After Check) */}
-            {checkedArea && (
-              <div className="zk-dock-part-actions">
-                <button
-                  type="button"
-                  onClick={openModal}
-                  className={`zk-dock-book-btn ${
-                    checkedArea.isCovered ? 'highlight' : 'extended'
-                  }`}
-                >
-                  <i
-                    className={`fa-solid ${
-                      checkedArea.isCovered ? 'fa-circle-check' : 'fa-circle-exclamation'
-                    }`}
-                    style={{
-                      color: checkedArea.isCovered ? '#166534' : '#92400E',
-                      fontSize: '13px',
-                    }}
-                  ></i>
-                  <span>
-                    {checkedArea.isCovered
-                      ? `Book Survey in ${checkedArea.postcode}`
-                      : `Request Survey (${checkedArea.postcode})`}
-                  </span>
-                  <i className="fa-solid fa-arrow-right" style={{ fontSize: '11px' }}></i>
-                </button>
-              </div>
-            )}
-
-            {/* Close Button */}
+          {/* Middle: Input with Check */}
+          <div className="zk-dock-part-search">
+            <i className="fa-solid fa-location-dot zk-dock-search-pin"></i>
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => {
+                setInput(e.target.value);
+                if (!e.target.value) setCheckedArea(null);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  handleCheck(input);
+                }
+              }}
+              placeholder="Enter UK Postcode (e.g. B10, B91)..."
+              className="zk-dock-input"
+            />
             <button
               type="button"
-              onClick={() => setIsMinimized(true)}
-              className="zk-dock-close-btn"
-              title="Minimize bar"
+              onClick={() => handleCheck(input)}
+              className="zk-dock-check-action"
             >
-              <i className="fa-solid fa-xmark"></i>
+              Check
             </button>
           </div>
-        </aside>
-      )}
+
+          {/* Quick Area Pills */}
+          <div className="zk-dock-part-pills d-none d-xl-flex">
+            {[
+              { code: 'B10', label: 'B10' },
+              { code: 'B91', label: 'B91 Solihull' },
+              { code: 'B13', label: 'B13' },
+              { code: 'B73', label: 'B73' },
+            ].map((pill) => (
+              <button
+                key={pill.code}
+                type="button"
+                onClick={() => handlePillClick(pill.code)}
+                className={`zk-dock-quick-pill ${
+                  checkedArea?.postcode === pill.code ? 'active' : ''
+                }`}
+              >
+                {pill.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Right: Book Survey Button (Appears Only After Check) */}
+          {checkedArea && (
+            <div className="zk-dock-part-actions">
+              <button
+                type="button"
+                onClick={openModal}
+                className={`zk-dock-book-btn ${
+                  checkedArea.isCovered ? 'highlight' : 'extended'
+                }`}
+              >
+                <i
+                  className={`fa-solid ${
+                    checkedArea.isCovered ? 'fa-circle-check' : 'fa-circle-exclamation'
+                  }`}
+                  style={{
+                    color: checkedArea.isCovered ? '#166534' : '#92400E',
+                    fontSize: '13px',
+                  }}
+                ></i>
+                <span>
+                  {checkedArea.isCovered
+                    ? `Book Survey in ${checkedArea.postcode}`
+                    : `Request Survey (${checkedArea.postcode})`}
+                </span>
+                <i className="fa-solid fa-arrow-right" style={{ fontSize: '11px' }}></i>
+              </button>
+            </div>
+          )}
+
+          {/* Close Button */}
+          <button
+            type="button"
+            onClick={() => setIsMinimized(true)}
+            className="zk-dock-close-btn"
+            title="Minimize bar"
+          >
+            <i className="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </aside>
 
       {/* =========================================================================
-          RE-OPEN CHIP (Circular button below chat on mobile, pill on desktop)
+          RE-OPEN BUTTON (Smooth Spring Scale Entrance/Exit)
           ========================================================================= */}
-      {isMinimized && (
-        <button
-          type="button"
-          onClick={() => setIsMinimized(false)}
-          className="zk-dock-reopen-chip"
-          title="Open Free Home Survey"
-          aria-label="Open Free Home Survey"
-        >
-          <i className="fa-solid fa-van-shuttle"></i>
-          <span className="zk-dock-reopen-text">Free Home Survey</span>
-        </button>
-      )}
+      <button
+        type="button"
+        onClick={() => setIsMinimized(false)}
+        className={`zk-dock-reopen-chip ${isMinimized ? 'is-chip-visible' : 'is-chip-hidden'}`}
+        title="Open Free Home Survey"
+        aria-label="Open Free Home Survey"
+      >
+        <i className="fa-solid fa-van-shuttle"></i>
+        <span className="zk-dock-reopen-text">Free Home Survey</span>
+      </button>
 
       {/* =========================================================================
           PERFECTLY ALIGNED & STRUCTURED LUXURY MODAL (100% SYMMETRICAL)
