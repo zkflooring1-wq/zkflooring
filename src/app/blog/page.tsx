@@ -96,7 +96,7 @@ export default async function BlogIndexPage() {
 
   return (
     <EditModeProvider initialData={sections}>
-      <main className="bg-[#FAF8F5] min-h-screen">
+      <main>
         {/* Metallic Gold Breadcrumb Section */}
         <section className="tv-breadcrumb-section">
           <div
@@ -137,18 +137,18 @@ export default async function BlogIndexPage() {
         </section>
 
         {/* Main Content Area */}
-        <section className="py-16 md:py-20">
-          <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Header */}
-            <div className="text-center max-w-3xl mx-auto mb-12">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16120B]/5 border border-[#16120B]/10 text-[#8a6820] text-xs font-bold uppercase tracking-wider mb-3">
-                <i className="fa-solid fa-sparkles text-[#B38728]"></i>
+        <section className="zk-blog-page-wrap">
+          <div className="container">
+            {/* Section Header */}
+            <div className="text-center mb-50">
+              <div className="sub-title-2 text-theme" style={{ marginBottom: '10px' }}>
+                <i className="fa-solid fa-circle-check" style={{ marginRight: '6px' }}></i>
                 <EditableField path="header.badge" fallback={header.badge || "Expert Knowledge & Guides"} />
               </div>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#16120B] tracking-tight font-[var(--font-heading)] mb-4">
+              <h2 className="sec-title" style={{ fontSize: '38px', fontWeight: 800, color: '#16120B', marginBottom: '12px' }}>
                 <EditableField path="header.title" fallback={header.title || "Flooring Insights & Buying Guides"} isHtml />
-              </h1>
-              <p className="text-sm sm:text-base text-[#6b6255] leading-relaxed">
+              </h2>
+              <p style={{ maxWidth: '640px', margin: '0 auto', fontSize: '15px', color: '#6b6255', lineHeight: 1.6 }}>
                 <EditableField
                   path="header.description"
                   fallback={header.description || "Professional advice, technical guides, and buying insights from our certified flooring specialists in Birmingham."}
@@ -156,42 +156,84 @@ export default async function BlogIndexPage() {
               </p>
             </div>
 
-            {/* Interactive Blog Feed (Category Filtering + Live Search + Featured Hero + 3-Col Grid) */}
+            {/* Interactive Blog Feed (Bootstrap Grid & Filters) */}
             <BlogFeed posts={combinedPosts} categories={categories} />
 
-            {/* Premium Consultation Callout Card */}
-            <div className="mt-16 bg-gradient-to-r from-[#16120B] via-[#241e15] to-[#16120B] border border-[#D4AF37]/30 rounded-3xl p-8 md:p-12 text-white shadow-xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-96 h-96 bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none" />
-              
-              <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
-                <div className="space-y-3 text-center lg:text-left">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#FCF6BA] text-xs font-bold">
-                    <i className="fa-solid fa-ruler-combined text-[#D4AF37]"></i>
+            {/* Consultation CTA Banner */}
+            <div className="zk-blog-cta-banner">
+              <div className="row align-items-center">
+                <div className="col-lg-8 mb-lg-0 mb-4 text-lg-start text-center">
+                  <div
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      background: 'rgba(212, 175, 55, 0.18)',
+                      border: '1px solid rgba(212, 175, 55, 0.4)',
+                      color: '#FCF6BA',
+                      padding: '4px 14px',
+                      borderRadius: '30px',
+                      fontSize: '11.5px',
+                      fontWeight: 700,
+                      marginBottom: '14px',
+                    }}
+                  >
+                    <i className="fa-solid fa-ruler-combined" style={{ color: '#D4AF37' }}></i>
                     Birmingham & West Midlands
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-extrabold font-[var(--font-heading)] text-white">
+                  <h3 style={{ fontSize: '28px', fontWeight: 800, color: '#ffffff', marginBottom: '10px' }}>
                     Need Advice for Your Property?
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#c8bfae] max-w-xl">
+                  <p style={{ fontSize: '14px', color: '#d0c6b6', margin: 0, lineHeight: 1.6, maxWidth: '580px' }}>
                     Get in touch with our master fitters for honest advice, material samples brought to your home, and a 100% free laser survey with zero obligation.
                   </p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row items-center gap-4 shrink-0">
-                  <a
-                    href="tel:07903723774"
-                    className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-xs flex items-center justify-center gap-2.5 transition-all"
-                  >
-                    <i className="fa-solid fa-phone text-[#D4AF37]"></i>
-                    07903 723 774
-                  </a>
-                  <Link
-                    href="/contact"
-                    className="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] text-[#16120B] font-extrabold text-xs flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-gold-500/20 hover:scale-[1.02]"
-                  >
-                    Book Free Survey
-                    <i className="fa-solid fa-arrow-right text-xs"></i>
-                  </Link>
+                <div className="col-lg-4 text-lg-end text-center">
+                  <div style={{ display: 'inline-flex', flexDirection: 'column', gap: '10px', width: '100%', maxWidth: '280px' }}>
+                    <a
+                      href="tel:07903723774"
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        padding: '12px 20px',
+                        borderRadius: '16px',
+                        background: 'rgba(255, 255, 255, 0.12)',
+                        border: '1px solid rgba(255, 255, 255, 0.25)',
+                        color: '#ffffff',
+                        fontWeight: 700,
+                        fontSize: '13px',
+                        textDecoration: 'none',
+                        transition: 'all 0.2s ease',
+                      }}
+                    >
+                      <i className="fa-solid fa-phone" style={{ color: '#D4AF37' }}></i>
+                      07903 723 774
+                    </a>
+                    <Link
+                      href="/contact"
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        padding: '13px 20px',
+                        borderRadius: '16px',
+                        background: 'linear-gradient(135deg, #BF953F, #FCF6BA, #B38728)',
+                        color: '#16120B',
+                        fontWeight: 800,
+                        fontSize: '13px',
+                        textDecoration: 'none',
+                        boxShadow: '0 6px 20px rgba(179, 135, 40, 0.3)',
+                        transition: 'all 0.2s ease',
+                      }}
+                    >
+                      Book Free Survey
+                      <i className="fa-solid fa-arrow-right" style={{ fontSize: '11px' }}></i>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
