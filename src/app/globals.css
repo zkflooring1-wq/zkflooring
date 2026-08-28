@@ -107,6 +107,7 @@
   margin-bottom: 0 !important;
   display: -webkit-box !important;
   -webkit-line-clamp: 2 !important;
+  line-clamp: 2 !important;
   -webkit-box-orient: vertical !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
@@ -133,16 +134,18 @@
 }
 
 /* ==========================================================================
-   FOOTER RECENT BLOG WIDGET UNIFORM SIZING
+   FOOTER RECENT BLOG WIDGET UNIFORM SIZING & EQUAL DIMENSIONS
    ========================================================================== */
 .footer-section .recent-post-item {
   display: flex !important;
   align-items: center !important;
   gap: 14px !important;
   margin-bottom: 16px !important;
+  padding: 4px 0 !important;
   float: none !important;
   clear: both !important;
   width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 .footer-section .recent-post-item.mb--20,
@@ -151,16 +154,18 @@
 }
 
 .footer-section .recent-post-item .image {
-  width: 74px !important;
-  height: 64px !important;
-  min-width: 74px !important;
-  max-width: 74px !important;
-  min-height: 64px !important;
-  max-height: 64px !important;
+  width: 68px !important;
+  height: 68px !important;
+  min-width: 68px !important;
+  max-width: 68px !important;
+  min-height: 68px !important;
+  max-height: 68px !important;
+  aspect-ratio: 1 / 1 !important;
   border-radius: 12px !important;
   overflow: hidden !important;
   flex-shrink: 0 !important;
   margin: 0 !important;
+  padding: 0 !important;
   float: none !important;
   background: rgba(22, 18, 11, 0.08) !important;
   position: relative !important;
@@ -176,12 +181,12 @@
 
 .footer-section .recent-post-item .image img,
 .footer-section .recent-post-item .image a img {
-  width: 74px !important;
-  height: 64px !important;
-  min-width: 74px !important;
-  max-width: 74px !important;
-  min-height: 64px !important;
-  max-height: 64px !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 68px !important;
+  max-width: 68px !important;
+  min-height: 68px !important;
+  max-height: 68px !important;
   object-fit: cover !important;
   object-position: center !important;
   border-radius: 12px !important;
@@ -196,6 +201,9 @@
 .footer-section .recent-post-item .recent-post-info {
   flex: 1 1 auto !important;
   min-width: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
 }
 
 .footer-section .recent-post-item .recent-post-info .title {
@@ -203,12 +211,16 @@
   font-weight: 700 !important;
   line-height: 1.35 !important;
   margin-bottom: 4px !important;
+  min-height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
 .footer-section .recent-post-item .recent-post-info .title a {
   color: #16120B !important;
   display: -webkit-box !important;
   -webkit-line-clamp: 2 !important;
+  line-clamp: 2 !important;
   -webkit-box-orient: vertical !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
