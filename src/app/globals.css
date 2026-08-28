@@ -881,263 +881,309 @@
 }
 
 /* ==========================================================================
-   STICKY BOTTOM LUXURY DOCK (MOBILE SHOWROOM & SURVEY)
+   ULTRA-SLIM COMPACT FLOATING BAR (MOBILE SHOWROOM & SURVEY DOCK)
    ========================================================================== */
-.zk-sticky-dock-container {
+.zk-slim-dock-wrapper {
   position: fixed;
   bottom: 18px;
   left: 50%;
   transform: translateX(-50%);
-  width: calc(100% - 32px);
-  max-width: 1180px;
+  width: auto;
+  max-width: 95vw;
   z-index: 999;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: fadeInDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.zk-sticky-dock-container.zk-dock-minimized {
-  transform: translateX(-50%) translateY(120px);
-  opacity: 0;
-  pointer-events: none;
-}
-
-.zk-sticky-dock-inner {
-  background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1.5px solid rgba(191, 149, 63, 0.45);
-  border-radius: 24px;
-  padding: 10px 18px;
-  box-shadow: 0 16px 45px rgba(22, 18, 11, 0.18), 0 2px 8px rgba(0, 0, 0, 0.05);
+.zk-slim-dock-bar {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(191, 149, 63, 0.5);
+  border-radius: 50px;
+  padding: 6px 12px 6px 16px;
+  box-shadow: 0 10px 32px rgba(22, 18, 11, 0.16), 0 2px 6px rgba(0, 0, 0, 0.04);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
+  height: 52px;
 }
 
-/* Left: Van & Heading */
-.zk-dock-left {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 260px;
-}
-
-.zk-van-pulse-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  font-weight: 800;
-  color: #8a6820;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.zk-pulse-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #16A34A;
-  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.25);
-  animation: zkPulse 1.8s infinite;
-}
-
-@keyframes zkPulse {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.5); }
-  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(22, 163, 74, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
-}
-
-.zk-dock-heading strong {
-  display: block;
-  font-size: 13.5px;
-  font-weight: 800;
-  color: #16120B;
-  line-height: 1.2;
-}
-
-.zk-dock-sub {
-  font-size: 11.5px;
-  color: #665F54;
-  line-height: 1.2;
-  display: block;
-}
-
-/* Center: Clean High-Contrast Input */
-.zk-dock-center {
-  flex: 1;
-  max-width: 440px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.zk-dock-input-wrap {
+/* Brand */
+.zk-slim-dock-brand {
   display: flex;
   align-items: center;
-  background: #FFFFFF !important;
-  border: 1.5px solid #d9cebe;
-  border-radius: 14px;
-  padding: 3px 4px 3px 12px;
-  transition: all 0.2s ease;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.04);
-}
-
-.zk-dock-input-wrap:focus-within {
-  border-color: #AA771C;
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
-}
-
-.zk-dock-pin-icon {
-  color: #AA771C;
-  font-size: 13px;
-  margin-right: 8px;
+  gap: 8px;
   flex-shrink: 0;
 }
 
-.zk-dock-clean-input {
+.zk-slim-van-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #FAF6EE;
+  border: 1px solid rgba(191, 149, 63, 0.4);
+  color: #AA771C;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+
+.zk-slim-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.zk-slim-brand-text strong {
+  font-size: 12px;
+  font-weight: 800;
+  color: #16120B;
+  white-space: nowrap;
+}
+
+.zk-slim-brand-text span {
+  font-size: 10px;
+  color: #7A7266;
+  white-space: nowrap;
+}
+
+/* Input Form */
+.zk-slim-input-form {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.zk-slim-input-box {
+  display: flex;
+  align-items: center;
+  background: #FAF8F5;
+  border: 1px solid #dcd3c5;
+  border-radius: 30px;
+  padding: 2px 4px 2px 10px;
+  width: 240px;
+  transition: all 0.2s ease;
+}
+
+.zk-slim-input-box:focus-within {
+  background: #FFFFFF;
+  border-color: #AA771C;
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+  width: 260px;
+}
+
+.zk-slim-pin {
+  color: #AA771C;
+  font-size: 11px;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+.zk-slim-clean-input {
   flex: 1;
   border: none !important;
   background: transparent !important;
-  font-size: 12.5px !important;
-  font-weight: 700 !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
   color: #16120B !important;
   outline: none !important;
-  padding: 6px 0 !important;
+  padding: 4px 0 !important;
   min-width: 0;
 }
 
-.zk-dock-clean-input::placeholder {
-  color: #888075 !important;
-  font-weight: 500 !important;
+.zk-slim-clean-input::placeholder {
+  color: #999 !important;
+  font-weight: 400 !important;
 }
 
-.zk-dock-check-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
+.zk-slim-check-btn {
   background: #16120B;
   color: #FCF6BA;
-  border: 1px solid rgba(191, 149, 63, 0.4);
-  padding: 6px 14px;
-  border-radius: 10px;
-  font-size: 11.5px;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
   font-weight: 800;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
+  white-space: nowrap;
   flex-shrink: 0;
 }
 
-.zk-dock-check-btn:hover {
+.zk-slim-check-btn:hover {
   background: #2b2417;
   color: #FFFFFF;
 }
 
-.zk-dock-quick-pills {
+/* Micro Pills */
+.zk-slim-micro-pills {
   display: flex;
   align-items: center;
-  gap: 4px;
-  overflow-x: auto;
-  scrollbar-width: none;
+  gap: 3px;
 }
 
-.zk-dock-quick-pills::-webkit-scrollbar {
-  display: none;
-}
-
-.zk-dock-pill-btn {
-  border: 1px solid #e3d9cc;
+.zk-slim-micro-pill {
+  border: 1px solid #e2d9cd;
   background: #FAF8F5;
-  color: #5c554a;
-  font-size: 10.5px;
+  color: #665F54;
+  font-size: 10px;
   font-weight: 700;
-  padding: 2px 8px;
+  padding: 2px 7px;
   border-radius: 12px;
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.15s ease;
 }
 
-.zk-dock-pill-btn:hover {
+.zk-slim-micro-pill:hover {
   background: #16120B;
   color: #FCF6BA;
   border-color: #16120B;
 }
 
-/* Right: CTA & Minimize */
-.zk-dock-right {
+/* Verified Result Pill */
+.zk-slim-verified-box {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  background: #F0FDF4;
+  border: 1px solid #86EFAC;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  color: #166534;
+}
+
+.zk-slim-check-icon {
+  color: #16A34A;
+  font-size: 13px;
+}
+
+.zk-slim-verified-text {
+  font-size: 11.5px;
+}
+
+.zk-slim-verified-text strong {
+  font-weight: 800;
+  color: #14532D;
+}
+
+.zk-slim-recheck-link {
+  background: transparent;
+  border: none;
+  color: #15803D;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0 2px;
+}
+
+/* Action CTA Buttons */
+.zk-slim-dock-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   flex-shrink: 0;
 }
 
-.zk-dock-book-cta {
+.zk-slim-book-btn {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 10px 20px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #BF953F, #FCF6BA, #B38728);
-  color: #16120B;
+  gap: 5px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: #16120B;
+  color: #FCF6BA;
+  border: 1px solid rgba(191, 149, 63, 0.4);
+  font-size: 11.5px;
   font-weight: 800;
-  font-size: 12.5px;
-  border: none;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(179, 135, 40, 0.3);
   transition: all 0.2s ease;
   white-space: nowrap;
 }
 
-.zk-dock-book-cta:hover {
-  transform: translateY(-1.5px);
-  box-shadow: 0 6px 18px rgba(179, 135, 40, 0.42);
+.zk-slim-book-btn:hover {
+  background: #2b2417;
+  color: #FFFFFF;
 }
 
-.zk-dock-toggle-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 10px;
+.zk-slim-book-btn.highlight {
+  background: linear-gradient(135deg, #BF953F, #FCF6BA, #B38728);
+  color: #16120B;
+  border: none;
+  box-shadow: 0 2px 10px rgba(179, 135, 40, 0.35);
+  animation: zkGlowPulse 2s infinite;
+}
+
+.zk-slim-book-btn.highlight:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(179, 135, 40, 0.45);
+}
+
+@keyframes zkGlowPulse {
+  0% { box-shadow: 0 0 0 0 rgba(179, 135, 40, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(179, 135, 40, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(179, 135, 40, 0); }
+}
+
+.zk-slim-close-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
   background: #FAF8F5;
   border: 1px solid #e0d5c5;
-  color: #736E67;
+  color: #8C8477;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  font-size: 10px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
-.zk-dock-toggle-btn:hover {
+.zk-slim-close-btn:hover {
   background: #16120B;
   color: #FCF6BA;
 }
 
-/* Reopen Floating Button */
-.zk-dock-reopen-btn {
+/* Reopen Chip (Positioned Bottom-Left away from bottom-right chat widget!) */
+.zk-slim-reopen-chip {
   position: fixed;
   bottom: 20px;
-  right: 24px;
-  z-index: 999;
+  left: 24px;
+  z-index: 9999;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   background: #16120B;
   color: #FCF6BA;
-  border: 1.5px solid #BF953F;
-  padding: 11px 18px;
+  border: 1px solid #BF953F;
+  padding: 8px 14px;
   border-radius: 30px;
-  font-size: 12.5px;
+  font-size: 11.5px;
   font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-  animation: fadeInDown 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  animation: fadeInDown 0.25s ease;
 }
 
-.zk-dock-reopen-btn:hover {
+.zk-slim-reopen-chip:hover {
   background: #2b2417;
-  transform: scale(1.03);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .zk-slim-dock-bar {
+    height: auto;
+    border-radius: 20px;
+    padding: 8px 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .zk-slim-input-box { width: 100%; }
+  .zk-slim-reopen-chip { left: 16px; bottom: 16px; font-size: 10.5px; }
 }
 
 /* ==========================================================================

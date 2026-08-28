@@ -4,79 +4,62 @@ import React, { useState } from 'react';
 
 interface AreaInfo {
   name: string;
-  tier: 'same-day' | 'standard' | 'extended';
   travelTime: string;
-  freeSurvey: boolean;
 }
 
 const COVERED_AREAS: Record<string, AreaInfo> = {
-  // Birmingham Central & East (Headquarters Hub)
-  'B10': { name: 'Small Heath & Bordesley Green (HQ Hub)', tier: 'same-day', travelTime: '5-15 mins', freeSurvey: true },
-  'B9': { name: 'Bordesley & Small Heath', tier: 'same-day', travelTime: '10 mins', freeSurvey: true },
-  'B11': { name: 'Sparkhill & Tyseley', tier: 'same-day', travelTime: '10 mins', freeSurvey: true },
-  'B12': { name: 'Balsall Heath & Highgate', tier: 'same-day', travelTime: '15 mins', freeSurvey: true },
-  'B1': { name: 'Birmingham City Centre & Bullring', tier: 'same-day', travelTime: '15 mins', freeSurvey: true },
-  'B2': { name: 'Birmingham Central', tier: 'same-day', travelTime: '15 mins', freeSurvey: true },
-  'B3': { name: 'Jewellery Quarter / City Centre', tier: 'same-day', travelTime: '15 mins', freeSurvey: true },
-  'B4': { name: 'Aston Triangle / City Centre', tier: 'same-day', travelTime: '15 mins', freeSurvey: true },
-  'B5': { name: 'Digbeth & Southside', tier: 'same-day', travelTime: '12 mins', freeSurvey: true },
-
-  // South Birmingham & Solihull
-  'B13': { name: 'Moseley', tier: 'same-day', travelTime: '15 mins', freeSurvey: true },
-  'B14': { name: 'Kings Heath & Druids Heath', tier: 'same-day', travelTime: '20 mins', freeSurvey: true },
-  'B15': { name: 'Edgbaston', tier: 'same-day', travelTime: '20 mins', freeSurvey: true },
-  'B17': { name: 'Harborne', tier: 'same-day', travelTime: '20 mins', freeSurvey: true },
-  'B25': { name: 'Yardley & Stechford', tier: 'same-day', travelTime: '10 mins', freeSurvey: true },
-  'B26': { name: 'Sheldon & Airport Area', tier: 'same-day', travelTime: '15 mins', freeSurvey: true },
-  'B27': { name: 'Acocks Green', tier: 'same-day', travelTime: '12 mins', freeSurvey: true },
-  'B28': { name: 'Hall Green', tier: 'same-day', travelTime: '15 mins', freeSurvey: true },
-  'B29': { name: 'Selly Oak & University', tier: 'same-day', travelTime: '20 mins', freeSurvey: true },
-  'B30': { name: 'Bournville & Cotteridge', tier: 'same-day', travelTime: '25 mins', freeSurvey: true },
-  'B31': { name: 'Northfield & Longbridge', tier: 'same-day', travelTime: '25 mins', freeSurvey: true },
-  'B32': { name: 'Quinton & Woodgate', tier: 'same-day', travelTime: '25 mins', freeSurvey: true },
-  'B90': { name: 'Shirley & Solihull South', tier: 'same-day', travelTime: '20 mins', freeSurvey: true },
-  'B91': { name: 'Solihull Town Centre & Olton', tier: 'same-day', travelTime: '20 mins', freeSurvey: true },
-  'B92': { name: 'Olton & Solihull North', tier: 'same-day', travelTime: '15 mins', freeSurvey: true },
-  'B93': { name: 'Knowle & Dorridge', tier: 'same-day', travelTime: '25 mins', freeSurvey: true },
-  'B94': { name: 'Hockley Heath & Lapworth', tier: 'standard', travelTime: '30 mins', freeSurvey: true },
-
-  // North Birmingham & Sutton Coldfield
-  'B23': { name: 'Erdington & Short Heath', tier: 'same-day', travelTime: '20 mins', freeSurvey: true },
-  'B24': { name: 'Erdington & Castle Vale', tier: 'same-day', travelTime: '15 mins', freeSurvey: true },
-  'B42': { name: 'Perry Barr', tier: 'same-day', travelTime: '20 mins', freeSurvey: true },
-  'B43': { name: 'Great Barr', tier: 'same-day', travelTime: '25 mins', freeSurvey: true },
-  'B44': { name: 'Kingstanding', tier: 'same-day', travelTime: '25 mins', freeSurvey: true },
-  'B72': { name: 'Sutton Coldfield Town', tier: 'same-day', travelTime: '25 mins', freeSurvey: true },
-  'B73': { name: 'Boldmere & Sutton Park', tier: 'same-day', travelTime: '25 mins', freeSurvey: true },
-  'B74': { name: 'Four Oaks & Streetly', tier: 'same-day', travelTime: '30 mins', freeSurvey: true },
-  'B75': { name: 'Roughley & Falcon Lodge', tier: 'same-day', travelTime: '30 mins', freeSurvey: true },
-  'B76': { name: 'Walmley & Minworth', tier: 'same-day', travelTime: '20 mins', freeSurvey: true },
-
-  // Black Country & West Midlands
-  'B62': { name: 'Halesowen', tier: 'standard', travelTime: '30 mins', freeSurvey: true },
-  'B63': { name: 'Halesowen & Cradley', tier: 'standard', travelTime: '30 mins', freeSurvey: true },
-  'B66': { name: 'Smethwick', tier: 'same-day', travelTime: '20 mins', freeSurvey: true },
-  'B67': { name: 'Smethwick & Bearwood', tier: 'same-day', travelTime: '20 mins', freeSurvey: true },
-  'B68': { name: 'Oldbury', tier: 'same-day', travelTime: '25 mins', freeSurvey: true },
-  'B70': { name: 'West Bromwich', tier: 'same-day', travelTime: '25 mins', freeSurvey: true },
-  'B71': { name: 'West Bromwich North', tier: 'same-day', travelTime: '25 mins', freeSurvey: true },
-  'DY1': { name: 'Dudley Central', tier: 'standard', travelTime: '35 mins', freeSurvey: true },
-  'DY8': { name: 'Stourbridge', tier: 'standard', travelTime: '40 mins', freeSurvey: true },
-  'WS1': { name: 'Walsall Town Centre', tier: 'standard', travelTime: '30 mins', freeSurvey: true },
-  'WS5': { name: 'Walsall & Bescot', tier: 'standard', travelTime: '25 mins', freeSurvey: true },
-  'WS13': { name: 'Lichfield', tier: 'standard', travelTime: '40 mins', freeSurvey: true },
-  'WV1': { name: 'Wolverhampton Central', tier: 'standard', travelTime: '40 mins', freeSurvey: true },
-  'CV1': { name: 'Coventry Central', tier: 'standard', travelTime: '35 mins', freeSurvey: true },
-  'CV3': { name: 'Coventry South', tier: 'standard', travelTime: '35 mins', freeSurvey: true },
+  'B10': { name: 'Small Heath & Bordesley Green', travelTime: '5-15 mins' },
+  'B9': { name: 'Bordesley & Small Heath', travelTime: '10 mins' },
+  'B11': { name: 'Sparkhill & Tyseley', travelTime: '10 mins' },
+  'B12': { name: 'Balsall Heath & Highgate', travelTime: '15 mins' },
+  'B1': { name: 'Birmingham City Centre', travelTime: '15 mins' },
+  'B2': { name: 'Birmingham Central', travelTime: '15 mins' },
+  'B3': { name: 'Jewellery Quarter', travelTime: '15 mins' },
+  'B4': { name: 'Aston / City Centre', travelTime: '15 mins' },
+  'B5': { name: 'Digbeth & Southside', travelTime: '12 mins' },
+  'B13': { name: 'Moseley', travelTime: '15 mins' },
+  'B14': { name: 'Kings Heath', travelTime: '20 mins' },
+  'B15': { name: 'Edgbaston', travelTime: '20 mins' },
+  'B17': { name: 'Harborne', travelTime: '20 mins' },
+  'B25': { name: 'Yardley & Stechford', travelTime: '10 mins' },
+  'B26': { name: 'Sheldon & Airport Area', travelTime: '15 mins' },
+  'B27': { name: 'Acocks Green', travelTime: '12 mins' },
+  'B28': { name: 'Hall Green', travelTime: '15 mins' },
+  'B29': { name: 'Selly Oak', travelTime: '20 mins' },
+  'B30': { name: 'Bournville', travelTime: '25 mins' },
+  'B31': { name: 'Northfield', travelTime: '25 mins' },
+  'B32': { name: 'Quinton', travelTime: '25 mins' },
+  'B90': { name: 'Shirley & Solihull South', travelTime: '20 mins' },
+  'B91': { name: 'Solihull Town Centre', travelTime: '20 mins' },
+  'B92': { name: 'Olton & Solihull North', travelTime: '15 mins' },
+  'B93': { name: 'Knowle & Dorridge', travelTime: '25 mins' },
+  'B23': { name: 'Erdington', travelTime: '20 mins' },
+  'B24': { name: 'Castle Vale', travelTime: '15 mins' },
+  'B72': { name: 'Sutton Coldfield', travelTime: '25 mins' },
+  'B73': { name: 'Boldmere & Sutton Park', travelTime: '25 mins' },
+  'B74': { name: 'Four Oaks & Streetly', travelTime: '30 mins' },
+  'B76': { name: 'Walmley & Minworth', travelTime: '20 mins' },
+  'B62': { name: 'Halesowen', travelTime: '30 mins' },
+  'B66': { name: 'Smethwick', travelTime: '20 mins' },
+  'B70': { name: 'West Bromwich', travelTime: '25 mins' },
+  'DY1': { name: 'Dudley', travelTime: '35 mins' },
+  'WS1': { name: 'Walsall', travelTime: '30 mins' },
+  'WV1': { name: 'Wolverhampton', travelTime: '40 mins' },
+  'CV1': { name: 'Coventry', travelTime: '35 mins' },
 };
 
 export default function PostcodeChecker() {
   const [input, setInput] = useState('');
   const [isMinimized, setIsMinimized] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedAreaText, setSelectedAreaText] = useState('');
+  const [checkedResult, setCheckedResult] = useState<{
+    postcode: string;
+    areaName: string;
+    travelTime: string;
+    isCovered: boolean;
+  } | null>(null);
 
-  // Booking Modal Form State
+  // Modal State
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [bookingForm, setBookingForm] = useState({
     name: '',
     phone: '',
@@ -89,12 +72,16 @@ export default function PostcodeChecker() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const checkAndOpenModal = (query: string) => {
+  // STEP 1: Check Availability
+  const handleCheck = (query: string) => {
     const cleaned = query.trim().toUpperCase();
     if (!cleaned) {
-      setBookingForm((prev) => ({ ...prev, postcode: 'B10' }));
-      setSelectedAreaText('Small Heath (B10 Hub)');
-      setIsModalOpen(true);
+      setCheckedResult({
+        postcode: 'B10',
+        areaName: 'Small Heath (HQ Hub)',
+        travelTime: '5-15 mins',
+        isCovered: true,
+      });
       return;
     }
 
@@ -102,12 +89,45 @@ export default function PostcodeChecker() {
     const outcode = match ? match[1] : cleaned;
     const area = COVERED_AREAS[outcode];
 
-    const areaLabel = area ? `${area.name} (${outcode})` : `${cleaned} (West Midlands)`;
-    setSelectedAreaText(areaLabel);
+    if (area) {
+      setCheckedResult({
+        postcode: outcode,
+        areaName: area.name,
+        travelTime: area.travelTime,
+        isCovered: true,
+      });
+    } else if (
+      cleaned.startsWith('B') ||
+      cleaned.startsWith('WS') ||
+      cleaned.startsWith('DY') ||
+      cleaned.startsWith('WV') ||
+      cleaned.startsWith('CV')
+    ) {
+      setCheckedResult({
+        postcode: outcode,
+        areaName: 'Greater Birmingham Area',
+        travelTime: '25-40 mins',
+        isCovered: true,
+      });
+    } else {
+      setCheckedResult({
+        postcode: cleaned,
+        areaName: 'Extended UK Radius',
+        travelTime: 'Bespoke booking',
+        isCovered: true,
+      });
+    }
+  };
+
+  // STEP 2: Open Booking Modal (Triggered ONLY after checking or clicking book)
+  const openModalWithCheckedArea = () => {
+    const currentCode = checkedResult?.postcode || input.trim().toUpperCase() || 'B10';
+    const areaLabel = checkedResult?.areaName ? `${checkedResult.areaName} (${currentCode})` : currentCode;
+
     setBookingForm((prev) => ({
       ...prev,
-      postcode: cleaned,
-      message: `Requested Mobile Showroom consultation for area: ${areaLabel}`,
+      postcode: currentCode,
+      message: `Requested Free Survey for ${areaLabel}`,
     }));
     setIsModalOpen(true);
   };
@@ -126,13 +146,12 @@ export default function PostcodeChecker() {
           email: bookingForm.email || null,
           service: `Free Survey: ${bookingForm.service}`,
           room_size: `Postcode: ${bookingForm.postcode}`,
-          message: `Slot: ${bookingForm.preferredSlot}. ${bookingForm.message || ''}`.trim(),
+          message: `Preferred Slot: ${bookingForm.preferredSlot}. ${bookingForm.message || ''}`.trim(),
           source: 'mobile_showroom_dock',
         }),
       });
       setIsSuccess(true);
     } catch {
-      // Continue gracefully
       setIsSuccess(true);
     } finally {
       setIsSubmitting(false);
@@ -142,108 +161,137 @@ export default function PostcodeChecker() {
   return (
     <>
       {/* =========================================================================
-          STICKY BOTTOM DOCK (APPLE / LUXURY TESLA FLOATING BAR)
+          SLEEK COMPACT BOTTOM FLOATING DOCK (SINGLE SLIM ROW ~48px)
           ========================================================================= */}
-      <div className={`zk-sticky-dock-container ${isMinimized ? 'zk-dock-minimized' : ''}`}>
-        <div className="zk-sticky-dock-inner">
-          
-          {/* Left: Van Indicator & Title */}
-          <div className="zk-dock-left">
-            <div className="zk-van-pulse-badge">
-              <span className="zk-pulse-dot"></span>
-              <i className="fa-solid fa-van-shuttle" style={{ color: '#AA771C' }}></i>
-              <span className="zk-dock-badge-text">Mobile Showroom Active</span>
+      {!isMinimized && (
+        <div className="zk-slim-dock-wrapper">
+          <div className="zk-slim-dock-bar">
+            
+            {/* Left: Mobile Van Icon & Title */}
+            <div className="zk-slim-dock-brand">
+              <span className="zk-slim-van-icon">
+                <i className="fa-solid fa-van-shuttle"></i>
+              </span>
+              <div className="zk-slim-brand-text">
+                <strong>Free Home Survey</strong>
+                <span>Birmingham &amp; West Midlands</span>
+              </div>
             </div>
-            <div className="zk-dock-heading">
-              <strong>Free In-Home Survey &amp; Laser Measuring</strong>
-              <span className="zk-dock-sub">We bring 200+ samples to your doorstep across Birmingham</span>
-            </div>
-          </div>
 
-          {/* Center: Clean High-Contrast Postcode Input */}
-          <div className="zk-dock-center">
-            <div className="zk-dock-input-wrap">
-              <i className="fa-solid fa-location-dot zk-dock-pin-icon"></i>
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault();
-                    checkAndOpenModal(input);
-                  }
+            {/* Middle: Check Input OR Verified Result */}
+            {!checkedResult ? (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleCheck(input);
                 }}
-                placeholder="Enter UK Postcode (e.g. B10, B91, Solihull)..."
-                className="zk-dock-clean-input"
-              />
+                className="zk-slim-input-form"
+              >
+                <div className="zk-slim-input-box">
+                  <i className="fa-solid fa-location-dot zk-slim-pin"></i>
+                  <input
+                    type="text"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder="Enter Postcode (e.g. B10, B91, Solihull)..."
+                    className="zk-slim-clean-input"
+                  />
+                  <button type="submit" className="zk-slim-check-btn">
+                    Check
+                  </button>
+                </div>
+
+                {/* Micro Quick Pills */}
+                <div className="zk-slim-micro-pills d-none d-lg-flex">
+                  {['B10', 'B91 Solihull', 'B13', 'B73'].map((code) => (
+                    <button
+                      key={code}
+                      type="button"
+                      onClick={() => {
+                        const raw = code.split(' ')[0];
+                        setInput(raw);
+                        handleCheck(raw);
+                      }}
+                      className="zk-slim-micro-pill"
+                    >
+                      {code}
+                    </button>
+                  ))}
+                </div>
+              </form>
+            ) : (
+              /* Verified Result State (Check Successful!) */
+              <div className="zk-slim-verified-box">
+                <span className="zk-slim-check-icon">
+                  <i className="fa-solid fa-circle-check"></i>
+                </span>
+                <span className="zk-slim-verified-text">
+                  Available in <strong>{checkedResult.areaName} ({checkedResult.postcode})</strong>
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setCheckedResult(null)}
+                  className="zk-slim-recheck-link"
+                >
+                  Change
+                </button>
+              </div>
+            )}
+
+            {/* Right: STEP 2 - Book Free Survey CTA (Appears after Check or 1-Click) */}
+            <div className="zk-slim-dock-actions">
+              {checkedResult ? (
+                <button
+                  type="button"
+                  onClick={openModalWithCheckedArea}
+                  className="zk-slim-book-btn highlight"
+                >
+                  <i className="fa-solid fa-calendar-check"></i>
+                  <span>Book Free Survey in {checkedResult.postcode}</span>
+                  <i className="fa-solid fa-arrow-right"></i>
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => handleCheck(input || 'B10')}
+                  className="zk-slim-book-btn"
+                >
+                  <i className="fa-solid fa-calendar-check"></i>
+                  <span>Book Survey</span>
+                </button>
+              )}
+
+              {/* Minimize button */}
               <button
                 type="button"
-                onClick={() => checkAndOpenModal(input)}
-                className="zk-dock-check-btn"
+                onClick={() => setIsMinimized(true)}
+                className="zk-slim-close-btn"
+                title="Minimize bar"
               >
-                <span>Check</span>
-                <i className="fa-solid fa-arrow-right"></i>
+                <i className="fa-solid fa-xmark"></i>
               </button>
             </div>
-
-            {/* Quick Area Badges */}
-            <div className="zk-dock-quick-pills">
-              {['B10 Small Heath', 'B91 Solihull', 'B13 Moseley', 'B73 Sutton'].map((pill) => (
-                <button
-                  key={pill}
-                  type="button"
-                  onClick={() => {
-                    const code = pill.split(' ')[0];
-                    setInput(code);
-                    checkAndOpenModal(code);
-                  }}
-                  className="zk-dock-pill-btn"
-                >
-                  {pill}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Right: Primary Book Button & Minimize */}
-          <div className="zk-dock-right">
-            <button
-              type="button"
-              onClick={() => checkAndOpenModal(input || 'B10')}
-              className="zk-dock-book-cta"
-            >
-              <i className="fa-solid fa-calendar-check"></i>
-              <span>Book Free Survey</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setIsMinimized(!isMinimized)}
-              className="zk-dock-toggle-btn"
-              title={isMinimized ? 'Expand Dock' : 'Minimize Dock'}
-            >
-              <i className={`fa-solid ${isMinimized ? 'fa-chevron-up' : 'fa-minus'}`}></i>
-            </button>
           </div>
         </div>
-      </div>
+      )}
 
-      {/* Floating Re-open Button when minimized */}
+      {/* =========================================================================
+          RE-OPEN CHIP (Positioned Bottom-Left to NEVER overlap the chat widget!)
+          ========================================================================= */}
       {isMinimized && (
         <button
           type="button"
           onClick={() => setIsMinimized(false)}
-          className="zk-dock-reopen-btn"
-          title="Open Mobile Showroom Booking Dock"
+          className="zk-slim-reopen-chip"
+          title="Open Free Home Survey Checker"
         >
           <i className="fa-solid fa-van-shuttle"></i>
-          <span>Book Free Home Survey</span>
+          <span>Free Home Survey</span>
         </button>
       )}
 
       {/* =========================================================================
-          INTERACTIVE SURVEY BOOKING MODAL (AUTO-SYNCS TO ADMIN CRM)
+          INTERACTIVE SURVEY BOOKING MODAL (100% PRO & FAST)
           ========================================================================= */}
       {isModalOpen && (
         <div className="zk-survey-modal-overlay" onClick={() => setIsModalOpen(false)}>
@@ -260,12 +308,12 @@ export default function PostcodeChecker() {
                     100% Free &amp; No Obligation
                   </span>
                 </div>
-                <h3 style={{ fontSize: '20px', fontWeight: 800, color: '#16120B', margin: 0 }}>
+                <h3 style={{ fontSize: '19px', fontWeight: 800, color: '#16120B', margin: 0 }}>
                   Book Free In-Home Survey &amp; Sample Box
                 </h3>
-                {selectedAreaText && (
-                  <p style={{ fontSize: '13px', color: '#8a6820', fontWeight: 700, margin: '4px 0 0' }}>
-                    📍 Area: {selectedAreaText}
+                {checkedResult && (
+                  <p style={{ fontSize: '12.5px', color: '#8a6820', fontWeight: 700, margin: '3px 0 0' }}>
+                    📍 Location: {checkedResult.areaName} ({checkedResult.postcode})
                   </p>
                 )}
               </div>
@@ -285,17 +333,18 @@ export default function PostcodeChecker() {
                 <div className="zk-success-icon-circle">
                   <i className="fa-solid fa-check"></i>
                 </div>
-                <h4 style={{ fontSize: '20px', fontWeight: 800, color: '#16120B', marginBottom: '8px' }}>
-                  Survey Appointment Requested!
+                <h4 style={{ fontSize: '19px', fontWeight: 800, color: '#16120B', marginBottom: '8px' }}>
+                  Survey Request Confirmed!
                 </h4>
-                <p style={{ fontSize: '14px', color: '#635E57', maxWidth: '440px', margin: '0 auto 20px', lineHeight: 1.5 }}>
-                  Thank you, <strong>{bookingForm.name}</strong>. Your request has been dispatched directly to our master fitting coordinator. We will call you shortly at <strong>{bookingForm.phone}</strong> to confirm your slot.
+                <p style={{ fontSize: '13.5px', color: '#635E57', maxWidth: '420px', margin: '0 auto 18px', lineHeight: 1.5 }}>
+                  Thank you, <strong>{bookingForm.name}</strong>. Our fitting specialist will call you shortly at <strong>{bookingForm.phone}</strong> to confirm your appointment time and sample preferences.
                 </p>
                 <button
                   type="button"
                   onClick={() => {
                     setIsModalOpen(false);
                     setIsSuccess(false);
+                    setCheckedResult(null);
                     setBookingForm({
                       name: '',
                       phone: '',
@@ -306,16 +355,15 @@ export default function PostcodeChecker() {
                       message: '',
                     });
                   }}
-                  className="zk-dock-book-cta"
-                  style={{ margin: '0 auto' }}
+                  className="zk-slim-book-btn highlight"
+                  style={{ margin: '0 auto', padding: '9px 24px' }}
                 >
-                  Done &amp; Close
+                  Done
                 </button>
               </div>
             ) : (
               <form onSubmit={handleBookingSubmit} className="zk-survey-form">
-                
-                <div className="row g-3">
+                <div className="row g-2.5">
                   {/* Name */}
                   <div className="col-md-6">
                     <label className="zk-form-label">Full Name *</label>
@@ -406,19 +454,19 @@ export default function PostcodeChecker() {
                         <option value="Morning (9:00 AM - 12:00 PM)">Morning (9:00 AM - 12:00 PM)</option>
                         <option value="Afternoon (12:00 PM - 4:00 PM)">Afternoon (12:00 PM - 4:00 PM)</option>
                         <option value="Evening (4:00 PM - 7:00 PM)">Evening (4:00 PM - 7:00 PM)</option>
-                        <option value="Saturday Morning">Saturday Morning Slot</option>
-                        <option value="Urgent / Same-Day Consultation">Urgent / Same-Day Consultation</option>
+                        <option value="Saturday Morning">Saturday Morning</option>
+                        <option value="Urgent / Same-Day">Urgent / Same-Day</option>
                       </select>
                     </div>
                   </div>
 
-                  {/* Optional Notes */}
+                  {/* Notes */}
                   <div className="col-12">
                     <label className="zk-form-label">Special Notes / Rooms to Measure</label>
                     <div className="zk-modal-input-wrap textarea-wrap">
                       <textarea
                         rows={2}
-                        placeholder="e.g. Looking to measure living room and hallway, bring oak herringbone samples..."
+                        placeholder="e.g. Living room & hallway measuring, bring oak samples..."
                         value={bookingForm.message}
                         onChange={(e) => setBookingForm({ ...bookingForm, message: e.target.value })}
                       ></textarea>
@@ -428,8 +476,8 @@ export default function PostcodeChecker() {
 
                 {/* Footer Buttons */}
                 <div className="d-flex align-items-center justify-content-between pt-3 mt-3 border-top">
-                  <div style={{ fontSize: '11.5px', color: '#666' }}>
-                    🔒 Zero spam &bull; Direct master fitter appointment
+                  <div style={{ fontSize: '11px', color: '#777' }}>
+                    🔒 100% Free &bull; No Obligation
                   </div>
 
                   <div className="d-flex align-items-center gap-2">
@@ -443,17 +491,17 @@ export default function PostcodeChecker() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="zk-dock-book-cta"
+                      className="zk-slim-book-btn highlight"
                     >
                       {isSubmitting ? (
                         <>
                           <i className="fa-solid fa-spinner fa-spin"></i>
-                          <span>Dispatching...</span>
+                          <span>Sending...</span>
                         </>
                       ) : (
                         <>
                           <i className="fa-solid fa-paper-plane"></i>
-                          <span>Confirm Free Survey Booking</span>
+                          <span>Confirm Booking</span>
                         </>
                       )}
                     </button>
