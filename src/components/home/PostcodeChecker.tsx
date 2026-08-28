@@ -37,19 +37,18 @@ const COVERED_AREAS: Record<string, AreaInfo> = {
   'CV1': { name: 'Coventry', travelTime: '35 mins' },
 };
 
-const POPULAR_FLOORING = [
-  'LVT & Herringbone',
-  'Carpet & Underlay',
-  'Engineered Hardwood',
-  'Laminate Flooring',
-  'Commercial Safety',
+const FLOORING_GRID_ITEMS = [
+  { id: 'LVT & Herringbone', label: 'LVT & Herringbone', icon: 'fa-cubes-stacked' },
+  { id: 'Carpet & Underlay', label: 'Carpet & Underlay', icon: 'fa-rug' },
+  { id: 'Engineered Hardwood', label: 'Engineered Wood', icon: 'fa-tree' },
+  { id: 'Laminate Flooring', label: 'Laminate Floors', icon: 'fa-layer-group' },
 ];
 
-const TIME_SLOTS = [
-  { id: 'Morning (9am - 12pm)', label: 'Morning (9am – 12pm)', icon: 'fa-sun' },
-  { id: 'Afternoon (12pm - 4pm)', label: 'Afternoon (12pm – 4pm)', icon: 'fa-cloud-sun' },
-  { id: 'Evening (4pm - 7pm)', label: 'Evening (4pm – 7pm)', icon: 'fa-moon' },
-  { id: 'Saturday VIP Slot', label: 'Saturday Slot', icon: 'fa-calendar-check' },
+const TIME_SLOT_GRID_ITEMS = [
+  { id: 'Morning (9am - 12pm)', label: 'Morning', sub: '9am – 12pm', icon: 'fa-sun' },
+  { id: 'Afternoon (12pm - 4pm)', label: 'Afternoon', sub: '12pm – 4pm', icon: 'fa-cloud-sun' },
+  { id: 'Evening (4pm - 7pm)', label: 'Evening', sub: '4pm – 7pm', icon: 'fa-moon' },
+  { id: 'Saturday VIP Slot', label: 'Saturday Slot', sub: 'Weekend VIP', icon: 'fa-calendar-check' },
 ];
 
 export default function PostcodeChecker() {
@@ -143,7 +142,7 @@ export default function PostcodeChecker() {
   return (
     <>
       {/* =========================================================================
-          STICKY BOTTOM FLOATING DOCK (CLEAN & SLIM)
+          STICKY BOTTOM FLOATING DOCK (SLIM & BALANCED)
           ========================================================================= */}
       {!isMinimized && (
         <aside aria-label="Mobile showroom booking" className="zk-sticky-dock-bar-wrap">
@@ -267,7 +266,7 @@ export default function PostcodeChecker() {
       )}
 
       {/* =========================================================================
-          ULTRA-CLEAN MINIMALIST MODAL (FAST, ELEGANT & HIGH CONVERTING)
+          PERFECTLY ALIGNED & STRUCTURED LUXURY MODAL (100% SYMMETRICAL)
           ========================================================================= */}
       {isModalOpen && (
         <div className="zk-minimal-modal-overlay" onClick={() => setIsModalOpen(false)}>
@@ -323,96 +322,97 @@ export default function PostcodeChecker() {
                   </div>
                   <h3>Book Free In-Home Survey</h3>
                   <p>
-                    We bring <strong>200+ samples &amp; laser measuring</strong> directly to your door in <strong>{formData.postcode || 'Birmingham'}</strong>.
+                    We bring <strong>200+ physical samples &amp; laser measuring</strong> directly to your property in <strong>{formData.postcode || 'Birmingham'}</strong>.
                   </p>
                 </div>
 
-                {/* 1. Flooring Selection (Pills) */}
+                {/* 1. Symmetrical 2x2 Flooring Grid */}
                 <div className="zk-minimal-field">
-                  <label>Flooring Type Needed</label>
-                  <div className="zk-minimal-pills">
-                    {POPULAR_FLOORING.map((item) => (
+                  <label className="zk-field-label">Flooring Type Needed</label>
+                  <div className="zk-grid-2x2">
+                    {FLOORING_GRID_ITEMS.map((item) => (
                       <button
-                        key={item}
+                        key={item.id}
                         type="button"
-                        onClick={() => setFormData({ ...formData, flooring: item })}
-                        className={`zk-minimal-pill ${
-                          formData.flooring === item ? 'active' : ''
+                        onClick={() => setFormData({ ...formData, flooring: item.id })}
+                        className={`zk-card-choice ${
+                          formData.flooring === item.id ? 'active' : ''
                         }`}
                       >
-                        {item}
+                        <i className={`fa-solid ${item.icon}`}></i>
+                        <span>{item.label}</span>
                       </button>
                     ))}
                   </div>
                 </div>
 
-                {/* 2. Time Slot Selection (Pills - No ugly dropdown!) */}
+                {/* 2. Symmetrical 2x2 Time Slot Grid */}
                 <div className="zk-minimal-field">
-                  <label>Preferred Time Slot</label>
-                  <div className="zk-minimal-pills">
-                    {TIME_SLOTS.map((slot) => (
+                  <label className="zk-field-label">Preferred Time Slot</label>
+                  <div className="zk-grid-2x2">
+                    {TIME_SLOT_GRID_ITEMS.map((slot) => (
                       <button
                         key={slot.id}
                         type="button"
                         onClick={() => setFormData({ ...formData, preferredTime: slot.id })}
-                        className={`zk-minimal-pill ${
+                        className={`zk-card-choice ${
                           formData.preferredTime === slot.id ? 'active' : ''
                         }`}
                       >
-                        <i className={`fa-solid ${slot.icon}`} style={{ marginRight: '6px' }}></i>
-                        {slot.label}
+                        <i className={`fa-solid ${slot.icon}`}></i>
+                        <div>
+                          <strong>{slot.label}</strong>
+                          <small>{slot.sub}</small>
+                        </div>
                       </button>
                     ))}
                   </div>
                 </div>
 
-                {/* 3. Name, Phone & Postcode */}
-                <div className="row g-2.5">
-                  <div className="col-12">
-                    <div className="zk-minimal-input-wrap">
-                      <label>Full Name *</label>
-                      <div className="zk-minimal-input-box">
-                        <i className="fa-solid fa-user"></i>
-                        <input
-                          type="text"
-                          required
-                          placeholder="James Wilson"
-                          value={formData.name}
-                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        />
-                      </div>
+                {/* 3. Inputs (Full Name + 2-Column Phone/Postcode) */}
+                <div className="zk-minimal-inputs-grid">
+                  {/* Full Name */}
+                  <div className="zk-input-row full">
+                    <label className="zk-field-label">Full Name *</label>
+                    <div className="zk-input-box-styled">
+                      <i className="fa-solid fa-user"></i>
+                      <input
+                        type="text"
+                        required
+                        placeholder="James Wilson"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      />
                     </div>
                   </div>
 
-                  <div className="col-md-6">
-                    <div className="zk-minimal-input-wrap">
-                      <label>UK Phone Number *</label>
-                      <div className="zk-minimal-input-box">
-                        <i className="fa-solid fa-phone"></i>
-                        <input
-                          type="tel"
-                          required
-                          placeholder="07700 900123"
-                          value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        />
-                      </div>
+                  {/* UK Phone Number */}
+                  <div className="zk-input-row half">
+                    <label className="zk-field-label">UK Phone Number *</label>
+                    <div className="zk-input-box-styled">
+                      <i className="fa-solid fa-phone"></i>
+                      <input
+                        type="tel"
+                        required
+                        placeholder="07700 900123"
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      />
                     </div>
                   </div>
 
-                  <div className="col-md-6">
-                    <div className="zk-minimal-input-wrap">
-                      <label>Postcode *</label>
-                      <div className="zk-minimal-input-box">
-                        <i className="fa-solid fa-location-dot"></i>
-                        <input
-                          type="text"
-                          required
-                          placeholder="B91 3AB"
-                          value={formData.postcode}
-                          onChange={(e) => setFormData({ ...formData, postcode: e.target.value })}
-                        />
-                      </div>
+                  {/* UK Postcode */}
+                  <div className="zk-input-row half">
+                    <label className="zk-field-label">UK Postcode *</label>
+                    <div className="zk-input-box-styled">
+                      <i className="fa-solid fa-location-dot"></i>
+                      <input
+                        type="text"
+                        required
+                        placeholder="B91 3AB"
+                        value={formData.postcode}
+                        onChange={(e) => setFormData({ ...formData, postcode: e.target.value })}
+                      />
                     </div>
                   </div>
                 </div>
@@ -439,7 +439,7 @@ export default function PostcodeChecker() {
 
                 {/* Trust Footer */}
                 <div className="zk-minimal-trust">
-                  <i className="fa-solid fa-shield-check"></i>
+                  <i className="fa-solid fa-circle-check"></i>
                   <span>100% Free &bull; Zero Purchase Obligation &bull; Instant Confirmation</span>
                 </div>
               </form>
