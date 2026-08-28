@@ -243,6 +243,7 @@ export default function AIFlooringChatbot() {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             aria-label="Open Flooring AI Assistant"
+            className="zk-clean-ai-trigger-btn"
             style={{
               width: '58px',
               height: '58px',
@@ -876,10 +877,14 @@ export default function AIFlooringChatbot() {
           0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
           40% { opacity: 1; transform: scale(1.15); }
         }
-        @media (max-width: 480px) {
+        @media (max-width: 1024px) {
           .zk-clean-ai-root {
-            bottom: 16px !important;
+            bottom: 74px !important;
             right: 16px !important;
+          }
+          .zk-clean-ai-trigger-btn {
+            width: 48px !important;
+            height: 48px !important;
           }
         }
       `}</style>
