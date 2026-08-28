@@ -45,6 +45,13 @@ const POPULAR_FLOORING = [
   'Commercial Safety',
 ];
 
+const TIME_SLOTS = [
+  { id: 'Morning (9am - 12pm)', label: 'Morning (9am – 12pm)', icon: 'fa-sun' },
+  { id: 'Afternoon (12pm - 4pm)', label: 'Afternoon (12pm – 4pm)', icon: 'fa-cloud-sun' },
+  { id: 'Evening (4pm - 7pm)', label: 'Evening (4pm – 7pm)', icon: 'fa-moon' },
+  { id: 'Saturday VIP Slot', label: 'Saturday Slot', icon: 'fa-calendar-check' },
+];
+
 export default function PostcodeChecker() {
   const [input, setInput] = useState('');
   const [isMinimized, setIsMinimized] = useState(false);
@@ -320,7 +327,7 @@ export default function PostcodeChecker() {
                   </p>
                 </div>
 
-                {/* Flooring Pills */}
+                {/* 1. Flooring Selection (Pills) */}
                 <div className="zk-minimal-field">
                   <label>Flooring Type Needed</label>
                   <div className="zk-minimal-pills">
@@ -339,7 +346,27 @@ export default function PostcodeChecker() {
                   </div>
                 </div>
 
-                {/* Name & Phone */}
+                {/* 2. Time Slot Selection (Pills - No ugly dropdown!) */}
+                <div className="zk-minimal-field">
+                  <label>Preferred Time Slot</label>
+                  <div className="zk-minimal-pills">
+                    {TIME_SLOTS.map((slot) => (
+                      <button
+                        key={slot.id}
+                        type="button"
+                        onClick={() => setFormData({ ...formData, preferredTime: slot.id })}
+                        className={`zk-minimal-pill ${
+                          formData.preferredTime === slot.id ? 'active' : ''
+                        }`}
+                      >
+                        <i className={`fa-solid ${slot.icon}`} style={{ marginRight: '6px' }}></i>
+                        {slot.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 3. Name, Phone & Postcode */}
                 <div className="row g-2.5">
                   <div className="col-12">
                     <div className="zk-minimal-input-wrap">
@@ -385,27 +412,6 @@ export default function PostcodeChecker() {
                           value={formData.postcode}
                           onChange={(e) => setFormData({ ...formData, postcode: e.target.value })}
                         />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Time Slot Select */}
-                  <div className="col-12">
-                    <div className="zk-minimal-input-wrap">
-                      <label>Preferred Time Slot</label>
-                      <div className="zk-minimal-input-box">
-                        <i className="fa-solid fa-clock"></i>
-                        <select
-                          value={formData.preferredTime}
-                          onChange={(e) =>
-                            setFormData({ ...formData, preferredTime: e.target.value })
-                          }
-                        >
-                          <option value="Morning (9am - 12pm)">Morning (9:00 AM – 12:00 PM)</option>
-                          <option value="Afternoon (12pm - 4pm)">Afternoon (12:00 PM – 4:00 PM)</option>
-                          <option value="Evening (4pm - 7pm)">Evening (4:00 PM – 7:00 PM)</option>
-                          <option value="Saturday VIP Slot">Saturday Weekend Appointment</option>
-                        </select>
                       </div>
                     </div>
                   </div>
