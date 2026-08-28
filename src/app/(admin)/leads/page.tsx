@@ -68,7 +68,8 @@ export default function LeadsCRMPage() {
   const [totalPages, setTotalPages] = useState(1);
   const [total, setTotal] = useState(0);
 
-  const [viewMode, setViewMode] = useState<"kanban" | "table">("kanban");
+  const [viewMode, setViewMode] = useState<"kanban" | "table" | "calendar">("kanban");
+  const [calendarDate, setCalendarDate] = useState(new Date());
   const [quoteModalLead, setQuoteModalLead] = useState<Lead | null>(null);
   const [draggingLeadId, setDraggingLeadId] = useState<string | null>(null);
   const [dragOverColumn, setDragOverColumn] = useState<string | null>(null);
@@ -444,6 +445,18 @@ export default function LeadsCRMPage() {
                   <List className="w-3.5 h-3.5" />
                   Table List
                 </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode("calendar")}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    viewMode === "calendar"
+                      ? "bg-[#16120B] text-[#FCF6BA] shadow-sm"
+                      : "text-gray-600 hover:text-black"
+                  }`}
+                >
+                  <Calendar className="w-3.5 h-3.5" />
+                  Calendar Schedule
+                </button>
               </div>
 
               {/* Source Filter */}
@@ -780,6 +793,190 @@ export default function LeadsCRMPage() {
               })}
             </div>
           </div>
+        ) : viewMode === "calendar" ? (
+          /* ==========================================================================
+             INTERACTIVE FITTING & SURVEY CALENDAR SCHEDULE VIEW
+             ========================================================================== */
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-xs p-5 space-y-4">
+            {/* Calendar Controls & Month Switcher */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pb-3 border-b border-gray-200">
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setCalendarDate(
+                      new Date(calendarDate.getFullYear(), calendarDate.getMonth() - 1, 1)
+                    )
+                  }
+                  className="p-2 rounded-xl bg-gray-100 hover:bg-[#FAF6EE] text-gray-700 hover:text-[#AA771C] transition-all border border-gray-200"
+                  title="Previous Month"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+
+                <h3 className="text-base font-extrabold text-[#16120B] min-w-[180px] text-center">
+                  {calendarDate.toLocaleDateString("en-GB", { month: "long", year: "numeric" })}
+                </h3>
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    setCalendarDate(
+                      new Date(calendarDate.getFullYear(), calendarDate.getMonth() + 1, 1)
+                    )
+                  }
+                  className="p-2 rounded-xl bg-gray-100 hover:bg-[#FAF6EE] text-gray-700 hover:text-[#AA771C] transition-all border border-gray-200"
+                  title="Next Month"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setCalendarDate(new Date())}
+                  className="px-3 py-1.5 rounded-xl bg-[#FAF8F5] hover:bg-gray-100 text-xs font-bold text-gray-700 border border-gray-200 transition-all ml-2"
+                >
+                  Today
+                </button>
+              </div>
+
+              {/* Status Color Legend */}
+              <div className="flex items-center gap-3 flex-wrap text-xs font-semibold text-gray-600">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-purple-500"></span>
+                  <span>Survey Booked</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+                  <span>Contacted</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                  <span>Completed</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                  <span>New Inquiry</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Days of the Week Headers (Mon - Sun) */}
+            <div className="grid grid-cols-7 gap-2 text-center text-xs font-extrabold text-gray-500 uppercase tracking-wider py-1">
+              {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
+                <div key={day} className="py-1">
+                  {day}
+                </div>
+              ))}
+            </div>
+
+            {/* Calendar Grid Cells */}
+            {(() => {
+              const year = calendarDate.getFullYear();
+              const month = calendarDate.getMonth();
+              const daysInMonth = new Date(year, month + 1, 0).getDate();
+              // Monday-based starting day (0 = Mon, 6 = Sun)
+              const firstDayIndex = (new Date(year, month, 1).getDay() + 6) % 7;
+              const totalCells = Math.ceil((daysInMonth + firstDayIndex) / 7) * 7;
+              const todayStr = new Date().toISOString().split("T")[0];
+
+              return (
+                <div className="grid grid-cols-7 gap-2">
+                  {Array.from({ length: totalCells }).map((_, i) => {
+                    const dayNumber = i - firstDayIndex + 1;
+                    const isValidDay = dayNumber > 0 && dayNumber <= daysInMonth;
+                    const cellDate = isValidDay
+                      ? new Date(year, month, dayNumber)
+                      : null;
+                    const cellDateStr = cellDate
+                      ? cellDate.toISOString().split("T")[0]
+                      : null;
+                    const isToday = cellDateStr === todayStr;
+
+                    // Match leads for this day
+                    const dayLeads = isValidDay
+                      ? leads.filter((lead) => {
+                          const leadDate = new Date(lead.created_at).toISOString().split("T")[0];
+                          return leadDate === cellDateStr;
+                        })
+                      : [];
+
+                    return (
+                      <div
+                        key={i}
+                        className={`min-h-[110px] rounded-xl border p-2 flex flex-col transition-all ${
+                          !isValidDay
+                            ? "bg-gray-50/40 border-gray-100 opacity-30"
+                            : isToday
+                            ? "bg-[#FAF6EE]/50 border-[#BF953F] ring-1 ring-[#BF953F]/40 shadow-xs"
+                            : "bg-white border-gray-200 hover:border-gray-300"
+                        }`}
+                      >
+                        {isValidDay && (
+                          <>
+                            <div className="flex items-center justify-between mb-1.5">
+                              <span
+                                className={`text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center ${
+                                  isToday
+                                    ? "bg-[#16120B] text-[#FCF6BA]"
+                                    : "text-gray-700"
+                                }`}
+                              >
+                                {dayNumber}
+                              </span>
+                              {dayLeads.length > 0 && (
+                                <span className="text-[10px] font-bold text-gray-400">
+                                  {dayLeads.length} {dayLeads.length === 1 ? "lead" : "leads"}
+                                </span>
+                              )}
+                            </div>
+
+                            {/* Lead Event Badges inside Cell */}
+                            <div className="space-y-1.5 overflow-y-auto max-h-[85px]">
+                              {dayLeads.map((lead) => {
+                                const statusColors: Record<string, string> = {
+                                  new: "bg-amber-100 text-amber-950 border-amber-300 hover:bg-amber-200",
+                                  contacted: "bg-blue-100 text-blue-950 border-blue-300 hover:bg-blue-200",
+                                  survey_booked: "bg-purple-100 text-purple-950 border-purple-300 hover:bg-purple-200",
+                                  quote_sent: "bg-indigo-100 text-indigo-950 border-indigo-300 hover:bg-indigo-200",
+                                  completed: "bg-emerald-100 text-emerald-950 border-emerald-300 hover:bg-emerald-200",
+                                  cancelled: "bg-gray-100 text-gray-700 border-gray-300",
+                                };
+
+                                const badgeStyle =
+                                  statusColors[lead.status] || "bg-gray-100 text-gray-800 border-gray-200";
+
+                                return (
+                                  <button
+                                    key={lead.id}
+                                    type="button"
+                                    onClick={() => {
+                                      setSelectedLead(lead);
+                                      setNotesDraft(lead.notes || "");
+                                    }}
+                                    className={`w-full text-left p-1.5 rounded-lg border text-[11px] font-bold transition-all shadow-2xs block truncate ${badgeStyle}`}
+                                    title={`${lead.name} - ${lead.service || "Flooring"} (${lead.status.replace("_", " ")})`}
+                                  >
+                                    <div className="truncate flex items-center gap-1">
+                                      <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0"></span>
+                                      <span className="truncate">{lead.name}</span>
+                                    </div>
+                                    <div className="text-[9.5px] font-medium opacity-80 truncate">
+                                      {lead.service?.replace("Sample Request: ", "") || "Inquiry"}
+                                    </div>
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })()}
+          </div>
         ) : (
           /* ==========================================================================
              TABLE LIST VIEW
@@ -848,38 +1045,30 @@ export default function LeadsCRMPage() {
                           <select
                             value={lead.status}
                             onChange={(e) => handleStatusChange(lead.id, e.target.value)}
-                            className={`px-2.5 py-1.5 rounded-xl text-xs font-bold border transition-colors cursor-pointer focus:outline-none ${
-                              lead.status === "new"
-                                ? "bg-amber-100 text-amber-900 border-amber-300"
-                                : lead.status === "survey_booked"
-                                ? "bg-purple-100 text-purple-900 border-purple-300"
-                                : lead.status === "quote_sent"
-                                ? "bg-indigo-100 text-indigo-900 border-indigo-300"
-                                : lead.status === "contacted"
-                                ? "bg-blue-100 text-blue-900 border-blue-300"
-                                : lead.status === "completed"
-                                ? "bg-green-100 text-green-900 border-green-300"
-                                : "bg-gray-100 text-gray-800 border-gray-200"
-                            }`}
+                            className="px-2.5 py-1 rounded-lg text-xs font-bold bg-[#FAF8F5] border border-gray-300 text-[#16120B] focus:outline-none focus:border-[#BF953F] cursor-pointer"
                           >
-                            <option value="new">New</option>
+                            <option value="new">New Inquiry</option>
                             <option value="contacted">Contacted</option>
                             <option value="survey_booked">Survey Booked</option>
                             <option value="quote_sent">Quote Sent</option>
-                            <option value="completed">Completed</option>
-                            <option value="cancelled">Cancelled</option>
+                            <option value="completed">Completed &amp; Fitted</option>
+                            <option value="cancelled">Archived / Cancelled</option>
                           </select>
                         </td>
 
                         {/* Date */}
-                        <td className="p-4 text-xs text-gray-500 font-medium whitespace-nowrap">
-                          {formatDate(lead.created_at)}
+                        <td className="p-4 text-xs text-gray-500">
+                          {new Date(lead.created_at).toLocaleDateString("en-GB", {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric",
+                          })}
                         </td>
 
-                        {/* Action Buttons */}
+                        {/* Actions */}
                         <td className="p-4 text-right" onClick={(e) => e.stopPropagation()}>
                           <div className="flex items-center justify-end gap-1.5">
-                            {/* 1-Click Call */}
+                            {/* Call */}
                             <a
                               href={`tel:${cleanPhone}`}
                               className="p-2 rounded-lg bg-green-50 hover:bg-green-100 text-green-700 transition-colors"
