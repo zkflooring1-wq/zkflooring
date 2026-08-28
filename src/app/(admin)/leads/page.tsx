@@ -70,6 +70,9 @@ export default function LeadsCRMPage() {
 
   const [viewMode, setViewMode] = useState<"kanban" | "table">("kanban");
   const [quoteModalLead, setQuoteModalLead] = useState<Lead | null>(null);
+  const [draggingLeadId, setDraggingLeadId] = useState<string | null>(null);
+  const [dragOverColumn, setDragOverColumn] = useState<string | null>(null);
+  const [includeArchived, setIncludeArchived] = useState(false);
 
   // Stats
   const [stats, setStats] = useState({
@@ -509,17 +512,44 @@ export default function LeadsCRMPage() {
           </div>
         ) : viewMode === "kanban" ? (
           /* ==========================================================================
-             VISUAL KANBAN PIPELINE BOARD
+             VISUAL KANBAN PIPELINE BOARD (RESPONSIVE + DRAG & DROP)
              ========================================================================== */
-          <div className="overflow-x-auto pb-6">
-            <div className="flex gap-4 min-w-[1250px] items-start">
+          <div className="space-y-4">
+            {/* Top Pipeline Bar & Archived Toggle */}
+            <div className="flex items-center justify-between text-xs text-gray-500 px-1">
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-900 font-bold text-[11px]">
+                  ✨ Drag &amp; Drop Enabled
+                </span>
+                <span>Drag any lead card between columns to instantly update its status.</span>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setIncludeArchived(!includeArchived)}
+                className={`inline-flex items-center gap-1 px-3 py-1 rounded-lg font-bold transition-all border ${
+                  includeArchived
+                    ? "bg-gray-800 text-white border-gray-800 shadow-2xs"
+                    : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
+                }`}
+              >
+                {includeArchived ? "Hide Archived Column" : "Show Archived (Cancelled)"}
+              </button>
+            </div>
+
+            {/* Responsive Board Grid (No Cropping / No Overflow Cut-off) */}
+            <div
+              className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 ${
+                includeArchived ? "xl:grid-cols-6" : "xl:grid-cols-5"
+              } gap-3.5 items-start w-full`}
+            >
               {[
                 {
                   id: "new",
                   title: "New Inquiries",
                   badgeBg: "bg-amber-100 text-amber-900 border-amber-300",
                   headerBorder: "border-t-amber-500",
-                  headerBg: "bg-amber-50/60 text-amber-950",
+                  headerBg: "bg-amber-50/70 text-amber-950",
                   icon: AlertCircle,
                   nextStatus: "contacted",
                   nextLabel: "Move to Contacted",
@@ -529,7 +559,7 @@ export default function LeadsCRMPage() {
                   title: "Contacted",
                   badgeBg: "bg-blue-100 text-blue-900 border-blue-300",
                   headerBorder: "border-t-blue-500",
-                  headerBg: "bg-blue-50/60 text-blue-950",
+                  headerBg: "bg-blue-50/70 text-blue-950",
                   icon: Phone,
                   nextStatus: "survey_booked",
                   nextLabel: "Book Survey",
@@ -539,7 +569,7 @@ export default function LeadsCRMPage() {
                   title: "Survey Booked",
                   badgeBg: "bg-purple-100 text-purple-900 border-purple-300",
                   headerBorder: "border-t-purple-500",
-                  headerBg: "bg-purple-50/60 text-purple-950",
+                  headerBg: "bg-purple-50/70 text-purple-950",
                   icon: Calendar,
                   nextStatus: "quote_sent",
                   nextLabel: "Send Quote",
@@ -549,7 +579,7 @@ export default function LeadsCRMPage() {
                   title: "Quote Sent",
                   badgeBg: "bg-indigo-100 text-indigo-900 border-indigo-300",
                   headerBorder: "border-t-indigo-500",
-                  headerBg: "bg-indigo-50/60 text-indigo-950",
+                  headerBg: "bg-indigo-50/70 text-indigo-950",
                   icon: FileText,
                   nextStatus: "completed",
                   nextLabel: "Mark Completed",
@@ -559,86 +589,129 @@ export default function LeadsCRMPage() {
                   title: "Completed & Fitted",
                   badgeBg: "bg-emerald-100 text-emerald-900 border-emerald-300",
                   headerBorder: "border-t-emerald-500",
-                  headerBg: "bg-emerald-50/60 text-emerald-950",
+                  headerBg: "bg-emerald-50/70 text-emerald-950",
                   icon: CheckCircle2,
                   nextStatus: null,
                   nextLabel: null,
                 },
-                {
-                  id: "cancelled",
-                  title: "Archived / Cancelled",
-                  badgeBg: "bg-gray-100 text-gray-700 border-gray-300",
-                  headerBorder: "border-t-gray-400",
-                  headerBg: "bg-gray-50/60 text-gray-800",
-                  icon: X,
-                  nextStatus: "new",
-                  nextLabel: "Reopen Inquiry",
-                },
+                ...(includeArchived
+                  ? [
+                      {
+                        id: "cancelled",
+                        title: "Archived / Cancelled",
+                        badgeBg: "bg-gray-100 text-gray-700 border-gray-300",
+                        headerBorder: "border-t-gray-400",
+                        headerBg: "bg-gray-50/70 text-gray-800",
+                        icon: X,
+                        nextStatus: "new",
+                        nextLabel: "Reopen Inquiry",
+                      },
+                    ]
+                  : []),
               ].map((stage) => {
                 const stageLeads = leads.filter((l) => l.status === stage.id);
                 const StageIcon = stage.icon;
+                const isOver = dragOverColumn === stage.id;
 
                 return (
                   <div
                     key={stage.id}
-                    className="flex-1 bg-gray-50/80 rounded-2xl border border-gray-200 shadow-xs flex flex-col min-w-[280px]"
+                    onDragOver={(e) => {
+                      e.preventDefault();
+                      e.dataTransfer.dropEffect = "move";
+                      if (dragOverColumn !== stage.id) setDragOverColumn(stage.id);
+                    }}
+                    onDragLeave={(e) => {
+                      if (e.currentTarget.contains(e.relatedTarget as Node)) return;
+                      if (dragOverColumn === stage.id) setDragOverColumn(null);
+                    }}
+                    onDrop={(e) => {
+                      e.preventDefault();
+                      const leadId = e.dataTransfer.getData("text/plain") || draggingLeadId;
+                      setDragOverColumn(null);
+                      setDraggingLeadId(null);
+                      if (leadId) {
+                        handleStatusChange(leadId, stage.id);
+                      }
+                    }}
+                    className={`rounded-2xl border transition-all flex flex-col min-w-0 ${
+                      isOver
+                        ? "bg-amber-50/80 border-amber-400 ring-2 ring-amber-400 shadow-md scale-[1.01]"
+                        : "bg-gray-50/80 border-gray-200 shadow-xs"
+                    }`}
                   >
                     {/* Column Header */}
                     <div
-                      className={`p-3.5 border-b border-gray-200 border-t-4 ${stage.headerBorder} ${stage.headerBg} rounded-t-2xl flex items-center justify-between`}
+                      className={`p-3 border-b border-gray-200 border-t-4 ${stage.headerBorder} ${stage.headerBg} rounded-t-2xl flex items-center justify-between`}
                     >
-                      <div className="flex items-center gap-2">
-                        <StageIcon className="w-4 h-4 text-gray-700" />
-                        <h3 className="text-xs font-extrabold uppercase tracking-wide">
+                      <div className="flex items-center gap-1.5 min-w-0">
+                        <StageIcon className="w-3.5 h-3.5 text-gray-700 shrink-0" />
+                        <h3 className="text-xs font-extrabold uppercase tracking-wide truncate">
                           {stage.title}
                         </h3>
                       </div>
-                      <span className="px-2 py-0.5 rounded-full bg-white font-black text-xs shadow-2xs border border-gray-200">
+                      <span className="px-2 py-0.5 rounded-full bg-white font-black text-xs shadow-2xs border border-gray-200 shrink-0 ml-1">
                         {stageLeads.length}
                       </span>
                     </div>
 
                     {/* Column Body / Cards List */}
-                    <div className="p-3 space-y-3 min-h-[450px] max-h-[700px] overflow-y-auto">
-                      {stageLeads.length === 0 ? (
-                        <div className="py-12 text-center text-xs text-gray-400 font-medium">
+                    <div className="p-2.5 space-y-2.5 min-h-[480px] max-h-[720px] overflow-y-auto">
+                      {stageLeads.length === 0 && !isOver ? (
+                        <div className="py-14 text-center text-xs text-gray-400 font-medium px-2">
                           No inquiries in this stage
                         </div>
                       ) : (
                         stageLeads.map((lead) => {
                           const cleanPhone = getCleanPhone(lead.phone);
+                          const isDragging = draggingLeadId === lead.id;
+
                           return (
                             <div
                               key={lead.id}
+                              draggable={true}
+                              onDragStart={(e) => {
+                                e.dataTransfer.setData("text/plain", lead.id);
+                                e.dataTransfer.effectAllowed = "move";
+                                setDraggingLeadId(lead.id);
+                              }}
+                              onDragEnd={() => {
+                                setDraggingLeadId(null);
+                                setDragOverColumn(null);
+                              }}
                               onClick={() => {
                                 setSelectedLead(lead);
                                 setNotesDraft(lead.notes || "");
                               }}
-                              className="bg-white p-4 rounded-xl border border-gray-200 hover:border-[#BF953F] shadow-xs hover:shadow-md transition-all cursor-pointer group space-y-3"
+                              className={`bg-white p-3.5 rounded-xl border transition-all cursor-grab active:cursor-grabbing group space-y-2.5 ${
+                                isDragging
+                                  ? "opacity-30 border-dashed border-amber-500 scale-95 shadow-none"
+                                  : "border-gray-200 hover:border-[#BF953F] shadow-xs hover:shadow-md"
+                              }`}
                             >
                               {/* Top Row: Customer & Source */}
-                              <div className="flex items-start justify-between gap-2">
-                                <div>
-                                  <h4 className="text-sm font-extrabold text-[#16120B] group-hover:text-[#AA771C] transition-colors leading-snug">
+                              <div className="flex items-start justify-between gap-1.5">
+                                <div className="min-w-0">
+                                  <h4 className="text-sm font-extrabold text-[#16120B] group-hover:text-[#AA771C] transition-colors leading-snug truncate">
                                     {lead.name}
                                   </h4>
-                                  <div className="text-[11px] text-gray-500 font-mono mt-0.5">
+                                  <div className="text-[11px] text-gray-500 font-mono mt-0.5 truncate">
                                     {lead.phone}
                                   </div>
                                 </div>
-                                <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-gray-100 text-gray-700 uppercase">
+                                <span className="text-[9.5px] font-bold px-1.5 py-0.5 rounded bg-gray-100 text-gray-700 uppercase shrink-0">
                                   {lead.source?.replace("_", " ") || "Inquiry"}
                                 </span>
                               </div>
 
                               {/* Service & Estimate */}
-                              <div className="p-2.5 rounded-lg bg-[#FAF8F5] border border-gray-100 text-xs space-y-1">
+                              <div className="p-2 rounded-lg bg-[#FAF8F5] border border-gray-100 text-xs space-y-0.5">
                                 <div className="font-bold text-[#16120B] truncate">
                                   {lead.service || "Flooring Installation"}
                                 </div>
-                                <div className="flex items-center justify-between text-[11px]">
-                                  <span className="text-gray-500">{lead.room_size || "Standard Room"}</span>
-                                  <span className="font-extrabold text-[#AA771C]">
+                                <div className="flex items-center justify-between text-[10.5px]">
+                                  <span className="text-gray-500 truncate mr-1">{lead.room_size || "Standard Room"}</span>
+                                  <span className="font-extrabold text-[#AA771C] shrink-0">
                                     {lead.estimated_cost || "Custom"}
                                   </span>
                                 </div>
@@ -646,10 +719,10 @@ export default function LeadsCRMPage() {
 
                               {/* Action Buttons Row */}
                               <div
-                                className="flex items-center justify-between pt-2 border-t border-gray-100"
+                                className="flex items-center justify-between pt-1.5 border-t border-gray-100"
                                 onClick={(e) => e.stopPropagation()}
                               >
-                                <div className="flex items-center gap-1.5">
+                                <div className="flex items-center gap-1">
                                   {/* Call */}
                                   <a
                                     href={`tel:${cleanPhone}`}
@@ -682,17 +755,24 @@ export default function LeadsCRMPage() {
                                 {stage.nextStatus && (
                                   <button
                                     onClick={() => handleStatusChange(lead.id, stage.nextStatus!)}
-                                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#16120B] hover:bg-black text-[#FCF6BA] text-[11px] font-bold transition-all shadow-2xs"
+                                    className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-[#16120B] hover:bg-black text-[#FCF6BA] text-[10.5px] font-bold transition-all shadow-2xs"
                                     title={stage.nextLabel || "Advance Stage"}
                                   >
                                     <span>Advance</span>
-                                    <ArrowRight className="w-3 h-3" />
+                                    <ArrowRight className="w-2.5 h-2.5" />
                                   </button>
                                 )}
                               </div>
                             </div>
                           );
                         })
+                      )}
+
+                      {/* Drop Zone Highlight Hint */}
+                      {isOver && (
+                        <div className="p-3 border-2 border-dashed border-amber-400 bg-amber-100/60 rounded-xl text-center text-xs font-bold text-amber-900 animate-pulse">
+                          ✨ Drop to move to {stage.title}
+                        </div>
                       )}
                     </div>
                   </div>
