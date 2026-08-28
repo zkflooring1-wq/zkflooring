@@ -251,7 +251,7 @@ export default function PostcodeChecker() {
       )}
 
       {/* =========================================================================
-          RE-OPEN CHIP (Bottom-Left away from bottom-right chat widget)
+          RE-OPEN CHIP (Circular button below chat on mobile, pill on desktop)
           ========================================================================= */}
       {isMinimized && (
         <button
@@ -259,9 +259,10 @@ export default function PostcodeChecker() {
           onClick={() => setIsMinimized(false)}
           className="zk-dock-reopen-chip"
           title="Open Free Home Survey"
+          aria-label="Open Free Home Survey"
         >
-          <i className="fa-solid fa-van-shuttle" style={{ color: '#AA771C' }}></i>
-          <span>Free Home Survey</span>
+          <i className="fa-solid fa-van-shuttle"></i>
+          <span className="zk-dock-reopen-text">Free Home Survey</span>
         </button>
       )}
 

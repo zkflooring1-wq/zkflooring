@@ -1114,7 +1114,7 @@
   z-index: 9999;
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
   background: #16120B;
   color: #FCF6BA;
   border: 1.5px solid #BF953F;
@@ -1125,17 +1125,17 @@
   cursor: pointer;
   box-shadow: 0 6px 22px rgba(0, 0, 0, 0.28);
   animation: fadeInDown 0.25s ease;
+  transition: all 0.2s ease;
+}
+
+.zk-dock-reopen-chip i {
+  color: #BF953F;
+  font-size: 13px;
 }
 
 .zk-dock-reopen-chip:hover {
   background: #2b2417;
   transform: translateY(-1px);
-}
-
-@keyframes zkGlowPulse {
-  0% { box-shadow: 0 0 0 0 rgba(179, 135, 40, 0.4); }
-  70% { box-shadow: 0 0 0 6px rgba(179, 135, 40, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(179, 135, 40, 0); }
 }
 
 /* Base Floating AI Chatbot Root */
@@ -1155,10 +1155,11 @@
   box-sizing: border-box !important;
 }
 
-/* Mobile & Tablet Responsive Coordination (Zero Overlap with Dock) */
+/* Mobile & Tablet Responsive Coordination (Chat + Minimized Survey Dock Stack) */
 @media (max-width: 1024px) {
+  /* Chat button at top of stack */
   .zk-clean-ai-root {
-    bottom: 78px !important;
+    bottom: 74px !important;
     right: 16px !important;
   }
   
@@ -1167,6 +1168,36 @@
     height: 48px !important;
     min-width: 48px !important;
     min-height: 48px !important;
+  }
+
+  /* Minimized Survey button transformed to matching round circle below chat */
+  .zk-dock-reopen-chip {
+    left: auto !important;
+    right: 16px !important;
+    bottom: 16px !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    border-radius: 50% !important;
+    aspect-ratio: 1 / 1 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    justify-content: center !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+    background: #16120B !important;
+    border: 1.5px solid #BF953F !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important;
+  }
+
+  .zk-dock-reopen-text {
+    display: none !important;
+  }
+
+  .zk-dock-reopen-chip i {
+    font-size: 16px !important;
+    color: #FCF6BA !important;
   }
 }
 
@@ -1232,17 +1263,6 @@
     width: 22px;
     height: 22px;
     font-size: 9px;
-  }
-
-  /* Chat button placed safely above the dock */
-  .zk-clean-ai-root {
-    bottom: 74px !important;
-    right: 14px !important;
-  }
-  
-  .zk-clean-ai-root button {
-    width: 46px !important;
-    height: 46px !important;
   }
 }
 
