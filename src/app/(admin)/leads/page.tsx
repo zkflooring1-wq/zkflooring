@@ -136,7 +136,7 @@ export default function LeadsCRMPage() {
           setStats(d);
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   useEffect(() => {
@@ -312,7 +312,7 @@ export default function LeadsCRMPage() {
   return (
     <AdminLayout title="Leads &amp; Inquiries CRM" breadcrumb={["CRM", "Leads"]}>
       <div className="space-y-6 pb-24 max-w-7xl mx-auto">
-        
+
         {/* Top Header Card */}
         <div className="relative overflow-hidden rounded-2xl bg-[#16120B] border border-[#BF953F]/30 p-6 shadow-xl text-white">
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
@@ -393,7 +393,7 @@ export default function LeadsCRMPage() {
         {/* Filters & Search Toolbar */}
         <div className="bg-white rounded-2xl border border-gray-200 p-4 shadow-xs space-y-3">
           <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
-            
+
             {/* Search Input */}
             <div className="relative flex-1 min-w-[240px]">
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
@@ -424,11 +424,10 @@ export default function LeadsCRMPage() {
                 <button
                   type="button"
                   onClick={() => setViewMode("kanban")}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                    viewMode === "kanban"
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${viewMode === "kanban"
                       ? "bg-[#16120B] text-[#FCF6BA] shadow-sm"
                       : "text-gray-600 hover:text-black"
-                  }`}
+                    }`}
                 >
                   <LayoutGrid className="w-3.5 h-3.5" />
                   Pipeline (Kanban)
@@ -436,11 +435,10 @@ export default function LeadsCRMPage() {
                 <button
                   type="button"
                   onClick={() => setViewMode("table")}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                    viewMode === "table"
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${viewMode === "table"
                       ? "bg-[#16120B] text-[#FCF6BA] shadow-sm"
                       : "text-gray-600 hover:text-black"
-                  }`}
+                    }`}
                 >
                   <List className="w-3.5 h-3.5" />
                   Table List
@@ -448,11 +446,10 @@ export default function LeadsCRMPage() {
                 <button
                   type="button"
                   onClick={() => setViewMode("calendar")}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                    viewMode === "calendar"
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${viewMode === "calendar"
                       ? "bg-[#16120B] text-[#FCF6BA] shadow-sm"
                       : "text-gray-600 hover:text-black"
-                  }`}
+                    }`}
                 >
                   <Calendar className="w-3.5 h-3.5" />
                   Calendar Schedule
@@ -488,11 +485,10 @@ export default function LeadsCRMPage() {
                     setStatusFilter(opt.value);
                     setPage(1);
                   }}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
-                    isActive
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${isActive
                       ? "bg-[#16120B] text-[#FCF6BA] shadow-sm border border-[#BF953F]/40"
                       : "bg-[#FAF8F5] text-gray-700 hover:bg-gray-100 hover:text-black border border-gray-200"
-                  }`}
+                    }`}
                 >
                   {opt.label}
                   {opt.value === "new" && stats.new > 0 && (
@@ -540,11 +536,10 @@ export default function LeadsCRMPage() {
               <button
                 type="button"
                 onClick={() => setIncludeArchived(!includeArchived)}
-                className={`inline-flex items-center gap-1 px-3 py-1 rounded-lg font-bold transition-all border ${
-                  includeArchived
+                className={`inline-flex items-center gap-1 px-3 py-1 rounded-lg font-bold transition-all border ${includeArchived
                     ? "bg-gray-800 text-white border-gray-800 shadow-2xs"
                     : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
-                }`}
+                  }`}
               >
                 {includeArchived ? "Hide Archived Column" : "Show Archived (Cancelled)"}
               </button>
@@ -552,9 +547,8 @@ export default function LeadsCRMPage() {
 
             {/* Responsive Board Grid (No Cropping / No Overflow Cut-off) */}
             <div
-              className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 ${
-                includeArchived ? "xl:grid-cols-6" : "xl:grid-cols-5"
-              } gap-3.5 items-start w-full`}
+              className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 ${includeArchived ? "xl:grid-cols-6" : "xl:grid-cols-5"
+                } gap-3.5 items-start w-full`}
             >
               {[
                 {
@@ -609,17 +603,17 @@ export default function LeadsCRMPage() {
                 },
                 ...(includeArchived
                   ? [
-                      {
-                        id: "cancelled",
-                        title: "Archived / Cancelled",
-                        badgeBg: "bg-gray-100 text-gray-700 border-gray-300",
-                        headerBorder: "border-t-gray-400",
-                        headerBg: "bg-gray-50/70 text-gray-800",
-                        icon: X,
-                        nextStatus: "new",
-                        nextLabel: "Reopen Inquiry",
-                      },
-                    ]
+                    {
+                      id: "cancelled",
+                      title: "Archived / Cancelled",
+                      badgeBg: "bg-gray-100 text-gray-700 border-gray-300",
+                      headerBorder: "border-t-gray-400",
+                      headerBg: "bg-gray-50/70 text-gray-800",
+                      icon: X,
+                      nextStatus: "new",
+                      nextLabel: "Reopen Inquiry",
+                    },
+                  ]
                   : []),
               ].map((stage) => {
                 const stageLeads = leads.filter((l) => l.status === stage.id);
@@ -647,11 +641,10 @@ export default function LeadsCRMPage() {
                         handleStatusChange(leadId, stage.id);
                       }
                     }}
-                    className={`rounded-2xl border transition-all flex flex-col min-w-0 ${
-                      isOver
+                    className={`rounded-2xl border transition-all flex flex-col min-w-0 ${isOver
                         ? "bg-amber-50/80 border-amber-400 ring-2 ring-amber-400 shadow-md scale-[1.01]"
                         : "bg-gray-50/80 border-gray-200 shadow-xs"
-                    }`}
+                      }`}
                   >
                     {/* Column Header */}
                     <div
@@ -696,11 +689,10 @@ export default function LeadsCRMPage() {
                                 setSelectedLead(lead);
                                 setNotesDraft(lead.notes || "");
                               }}
-                              className={`bg-white p-3.5 rounded-xl border transition-all cursor-grab active:cursor-grabbing group space-y-2.5 ${
-                                isDragging
+                              className={`bg-white p-3.5 rounded-xl border transition-all cursor-grab active:cursor-grabbing group space-y-2.5 ${isDragging
                                   ? "opacity-30 border-dashed border-amber-500 scale-95 shadow-none"
                                   : "border-gray-200 hover:border-[#BF953F] shadow-xs hover:shadow-md"
-                              }`}
+                                }`}
                             >
                               {/* Top Row: Customer & Source */}
                               <div className="flex items-start justify-between gap-1.5">
@@ -896,31 +888,29 @@ export default function LeadsCRMPage() {
                     // Match leads for this day
                     const dayLeads = isValidDay
                       ? leads.filter((lead) => {
-                          const leadDate = new Date(lead.created_at).toISOString().split("T")[0];
-                          return leadDate === cellDateStr;
-                        })
+                        const leadDate = new Date(lead.created_at).toISOString().split("T")[0];
+                        return leadDate === cellDateStr;
+                      })
                       : [];
 
                     return (
                       <div
                         key={i}
-                        className={`min-h-[110px] rounded-xl border p-2 flex flex-col transition-all ${
-                          !isValidDay
+                        className={`min-h-[110px] rounded-xl border p-2 flex flex-col transition-all ${!isValidDay
                             ? "bg-gray-50/40 border-gray-100 opacity-30"
                             : isToday
-                            ? "bg-[#FAF6EE]/50 border-[#BF953F] ring-1 ring-[#BF953F]/40 shadow-xs"
-                            : "bg-white border-gray-200 hover:border-gray-300"
-                        }`}
+                              ? "bg-[#FAF6EE]/50 border-[#BF953F] ring-1 ring-[#BF953F]/40 shadow-xs"
+                              : "bg-white border-gray-200 hover:border-gray-300"
+                          }`}
                       >
                         {isValidDay && (
                           <>
                             <div className="flex items-center justify-between mb-1.5">
                               <span
-                                className={`text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center ${
-                                  isToday
+                                className={`text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center ${isToday
                                     ? "bg-[#16120B] text-[#FCF6BA]"
                                     : "text-gray-700"
-                                }`}
+                                  }`}
                               >
                                 {dayNumber}
                               </span>
@@ -1006,9 +996,8 @@ export default function LeadsCRMPage() {
                           setSelectedLead(lead);
                           setNotesDraft(lead.notes || "");
                         }}
-                        className={`hover:bg-[#FAF6EE]/40 transition-colors cursor-pointer ${
-                          lead.status === "new" ? "bg-[#FAF6EE]/20" : ""
-                        }`}
+                        className={`hover:bg-[#FAF6EE]/40 transition-colors cursor-pointer ${lead.status === "new" ? "bg-[#FAF6EE]/20" : ""
+                          }`}
                       >
                         {/* Customer */}
                         <td className="p-4">
@@ -1165,7 +1154,7 @@ export default function LeadsCRMPage() {
             onClick={() => setSelectedLead(null)}
           />
           <div className="relative bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col border border-[#BF953F]/30 animate-in zoom-in-95 duration-200">
-            
+
             {/* Drawer Header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-[#16120B] text-white">
               <div className="flex items-center gap-2.5">
@@ -1186,7 +1175,7 @@ export default function LeadsCRMPage() {
 
             {/* Drawer Body */}
             <div className="flex-1 overflow-y-auto p-6 space-y-5">
-              
+
               {/* Top Contact & Quick Action Bar */}
               <div className="p-4 bg-[#FAF8F5] rounded-2xl border border-gray-200 flex flex-wrap items-center justify-between gap-4">
                 <div>
@@ -1243,11 +1232,10 @@ export default function LeadsCRMPage() {
                       key={st.value}
                       type="button"
                       onClick={() => handleStatusChange(selectedLead.id, st.value)}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                        selectedLead.status === st.value
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${selectedLead.status === st.value
                           ? "bg-[#16120B] text-[#FCF6BA] shadow-sm border border-[#BF953F]"
                           : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                      }`}
+                        }`}
                     >
                       {st.label}
                     </button>
