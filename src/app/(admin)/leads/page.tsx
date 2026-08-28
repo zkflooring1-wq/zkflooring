@@ -28,9 +28,15 @@ import {
   Save,
   Check,
   AlertCircle,
-  RefreshCw
+  RefreshCw,
+  LayoutGrid,
+  List,
+  Sparkles,
+  ArrowRight,
+  Receipt
 } from "lucide-react";
 import toast from "react-hot-toast";
+import QuoteInvoiceModal from "@/components/leads/QuoteInvoiceModal";
 
 const STATUS_OPTIONS = [
   { value: "all", label: "All Leads" },
@@ -60,6 +66,9 @@ export default function LeadsCRMPage() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [total, setTotal] = useState(0);
+
+  const [viewMode, setViewMode] = useState<"kanban" | "table">("kanban");
+  const [quoteModalLead, setQuoteModalLead] = useState<Lead | null>(null);
 
   // Stats
   const [stats, setStats] = useState({
@@ -101,7 +110,7 @@ export default function LeadsCRMPage() {
     if (statusFilter && statusFilter !== "all") params.set("status", statusFilter);
     if (sourceFilter && sourceFilter !== "all") params.set("source", sourceFilter);
     params.set("page", String(page));
-    params.set("limit", "25");
+    params.set("limit", viewMode === "kanban" ? "100" : "25");
 
     fetch(`/api/leads?${params}`)
       .then((r) => r.json())
@@ -347,8 +356,37 @@ export default function LeadsCRMPage() {
               )}
             </div>
 
-            {/* Source Filter */}
-            <div className="flex items-center gap-2">
+            {/* View Switcher & Source Filter */}
+            <div className="flex items-center gap-2 flex-wrap">
+              {/* View Switcher Toggle */}
+              <div className="flex items-center p-1 bg-[#FAF8F5] border border-gray-300 rounded-xl shadow-2xs">
+                <button
+                  type="button"
+                  onClick={() => setViewMode("kanban")}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    viewMode === "kanban"
+                      ? "bg-[#16120B] text-[#FCF6BA] shadow-sm"
+                      : "text-gray-600 hover:text-black"
+                  }`}
+                >
+                  <LayoutGrid className="w-3.5 h-3.5" />
+                  Pipeline (Kanban)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode("table")}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    viewMode === "table"
+                      ? "bg-[#16120B] text-[#FCF6BA] shadow-sm"
+                      : "text-gray-600 hover:text-black"
+                  }`}
+                >
+                  <List className="w-3.5 h-3.5" />
+                  Table List
+                </button>
+              </div>
+
+              {/* Source Filter */}
               <select
                 value={sourceFilter}
                 onChange={(e) => {
@@ -395,7 +433,7 @@ export default function LeadsCRMPage() {
           </div>
         </div>
 
-        {/* Leads Table */}
+        {/* Content: Kanban Pipeline OR Table View */}
         {loading ? (
           <LoadingState />
         ) : error ? (
@@ -412,7 +450,203 @@ export default function LeadsCRMPage() {
                 : "New inquiries from the website and cost calculator will automatically show up here."}
             </p>
           </div>
+        ) : viewMode === "kanban" ? (
+          /* ==========================================================================
+             VISUAL KANBAN PIPELINE BOARD
+             ========================================================================== */
+          <div className="overflow-x-auto pb-6">
+            <div className="flex gap-4 min-w-[1250px] items-start">
+              {[
+                {
+                  id: "new",
+                  title: "New Inquiries",
+                  badgeBg: "bg-amber-100 text-amber-900 border-amber-300",
+                  headerBorder: "border-t-amber-500",
+                  headerBg: "bg-amber-50/60 text-amber-950",
+                  icon: AlertCircle,
+                  nextStatus: "contacted",
+                  nextLabel: "Move to Contacted",
+                },
+                {
+                  id: "contacted",
+                  title: "Contacted",
+                  badgeBg: "bg-blue-100 text-blue-900 border-blue-300",
+                  headerBorder: "border-t-blue-500",
+                  headerBg: "bg-blue-50/60 text-blue-950",
+                  icon: Phone,
+                  nextStatus: "survey_booked",
+                  nextLabel: "Book Survey",
+                },
+                {
+                  id: "survey_booked",
+                  title: "Survey Booked",
+                  badgeBg: "bg-purple-100 text-purple-900 border-purple-300",
+                  headerBorder: "border-t-purple-500",
+                  headerBg: "bg-purple-50/60 text-purple-950",
+                  icon: Calendar,
+                  nextStatus: "quote_sent",
+                  nextLabel: "Send Quote",
+                },
+                {
+                  id: "quote_sent",
+                  title: "Quote Sent",
+                  badgeBg: "bg-indigo-100 text-indigo-900 border-indigo-300",
+                  headerBorder: "border-t-indigo-500",
+                  headerBg: "bg-indigo-50/60 text-indigo-950",
+                  icon: FileText,
+                  nextStatus: "completed",
+                  nextLabel: "Mark Completed",
+                },
+                {
+                  id: "completed",
+                  title: "Completed & Fitted",
+                  badgeBg: "bg-emerald-100 text-emerald-900 border-emerald-300",
+                  headerBorder: "border-t-emerald-500",
+                  headerBg: "bg-emerald-50/60 text-emerald-950",
+                  icon: CheckCircle2,
+                  nextStatus: null,
+                  nextLabel: null,
+                },
+                {
+                  id: "cancelled",
+                  title: "Archived / Cancelled",
+                  badgeBg: "bg-gray-100 text-gray-700 border-gray-300",
+                  headerBorder: "border-t-gray-400",
+                  headerBg: "bg-gray-50/60 text-gray-800",
+                  icon: X,
+                  nextStatus: "new",
+                  nextLabel: "Reopen Inquiry",
+                },
+              ].map((stage) => {
+                const stageLeads = leads.filter((l) => l.status === stage.id);
+                const StageIcon = stage.icon;
+
+                return (
+                  <div
+                    key={stage.id}
+                    className="flex-1 bg-gray-50/80 rounded-2xl border border-gray-200 shadow-xs flex flex-col min-w-[280px]"
+                  >
+                    {/* Column Header */}
+                    <div
+                      className={`p-3.5 border-b border-gray-200 border-t-4 ${stage.headerBorder} ${stage.headerBg} rounded-t-2xl flex items-center justify-between`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <StageIcon className="w-4 h-4 text-gray-700" />
+                        <h3 className="text-xs font-extrabold uppercase tracking-wide">
+                          {stage.title}
+                        </h3>
+                      </div>
+                      <span className="px-2 py-0.5 rounded-full bg-white font-black text-xs shadow-2xs border border-gray-200">
+                        {stageLeads.length}
+                      </span>
+                    </div>
+
+                    {/* Column Body / Cards List */}
+                    <div className="p-3 space-y-3 min-h-[450px] max-h-[700px] overflow-y-auto">
+                      {stageLeads.length === 0 ? (
+                        <div className="py-12 text-center text-xs text-gray-400 font-medium">
+                          No inquiries in this stage
+                        </div>
+                      ) : (
+                        stageLeads.map((lead) => {
+                          const cleanPhone = getCleanPhone(lead.phone);
+                          return (
+                            <div
+                              key={lead.id}
+                              onClick={() => {
+                                setSelectedLead(lead);
+                                setNotesDraft(lead.notes || "");
+                              }}
+                              className="bg-white p-4 rounded-xl border border-gray-200 hover:border-[#BF953F] shadow-xs hover:shadow-md transition-all cursor-pointer group space-y-3"
+                            >
+                              {/* Top Row: Customer & Source */}
+                              <div className="flex items-start justify-between gap-2">
+                                <div>
+                                  <h4 className="text-sm font-extrabold text-[#16120B] group-hover:text-[#AA771C] transition-colors leading-snug">
+                                    {lead.name}
+                                  </h4>
+                                  <div className="text-[11px] text-gray-500 font-mono mt-0.5">
+                                    {lead.phone}
+                                  </div>
+                                </div>
+                                <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-gray-100 text-gray-700 uppercase">
+                                  {lead.source?.replace("_", " ") || "Inquiry"}
+                                </span>
+                              </div>
+
+                              {/* Service & Estimate */}
+                              <div className="p-2.5 rounded-lg bg-[#FAF8F5] border border-gray-100 text-xs space-y-1">
+                                <div className="font-bold text-[#16120B] truncate">
+                                  {lead.service || "Flooring Installation"}
+                                </div>
+                                <div className="flex items-center justify-between text-[11px]">
+                                  <span className="text-gray-500">{lead.room_size || "Standard Room"}</span>
+                                  <span className="font-extrabold text-[#AA771C]">
+                                    {lead.estimated_cost || "Custom"}
+                                  </span>
+                                </div>
+                              </div>
+
+                              {/* Action Buttons Row */}
+                              <div
+                                className="flex items-center justify-between pt-2 border-t border-gray-100"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <div className="flex items-center gap-1.5">
+                                  {/* Call */}
+                                  <a
+                                    href={`tel:${cleanPhone}`}
+                                    className="p-1.5 rounded-lg bg-green-50 hover:bg-green-100 text-green-700 transition-colors"
+                                    title="Call Customer"
+                                  >
+                                    <Phone className="w-3.5 h-3.5" />
+                                  </a>
+                                  {/* WhatsApp */}
+                                  <a
+                                    href={`https://wa.me/${cleanPhone.startsWith("+") ? cleanPhone.slice(1) : cleanPhone.startsWith("0") ? "44" + cleanPhone.slice(1) : cleanPhone}?text=Hi%20${encodeURIComponent(lead.name)},%20thank%20you%20for%20contacting%20ZK%20Flooring%20Birmingham.`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 transition-colors"
+                                    title="WhatsApp Customer"
+                                  >
+                                    <Send className="w-3.5 h-3.5" />
+                                  </a>
+                                  {/* Generate Quote */}
+                                  <button
+                                    onClick={() => setQuoteModalLead(lead)}
+                                    className="p-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 transition-colors"
+                                    title="Build PDF Quote / Invoice"
+                                  >
+                                    <Receipt className="w-3.5 h-3.5" />
+                                  </button>
+                                </div>
+
+                                {/* Quick Advance Button */}
+                                {stage.nextStatus && (
+                                  <button
+                                    onClick={() => handleStatusChange(lead.id, stage.nextStatus!)}
+                                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#16120B] hover:bg-black text-[#FCF6BA] text-[11px] font-bold transition-all shadow-2xs"
+                                    title={stage.nextLabel || "Advance Stage"}
+                                  >
+                                    <span>Advance</span>
+                                    <ArrowRight className="w-3 h-3" />
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         ) : (
+          /* ==========================================================================
+             TABLE LIST VIEW
+             ========================================================================== */
           <div className="bg-white rounded-2xl border border-gray-200 shadow-xs overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
@@ -429,7 +663,6 @@ export default function LeadsCRMPage() {
                 <tbody className="divide-y divide-gray-100">
                   {leads.map((lead) => {
                     const sourceInfo = SOURCE_LABELS[lead.source] || { label: lead.source, icon: MessageSquare };
-                    const SourceIcon = sourceInfo.icon;
                     const cleanPhone = getCleanPhone(lead.phone);
 
                     return (
@@ -448,40 +681,27 @@ export default function LeadsCRMPage() {
                           <div className="font-bold text-[#16120B] text-sm flex items-center gap-2">
                             {lead.name}
                             {lead.status === "new" && (
-                              <span className="px-2 py-0.5 rounded-md bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-extrabold uppercase">
+                              <span className="px-1.5 py-0.5 rounded text-[10px] font-extrabold bg-amber-100 text-amber-800 uppercase tracking-wide">
                                 New
                               </span>
                             )}
                           </div>
-                          <div className="flex items-center gap-3 text-xs text-gray-500 mt-1">
-                            <span className="font-mono">{lead.phone}</span>
-                            {lead.email && (
-                              <>
-                                <span>•</span>
-                                <span className="truncate max-w-[150px]">{lead.email}</span>
-                              </>
-                            )}
-                          </div>
+                          <div className="text-xs text-gray-600 mt-0.5 font-mono">{lead.phone}</div>
+                          {lead.email && <div className="text-xs text-gray-400">{lead.email}</div>}
                         </td>
 
                         {/* Service & Estimate */}
                         <td className="p-4">
-                          <div className="font-semibold text-gray-900 text-xs">{lead.service || "General Inquiry"}</div>
-                          <div className="text-xs text-[#AA771C] font-bold mt-0.5">
-                            {lead.estimated_cost ? (
-                              <span>Est: {lead.estimated_cost} {lead.room_size ? `(${lead.room_size})` : ""}</span>
-                            ) : lead.room_size ? (
-                              <span>Room: {lead.room_size}</span>
-                            ) : (
-                              <span className="text-gray-400 font-normal">Custom quote</span>
-                            )}
+                          <div className="font-semibold text-gray-900 text-xs">{lead.service || "Flooring Installation"}</div>
+                          <div className="text-xs font-bold text-[#AA771C] mt-0.5">
+                            {lead.estimated_cost || "Custom Survey"}{" "}
+                            {lead.room_size && <span className="text-gray-500 font-normal">({lead.room_size})</span>}
                           </div>
                         </td>
 
-                        {/* Source Tag */}
+                        {/* Source */}
                         <td className="p-4">
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-gray-100 border border-gray-200 text-gray-700 text-xs font-semibold">
-                            <SourceIcon className="w-3 h-3 text-[#AA771C]" />
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
                             {sourceInfo.label}
                           </span>
                         </td>
@@ -491,11 +711,13 @@ export default function LeadsCRMPage() {
                           <select
                             value={lead.status}
                             onChange={(e) => handleStatusChange(lead.id, e.target.value)}
-                            className={`px-2.5 py-1 rounded-lg text-xs font-bold border cursor-pointer focus:outline-none ${
+                            className={`px-2.5 py-1.5 rounded-xl text-xs font-bold border transition-colors cursor-pointer focus:outline-none ${
                               lead.status === "new"
                                 ? "bg-amber-100 text-amber-900 border-amber-300"
                                 : lead.status === "survey_booked"
                                 ? "bg-purple-100 text-purple-900 border-purple-300"
+                                : lead.status === "quote_sent"
+                                ? "bg-indigo-100 text-indigo-900 border-indigo-300"
                                 : lead.status === "contacted"
                                 ? "bg-blue-100 text-blue-900 border-blue-300"
                                 : lead.status === "completed"
@@ -539,6 +761,15 @@ export default function LeadsCRMPage() {
                             >
                               <Send className="w-3.5 h-3.5" />
                             </a>
+
+                            {/* 1-Click PDF Quote Maker */}
+                            <button
+                              onClick={() => setQuoteModalLead(lead)}
+                              className="p-2 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 transition-colors"
+                              title="Generate PDF Quote / Invoice"
+                            >
+                              <Receipt className="w-3.5 h-3.5" />
+                            </button>
 
                             {/* Open Details */}
                             <button
@@ -639,6 +870,15 @@ export default function LeadsCRMPage() {
                 </div>
 
                 <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setQuoteModalLead(selectedLead)}
+                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-neutral-950 text-xs font-bold transition-colors shadow-sm"
+                  >
+                    <Receipt className="w-3.5 h-3.5" />
+                    Build Quote / Invoice
+                  </button>
+
                   <a
                     href={`tel:${getCleanPhone(selectedLead.phone)}`}
                     className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-green-600 hover:bg-green-700 text-white text-xs font-bold transition-colors shadow-sm"
@@ -880,6 +1120,13 @@ export default function LeadsCRMPage() {
         loading={deleting}
         onConfirm={handleDelete}
         onCancel={() => setDeleteId(null)}
+      />
+
+      {/* 1-Click PDF Quote & Invoice Generator Modal */}
+      <QuoteInvoiceModal
+        isOpen={Boolean(quoteModalLead)}
+        onClose={() => setQuoteModalLead(null)}
+        lead={quoteModalLead}
       />
     </AdminLayout>
   );
