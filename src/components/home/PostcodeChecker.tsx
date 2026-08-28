@@ -8,27 +8,28 @@ interface AreaInfo {
 }
 
 const COVERED_AREAS: Record<string, AreaInfo> = {
-  'B10': { name: 'Small Heath', travelTime: '5-15 mins' },
-  'B9': { name: 'Bordesley', travelTime: '10 mins' },
-  'B11': { name: 'Sparkhill', travelTime: '10 mins' },
+  'B10': { name: 'Small Heath & Bordesley', travelTime: '5-15 mins' },
+  'B9': { name: 'Bordesley Green', travelTime: '10 mins' },
+  'B11': { name: 'Sparkhill & Tyseley', travelTime: '10 mins' },
   'B12': { name: 'Balsall Heath', travelTime: '15 mins' },
-  'B1': { name: 'City Centre', travelTime: '15 mins' },
-  'B2': { name: 'Central', travelTime: '15 mins' },
+  'B1': { name: 'Birmingham City Centre', travelTime: '15 mins' },
+  'B2': { name: 'Birmingham Central', travelTime: '15 mins' },
   'B3': { name: 'Jewellery Quarter', travelTime: '15 mins' },
   'B13': { name: 'Moseley', travelTime: '15 mins' },
   'B14': { name: 'Kings Heath', travelTime: '20 mins' },
   'B15': { name: 'Edgbaston', travelTime: '20 mins' },
   'B17': { name: 'Harborne', travelTime: '20 mins' },
   'B25': { name: 'Yardley', travelTime: '10 mins' },
-  'B26': { name: 'Sheldon', travelTime: '15 mins' },
+  'B26': { name: 'Sheldon & Airport', travelTime: '15 mins' },
   'B27': { name: 'Acocks Green', travelTime: '12 mins' },
   'B28': { name: 'Hall Green', travelTime: '15 mins' },
   'B90': { name: 'Shirley', travelTime: '20 mins' },
-  'B91': { name: 'Solihull', travelTime: '20 mins' },
-  'B92': { name: 'Olton', travelTime: '15 mins' },
+  'B91': { name: 'Solihull Town Centre', travelTime: '20 mins' },
+  'B92': { name: 'Olton & Solihull North', travelTime: '15 mins' },
+  'B93': { name: 'Knowle & Dorridge', travelTime: '25 mins' },
   'B72': { name: 'Sutton Coldfield', travelTime: '25 mins' },
-  'B73': { name: 'Boldmere', travelTime: '25 mins' },
-  'B74': { name: 'Four Oaks', travelTime: '30 mins' },
+  'B73': { name: 'Boldmere & Sutton Park', travelTime: '25 mins' },
+  'B74': { name: 'Four Oaks & Streetly', travelTime: '30 mins' },
   'B62': { name: 'Halesowen', travelTime: '30 mins' },
   'B66': { name: 'Smethwick', travelTime: '20 mins' },
   'WS1': { name: 'Walsall', travelTime: '30 mins' },
@@ -37,20 +38,65 @@ const COVERED_AREAS: Record<string, AreaInfo> = {
   'CV1': { name: 'Coventry', travelTime: '35 mins' },
 };
 
-const FLOORING_CHOICES = [
-  { id: 'LVT & Herringbone', icon: 'fa-cubes-stacked', label: 'LVT & Herringbone', desc: 'Luxury vinyl & parquet' },
-  { id: 'Carpet & Underlay', icon: 'fa-rug', label: 'Carpet & Underlay', desc: 'Plush, twist & saxony' },
-  { id: 'Hardwood & Engineered', icon: 'fa-tree', label: 'Engineered Wood', desc: 'Natural oak & timber' },
-  { id: 'Laminate Flooring', icon: 'fa-layer-group', label: 'Laminate Floors', desc: 'Durable & modern' },
-  { id: 'Commercial Safety', icon: 'fa-building', label: 'Commercial Safety', desc: 'Altro & Polyflor' },
-  { id: 'Subfloor Screeding', icon: 'fa-trowel-bricks', label: 'Subfloor & Screed', desc: 'Smoothing & leveling' },
+const UK_FLOORING_OPTIONS = [
+  {
+    id: 'Luxury Vinyl Tile (LVT) & Herringbone',
+    title: 'Luxury Vinyl (LVT) & Herringbone',
+    subtitle: 'Karndean & Amtico style parquet, 100% waterproof',
+    badge: 'Most Popular',
+    icon: 'fa-cubes-stacked',
+  },
+  {
+    id: 'Premium Carpet & Heavy Underlay',
+    title: 'Carpets & Underlays',
+    subtitle: 'Plush Saxony, 80/20 Wool Twist & Cloud9 underlay',
+    badge: 'Luxury Comfort',
+    icon: 'fa-rug',
+  },
+  {
+    id: 'Real Engineered & Solid Hardwood',
+    title: 'Engineered Hardwood',
+    subtitle: 'Natural Brushed Oak, Herringbone & Smoked finishes',
+    badge: 'Premium Wood',
+    icon: 'fa-tree',
+  },
+  {
+    id: 'Laminate Flooring Installation',
+    title: 'Laminate Flooring',
+    subtitle: 'AC4/AC5 scratch-proof boards with bevelled edges',
+    badge: 'High Durability',
+    icon: 'fa-layer-group',
+  },
+  {
+    id: 'Commercial Safety Flooring',
+    title: 'Commercial Safety Flooring',
+    subtitle: 'Altro, Polyflor, cap & cove hygienic wetrooms',
+    badge: 'Commercial',
+    icon: 'fa-building-shield',
+  },
+  {
+    id: 'Full Multi-Room Renovation',
+    title: 'Full House / Multi-Room Package',
+    subtitle: 'Subfloor screeding, acoustic prep & full installation',
+    badge: 'Complete Job',
+    icon: 'fa-house-chimney',
+  },
 ];
 
-const TIME_SLOTS = [
-  { id: 'Morning (9:00 AM - 12:00 PM)', label: 'Morning', time: '9am - 12pm', icon: 'fa-sun' },
-  { id: 'Afternoon (12:00 PM - 4:00 PM)', label: 'Afternoon', time: '12pm - 4pm', icon: 'fa-cloud-sun' },
-  { id: 'Evening (4:00 PM - 7:00 PM)', label: 'Evening', time: '4pm - 7pm', icon: 'fa-moon' },
-  { id: 'Saturday Morning', label: 'Saturday', time: 'Weekend Slot', icon: 'fa-calendar-day' },
+const UK_ROOM_OPTIONS = [
+  'Living Room & Lounge',
+  'Hallway, Stairs & Landing',
+  'Kitchen & Dining',
+  'Master Bedroom',
+  'Full House / 3+ Rooms',
+  'Commercial Office / Shop',
+];
+
+const UK_SLOT_OPTIONS = [
+  { id: 'Morning (9:00 AM - 12:00 PM)', title: 'Morning Slot', sub: '9:00 AM – 12:00 PM', icon: 'fa-sun' },
+  { id: 'Afternoon (12:00 PM - 4:00 PM)', title: 'Afternoon Slot', sub: '12:00 PM – 4:00 PM', icon: 'fa-cloud-sun' },
+  { id: 'Evening (4:00 PM - 7:00 PM)', title: 'Evening Slot', sub: '4:00 PM – 7:00 PM', icon: 'fa-moon' },
+  { id: 'Saturday VIP Appointment', title: 'Saturday Slot', sub: 'Weekend VIP Consultation', icon: 'fa-calendar-check' },
 ];
 
 export default function PostcodeChecker() {
@@ -62,21 +108,27 @@ export default function PostcodeChecker() {
     isCovered: boolean;
   } | null>(null);
 
-  // Modal State
+  // Multi-Step Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [bookingForm, setBookingForm] = useState({
-    name: '',
+  const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1);
+  const [selectedFlooring, setSelectedFlooring] = useState('Luxury Vinyl Tile (LVT) & Herringbone');
+  const [selectedRooms, setSelectedRooms] = useState<string[]>(['Living Room & Lounge']);
+  const [selectedSlot, setSelectedSlot] = useState('Morning (9:00 AM - 12:00 PM)');
+
+  // Contact Details (UK Friendly)
+  const [contactData, setContactData] = useState({
+    fullName: '',
     phone: '',
     email: '',
     postcode: '',
-    service: 'LVT & Herringbone',
-    preferredSlot: 'Morning (9:00 AM - 12:00 PM)',
-    message: '',
+    address: '',
+    notes: '',
   });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  // Check logic: Supports both covered (check) and extended (cross/notice)
+  // Check logic
   const handleCheck = (query?: string) => {
     const raw = (query !== undefined ? query : input).trim().toUpperCase();
     if (!raw) {
@@ -109,15 +161,19 @@ export default function PostcodeChecker() {
   };
 
   const openModal = () => {
-    const currentCode = checkedArea?.postcode || input.trim().toUpperCase() || 'B10';
-    const areaName = checkedArea?.name || 'Birmingham';
-
-    setBookingForm((prev) => ({
+    const currentCode = checkedArea?.postcode || input.trim().toUpperCase() || 'B91';
+    setContactData((prev) => ({
       ...prev,
       postcode: currentCode,
-      message: `Requested In-Home Survey for ${areaName} (${currentCode})`,
     }));
+    setCurrentStep(1);
     setIsModalOpen(true);
+  };
+
+  const toggleRoom = (room: string) => {
+    setSelectedRooms((prev) =>
+      prev.includes(room) ? prev.filter((r) => r !== room) : [...prev, room]
+    );
   };
 
   const handleBookingSubmit = async (e: React.FormEvent) => {
@@ -129,12 +185,12 @@ export default function PostcodeChecker() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: bookingForm.name,
-          phone: bookingForm.phone,
-          email: bookingForm.email || null,
-          service: `Free Survey: ${bookingForm.service}`,
-          room_size: `Postcode: ${bookingForm.postcode}`,
-          message: `Slot: ${bookingForm.preferredSlot}. ${bookingForm.message || ''}`.trim(),
+          name: contactData.fullName || 'Valued Customer',
+          phone: contactData.phone,
+          email: contactData.email || null,
+          service: `Free Survey: ${selectedFlooring}`,
+          room_size: `Rooms: ${selectedRooms.join(', ') || 'General Survey'} | Postcode: ${contactData.postcode}`,
+          message: `Slot: ${selectedSlot}. Address: ${contactData.address || 'Standard'}. Notes: ${contactData.notes || 'None'}`.trim(),
           source: 'sticky_bottom_dock',
         }),
       });
@@ -149,7 +205,7 @@ export default function PostcodeChecker() {
   return (
     <>
       {/* =========================================================================
-          STICKY BOTTOM FLOATING DOCK (BUTTON APPEARS ONLY AFTER CHECKING)
+          STICKY BOTTOM FLOATING DOCK (CLEAN & MINIMALIST)
           ========================================================================= */}
       {!isMinimized && (
         <aside aria-label="Mobile showroom booking" className="zk-sticky-dock-bar-wrap">
@@ -182,7 +238,7 @@ export default function PostcodeChecker() {
                     handleCheck(input);
                   }
                 }}
-                placeholder="Enter Postcode (e.g. B10, B91)..."
+                placeholder="Enter UK Postcode (e.g. B10, B91)..."
                 className="zk-dock-input"
               />
               <button
@@ -194,7 +250,7 @@ export default function PostcodeChecker() {
               </button>
             </div>
 
-            {/* Quick Area Pills (Visible on larger screens) */}
+            {/* Quick Area Pills */}
             <div className="zk-dock-part-pills d-none d-xl-flex">
               {[
                 { code: 'B10', label: 'B10' },
@@ -215,7 +271,7 @@ export default function PostcodeChecker() {
               ))}
             </div>
 
-            {/* Right: Book Survey Button APPEARS ONLY AFTER CHECK (Check ✅ or Cross ❌) */}
+            {/* Right: Book Survey Button APPEARS ONLY AFTER CHECK */}
             {checkedArea && (
               <div className="zk-dock-part-actions">
                 <button
@@ -273,63 +329,98 @@ export default function PostcodeChecker() {
       )}
 
       {/* =========================================================================
-          ULTRA-BEAUTIFUL LUXURY SURVEY BOOKING MODAL (10/10 DESIGN)
+          UK LUXURY MULTI-STEP SURVEY BOOKING WIZARD (10/10 MODERN UX)
           ========================================================================= */}
       {isModalOpen && (
-        <div className="zk-survey-modal-overlay" onClick={() => setIsModalOpen(false)}>
-          <div className="zk-luxury-modal-container" onClick={(e) => e.stopPropagation()}>
+        <div className="zk-uk-modal-overlay" onClick={() => setIsModalOpen(false)}>
+          <div className="zk-uk-modal-box" onClick={(e) => e.stopPropagation()}>
             
-            {/* Top Luxury Banner */}
-            <div className="zk-luxury-modal-top">
-              <div className="zk-luxury-modal-top-content">
+            {/* 1. Header Banner */}
+            <div className="zk-uk-modal-header">
+              <div className="zk-uk-header-brand">
                 <div className="d-flex align-items-center gap-2 mb-1">
-                  <span className="zk-modal-tag-gold">
-                    <i className="fa-solid fa-van-shuttle"></i> Mobile Showroom Consultation
+                  <span className="zk-uk-badge-gold">
+                    <i className="fa-solid fa-van-shuttle"></i> Mobile Showroom Van
                   </span>
-                  <span className="zk-modal-tag-green">
+                  <span className="zk-uk-badge-green">
                     <i className="fa-solid fa-shield-check"></i> 100% Free &bull; No Obligation
                   </span>
                 </div>
-                <h3 className="zk-luxury-modal-title">
-                  Book Your Free In-Home Survey &amp; Sample Box
+                <h3 className="zk-uk-header-title">
+                  Book Free In-Home Flooring Survey
                 </h3>
-                <p className="zk-luxury-modal-subtitle">
-                  We bring <strong>200+ physical samples</strong>, subfloor testing &amp; precision laser measuring directly to your doorstep in <strong>{bookingForm.postcode || 'Birmingham'}</strong>.
+                <p className="zk-uk-header-sub">
+                  We bring <strong>200+ samples &amp; laser measuring</strong> directly to your property in <strong>{contactData.postcode || 'Birmingham'}</strong>.
                 </p>
               </div>
 
               <button
                 type="button"
                 onClick={() => setIsModalOpen(false)}
-                className="zk-luxury-modal-close"
+                className="zk-uk-close-btn"
+                aria-label="Close modal"
               >
                 <i className="fa-solid fa-xmark"></i>
               </button>
             </div>
 
-            {/* Modal Body */}
-            {isSuccess ? (
-              <div className="zk-luxury-success-view">
-                <div className="zk-luxury-success-ring">
-                  <i className="fa-solid fa-check"></i>
+            {/* 2. Step Progress Bar */}
+            {!isSuccess && (
+              <div className="zk-uk-progress-bar">
+                <div
+                  className={`zk-uk-step-node ${currentStep >= 1 ? 'active' : ''} ${
+                    currentStep > 1 ? 'completed' : ''
+                  }`}
+                  onClick={() => setCurrentStep(1)}
+                >
+                  <span className="zk-uk-step-num">1</span>
+                  <span className="zk-uk-step-text">Flooring Style</span>
                 </div>
-                <h4>Survey Appointment Request Received!</h4>
+                <div className="zk-uk-step-divider"></div>
+                <div
+                  className={`zk-uk-step-node ${currentStep >= 2 ? 'active' : ''} ${
+                    currentStep > 2 ? 'completed' : ''
+                  }`}
+                  onClick={() => setCurrentStep(2)}
+                >
+                  <span className="zk-uk-step-num">2</span>
+                  <span className="zk-uk-step-text">Rooms &amp; Time</span>
+                </div>
+                <div className="zk-uk-step-divider"></div>
+                <div
+                  className={`zk-uk-step-node ${currentStep >= 3 ? 'active' : ''}`}
+                  onClick={() => setCurrentStep(3)}
+                >
+                  <span className="zk-uk-step-num">3</span>
+                  <span className="zk-uk-step-text">Address &amp; Confirm</span>
+                </div>
+              </div>
+            )}
+
+            {/* 3. Modal Body Content */}
+            {isSuccess ? (
+              /* Success Screen */
+              <div className="zk-uk-success-screen">
+                <div className="zk-uk-success-icon">
+                  <i className="fa-solid fa-calendar-check"></i>
+                </div>
+                <h4>Survey Appointment Requested!</h4>
                 <p>
-                  Thank you, <strong>{bookingForm.name}</strong>. Our senior fitting specialist will call you shortly at <strong>{bookingForm.phone}</strong> to confirm your slot for <strong>{bookingForm.preferredSlot}</strong>.
+                  Thank you, <strong>{contactData.fullName || 'Valued Customer'}</strong>. Our Birmingham fitting specialist will call you at <strong>{contactData.phone}</strong> shortly to confirm your <strong>{selectedSlot}</strong> appointment.
                 </p>
 
-                <div className="zk-success-perks">
-                  <div className="zk-perk-item">
+                <div className="zk-uk-guarantee-card">
+                  <div className="zk-uk-guarantee-row">
                     <i className="fa-solid fa-truck-fast"></i>
-                    <span>Mobile van arrives at your property</span>
+                    <span>Mobile showroom van arrives at your doorstep</span>
                   </div>
-                  <div className="zk-perk-item">
+                  <div className="zk-uk-guarantee-row">
                     <i className="fa-solid fa-ruler-combined"></i>
-                    <span>Full room precision laser measuring</span>
+                    <span>Precision laser measuring &amp; subfloor assessment</span>
                   </div>
-                  <div className="zk-perk-item">
+                  <div className="zk-uk-guarantee-row">
                     <i className="fa-solid fa-file-invoice-dollar"></i>
-                    <span>Same-day written guarantee quote</span>
+                    <span>Free itemised quote with zero purchase obligation</span>
                   </div>
                 </div>
 
@@ -338,209 +429,305 @@ export default function PostcodeChecker() {
                   onClick={() => {
                     setIsModalOpen(false);
                     setIsSuccess(false);
-                    setBookingForm({
-                      name: '',
-                      phone: '',
-                      email: '',
-                      postcode: '',
-                      service: 'LVT & Herringbone',
-                      preferredSlot: 'Morning (9:00 AM - 12:00 PM)',
-                      message: '',
-                    });
+                    setCurrentStep(1);
                   }}
-                  className="zk-luxury-submit-btn"
-                  style={{ maxWidth: '240px', margin: '0 auto' }}
+                  className="zk-uk-btn-primary"
+                  style={{ maxWidth: '200px', margin: '0 auto' }}
                 >
                   Done
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleBookingSubmit} className="zk-luxury-form-body">
+              /* Multi-Step Wizard */
+              <div className="zk-uk-wizard-body">
                 
-                {/* 1. Interactive Flooring Type Cards */}
-                <div className="zk-form-section">
-                  <label className="zk-section-heading">
-                    <span>1</span> Select Flooring Samples to Bring to Your Home
-                  </label>
-                  <div className="zk-flooring-grid">
-                    {FLOORING_CHOICES.map((choice) => (
+                {/* STEP 1: Select Flooring Type */}
+                {currentStep === 1 && (
+                  <div className="zk-uk-step-panel">
+                    <div className="zk-uk-panel-head">
+                      <h4>What type of flooring would you like to see?</h4>
+                      <p>Our mobile showroom carries 200+ samples from Karndean, Amtico, Quick-Step &amp; British carpets.</p>
+                    </div>
+
+                    <div className="zk-uk-flooring-grid">
+                      {UK_FLOORING_OPTIONS.map((item) => (
+                        <div
+                          key={item.id}
+                          onClick={() => setSelectedFlooring(item.id)}
+                          className={`zk-uk-flooring-card ${
+                            selectedFlooring === item.id ? 'selected' : ''
+                          }`}
+                        >
+                          <div className="zk-uk-flooring-card-top">
+                            <div className="zk-uk-flooring-icon">
+                              <i className={`fa-solid ${item.icon}`}></i>
+                            </div>
+                            <span className="zk-uk-pill-tag">{item.badge}</span>
+                          </div>
+                          <div className="zk-uk-flooring-info">
+                            <strong>{item.title}</strong>
+                            <span>{item.subtitle}</span>
+                          </div>
+                          <div className="zk-uk-radio-indicator">
+                            {selectedFlooring === item.id ? (
+                              <i className="fa-solid fa-circle-check"></i>
+                            ) : (
+                              <i className="fa-regular fa-circle"></i>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="zk-uk-nav-footer">
+                      <div className="zk-uk-trust-pill">
+                        <i className="fa-solid fa-check-double"></i>
+                        <span>Select any style &bull; We bring all physical samples</span>
+                      </div>
                       <button
-                        key={choice.id}
                         type="button"
-                        onClick={() => setBookingForm({ ...bookingForm, service: choice.id })}
-                        className={`zk-flooring-card ${
-                          bookingForm.service === choice.id ? 'active' : ''
-                        }`}
+                        onClick={() => setCurrentStep(2)}
+                        className="zk-uk-btn-primary"
                       >
-                        <div className="zk-flooring-card-icon">
-                          <i className={`fa-solid ${choice.icon}`}></i>
+                        <span>Next: Choose Rooms &amp; Time</span>
+                        <i className="fa-solid fa-arrow-right"></i>
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* STEP 2: Rooms & Time Slot */}
+                {currentStep === 2 && (
+                  <div className="zk-uk-step-panel">
+                    <div className="zk-uk-panel-head">
+                      <h4>Which rooms need measuring &amp; when suits you?</h4>
+                      <p>Select all rooms you would like our specialist to measure with precision lasers.</p>
+                    </div>
+
+                    {/* Rooms Selector */}
+                    <div className="mb-4">
+                      <label className="zk-uk-field-title">
+                        <i className="fa-solid fa-house-chimney"></i> Areas to Measure (Select all that apply)
+                      </label>
+                      <div className="zk-uk-room-chips">
+                        {UK_ROOM_OPTIONS.map((room) => {
+                          const isSelected = selectedRooms.includes(room);
+                          return (
+                            <button
+                              key={room}
+                              type="button"
+                              onClick={() => toggleRoom(room)}
+                              className={`zk-uk-room-chip ${isSelected ? 'active' : ''}`}
+                            >
+                              <i
+                                className={`fa-solid ${
+                                  isSelected ? 'fa-check' : 'fa-plus'
+                                }`}
+                              ></i>
+                              <span>{room}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Preferred Slot Selector */}
+                    <div>
+                      <label className="zk-uk-field-title">
+                        <i className="fa-solid fa-clock"></i> Preferred In-Home Survey Time Slot
+                      </label>
+                      <div className="zk-uk-slot-grid">
+                        {UK_SLOT_OPTIONS.map((slot) => (
+                          <div
+                            key={slot.id}
+                            onClick={() => setSelectedSlot(slot.id)}
+                            className={`zk-uk-slot-card ${
+                              selectedSlot === slot.id ? 'selected' : ''
+                            }`}
+                          >
+                            <i className={`fa-solid ${slot.icon} zk-uk-slot-icon`}></i>
+                            <div>
+                              <strong>{slot.title}</strong>
+                              <span>{slot.sub}</span>
+                            </div>
+                            <div className="zk-uk-slot-radio">
+                              {selectedSlot === slot.id && (
+                                <i className="fa-solid fa-circle-check"></i>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="zk-uk-nav-footer">
+                      <button
+                        type="button"
+                        onClick={() => setCurrentStep(1)}
+                        className="zk-uk-btn-back"
+                      >
+                        <i className="fa-solid fa-arrow-left"></i>
+                        <span>Back</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setCurrentStep(3)}
+                        className="zk-uk-btn-primary"
+                      >
+                        <span>Next: Contact Details</span>
+                        <i className="fa-solid fa-arrow-right"></i>
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* STEP 3: Contact & Address (UK Friendly) */}
+                {currentStep === 3 && (
+                  <form onSubmit={handleBookingSubmit} className="zk-uk-step-panel">
+                    <div className="zk-uk-panel-head">
+                      <h4>Where should our Mobile Showroom visit?</h4>
+                      <p>Enter your UK contact details. We will call you to confirm your appointment.</p>
+                    </div>
+
+                    <div className="row g-3">
+                      {/* Full Name */}
+                      <div className="col-md-6">
+                        <div className="zk-uk-field-wrap">
+                          <label>Full Name *</label>
+                          <div className="zk-uk-input-box">
+                            <i className="fa-solid fa-user"></i>
+                            <input
+                              type="text"
+                              required
+                              placeholder="e.g. James Wilson"
+                              value={contactData.fullName}
+                              onChange={(e) =>
+                                setContactData({ ...contactData, fullName: e.target.value })
+                              }
+                            />
+                          </div>
                         </div>
-                        <div className="zk-flooring-card-info">
-                          <strong>{choice.label}</strong>
-                          <span>{choice.desc}</span>
+                      </div>
+
+                      {/* Phone Number */}
+                      <div className="col-md-6">
+                        <div className="zk-uk-field-wrap">
+                          <label>UK Mobile / Phone Number *</label>
+                          <div className="zk-uk-input-box">
+                            <i className="fa-solid fa-phone"></i>
+                            <input
+                              type="tel"
+                              required
+                              placeholder="e.g. 07700 900123"
+                              value={contactData.phone}
+                              onChange={(e) =>
+                                setContactData({ ...contactData, phone: e.target.value })
+                              }
+                            />
+                          </div>
                         </div>
-                        {bookingForm.service === choice.id && (
-                          <span className="zk-flooring-selected-check">
-                            <i className="fa-solid fa-check"></i>
-                          </span>
+                      </div>
+
+                      {/* Postcode */}
+                      <div className="col-md-6">
+                        <div className="zk-uk-field-wrap">
+                          <label>UK Postcode *</label>
+                          <div className="zk-uk-input-box">
+                            <i className="fa-solid fa-location-dot"></i>
+                            <input
+                              type="text"
+                              required
+                              placeholder="e.g. B91 3AB, Solihull"
+                              value={contactData.postcode}
+                              onChange={(e) =>
+                                setContactData({ ...contactData, postcode: e.target.value })
+                              }
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Email */}
+                      <div className="col-md-6">
+                        <div className="zk-uk-field-wrap">
+                          <label>Email Address (For Written Quote)</label>
+                          <div className="zk-uk-input-box">
+                            <i className="fa-solid fa-envelope"></i>
+                            <input
+                              type="email"
+                              placeholder="e.g. james.wilson@example.co.uk"
+                              value={contactData.email}
+                              onChange={(e) =>
+                                setContactData({ ...contactData, email: e.target.value })
+                              }
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Street Address / Notes */}
+                      <div className="col-12">
+                        <div className="zk-uk-field-wrap">
+                          <label>Street Address / Specific Samples Needed (Optional)</label>
+                          <div className="zk-uk-input-box">
+                            <i className="fa-solid fa-house"></i>
+                            <input
+                              type="text"
+                              placeholder="e.g. 42 High Street, please bring light oak herringbone & grey carpets"
+                              value={contactData.address}
+                              onChange={(e) =>
+                                setContactData({ ...contactData, address: e.target.value })
+                              }
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Summary Card */}
+                    <div className="zk-uk-booking-summary">
+                      <div className="zk-uk-summary-item">
+                        <span className="label">Selected Flooring:</span>
+                        <span className="val">{selectedFlooring}</span>
+                      </div>
+                      <div className="zk-uk-summary-item">
+                        <span className="label">Appointment Slot:</span>
+                        <span className="val">{selectedSlot}</span>
+                      </div>
+                    </div>
+
+                    <div className="zk-uk-nav-footer">
+                      <button
+                        type="button"
+                        onClick={() => setCurrentStep(2)}
+                        className="zk-uk-btn-back"
+                      >
+                        <i className="fa-solid fa-arrow-left"></i>
+                        <span>Back</span>
+                      </button>
+
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="zk-uk-btn-primary submit"
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <i className="fa-solid fa-spinner fa-spin"></i>
+                            <span>Confirming Booking...</span>
+                          </>
+                        ) : (
+                          <>
+                            <i className="fa-solid fa-calendar-check"></i>
+                            <span>Confirm Free In-Home Survey</span>
+                            <i className="fa-solid fa-arrow-right"></i>
+                          </>
                         )}
                       </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* 2. Interactive Time Slot Buttons */}
-                <div className="zk-form-section">
-                  <label className="zk-section-heading">
-                    <span>2</span> Choose Preferred Consultation Time Slot
-                  </label>
-                  <div className="zk-slot-grid">
-                    {TIME_SLOTS.map((slot) => (
-                      <button
-                        key={slot.id}
-                        type="button"
-                        onClick={() => setBookingForm({ ...bookingForm, preferredSlot: slot.id })}
-                        className={`zk-slot-pill ${
-                          bookingForm.preferredSlot === slot.id ? 'active' : ''
-                        }`}
-                      >
-                        <i className={`fa-solid ${slot.icon}`}></i>
-                        <div>
-                          <strong>{slot.label}</strong>
-                          <small>{slot.time}</small>
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* 3. Customer Contact Details */}
-                <div className="zk-form-section">
-                  <label className="zk-section-heading">
-                    <span>3</span> Your Contact &amp; Property Details
-                  </label>
-                  <div className="row g-2.5">
-                    {/* Name */}
-                    <div className="col-md-6">
-                      <div className="zk-input-container">
-                        <label>Full Name *</label>
-                        <div className="zk-input-box-inner">
-                          <i className="fa-solid fa-user"></i>
-                          <input
-                            type="text"
-                            required
-                            placeholder="e.g. Tariq Mehmood"
-                            value={bookingForm.name}
-                            onChange={(e) => setBookingForm({ ...bookingForm, name: e.target.value })}
-                          />
-                        </div>
-                      </div>
                     </div>
-
-                    {/* Phone */}
-                    <div className="col-md-6">
-                      <div className="zk-input-container">
-                        <label>Phone Number (For Booking Confirmation) *</label>
-                        <div className="zk-input-box-inner">
-                          <i className="fa-solid fa-phone"></i>
-                          <input
-                            type="tel"
-                            required
-                            placeholder="e.g. 07903 723 774"
-                            value={bookingForm.phone}
-                            onChange={(e) => setBookingForm({ ...bookingForm, phone: e.target.value })}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Postcode / Address */}
-                    <div className="col-md-6">
-                      <div className="zk-input-container">
-                        <label>Postcode / Area *</label>
-                        <div className="zk-input-box-inner">
-                          <i className="fa-solid fa-location-dot"></i>
-                          <input
-                            type="text"
-                            required
-                            placeholder="e.g. B91 3AB, Solihull"
-                            value={bookingForm.postcode}
-                            onChange={(e) => setBookingForm({ ...bookingForm, postcode: e.target.value })}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Email */}
-                    <div className="col-md-6">
-                      <div className="zk-input-container">
-                        <label>Email (For Quote PDF)</label>
-                        <div className="zk-input-box-inner">
-                          <i className="fa-solid fa-envelope"></i>
-                          <input
-                            type="email"
-                            placeholder="e.g. tariq@example.com"
-                            value={bookingForm.email}
-                            onChange={(e) => setBookingForm({ ...bookingForm, email: e.target.value })}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Notes */}
-                    <div className="col-12">
-                      <div className="zk-input-container">
-                        <label>Rooms to Measure / Special Requirements (Optional)</label>
-                        <div className="zk-input-box-inner">
-                          <i className="fa-solid fa-comment-dots"></i>
-                          <input
-                            type="text"
-                            placeholder="e.g. Hallway &amp; living room, bringing natural oak samples..."
-                            value={bookingForm.message}
-                            onChange={(e) => setBookingForm({ ...bookingForm, message: e.target.value })}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Footer Action */}
-                <div className="zk-luxury-modal-footer">
-                  <div className="zk-footer-trust">
-                    <i className="fa-solid fa-lock"></i>
-                    <span>100% Free &bull; No Obligation &bull; Instant Confirmation</span>
-                  </div>
-
-                  <div className="d-flex align-items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setIsModalOpen(false)}
-                      className="zk-luxury-cancel-btn"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="zk-luxury-submit-btn"
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <i className="fa-solid fa-spinner fa-spin"></i>
-                          <span>Confirming...</span>
-                        </>
-                      ) : (
-                        <>
-                          <i className="fa-solid fa-calendar-check"></i>
-                          <span>Confirm Free Appointment</span>
-                          <i className="fa-solid fa-arrow-right"></i>
-                        </>
-                      )}
-                    </button>
-                  </div>
-                </div>
-              </form>
+                  </form>
+                )}
+              </div>
             )}
           </div>
         </div>
