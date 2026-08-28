@@ -1147,6 +1147,14 @@
   transition: all 0.25s ease;
 }
 
+.zk-clean-ai-root button {
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
 /* Mobile & Tablet Responsive Coordination (Zero Overlap with Dock) */
 @media (max-width: 1024px) {
   .zk-clean-ai-root {
@@ -1157,6 +1165,8 @@
   .zk-clean-ai-root button {
     width: 48px !important;
     height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
   }
 }
 

@@ -245,9 +245,15 @@ export default function AIFlooringChatbot() {
             aria-label="Open Flooring AI Assistant"
             className="zk-clean-ai-trigger-btn"
             style={{
-              width: '58px',
-              height: '58px',
+              width: '54px',
+              height: '54px',
+              minWidth: '54px',
+              minHeight: '54px',
+              aspectRatio: '1 / 1',
               borderRadius: '50%',
+              padding: 0,
+              margin: 0,
+              boxSizing: 'border-box',
               backgroundColor: '#ffffff',
               border: '1.5px solid #c5a880',
               boxShadow: '0 12px 32px rgba(0,0,0,0.12), 0 4px 12px rgba(197,168,128,0.25)',
@@ -255,6 +261,7 @@ export default function AIFlooringChatbot() {
               alignItems: 'center',
               justifyContent: 'center',
               cursor: 'pointer',
+              flexShrink: 0,
               transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
               transform: isHovered ? 'scale(1.08) translateY(-2px)' : 'scale(1)',
               position: 'relative',
@@ -262,17 +269,23 @@ export default function AIFlooringChatbot() {
           >
             {/* Elegant Metallic Gold Spark Icon */}
             <div
+              className="zk-clean-ai-inner-circle"
               style={{
-                width: '34px',
-                height: '34px',
+                width: '32px',
+                height: '32px',
+                minWidth: '32px',
+                minHeight: '32px',
+                aspectRatio: '1 / 1',
                 borderRadius: '50%',
                 background: 'linear-gradient(135deg, #dfc093 0%, #c5a880 60%, #a47d48 100%)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: '#ffffff',
-                fontSize: '17px',
+                fontSize: '15px',
                 boxShadow: '0 3px 8px rgba(197,168,128,0.4)',
+                flexShrink: 0,
+                boxSizing: 'border-box',
               }}
             >
               ✦
@@ -284,12 +297,13 @@ export default function AIFlooringChatbot() {
                 position: 'absolute',
                 top: '2px',
                 right: '2px',
-                width: '12px',
-                height: '12px',
+                width: '11px',
+                height: '11px',
                 borderRadius: '50%',
                 backgroundColor: '#10b981',
                 border: '2px solid #ffffff',
                 boxShadow: '0 0 4px rgba(16,185,129,0.5)',
+                flexShrink: 0,
               }}
             />
           </button>
@@ -873,9 +887,25 @@ export default function AIFlooringChatbot() {
           from { opacity: 0; transform: translateX(5px); }
           to { opacity: 1; transform: translateX(0); }
         }
-        @keyframes pulseDot {
-          0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
-          40% { opacity: 1; transform: scale(1.15); }
+        .zk-clean-ai-trigger-btn {
+          aspect-ratio: 1 / 1 !important;
+          border-radius: 50% !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          flex-shrink: 0 !important;
+          box-sizing: border-box !important;
+        }
+        .zk-clean-ai-inner-circle {
+          aspect-ratio: 1 / 1 !important;
+          border-radius: 50% !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          flex-shrink: 0 !important;
+          box-sizing: border-box !important;
         }
         @media (max-width: 1024px) {
           .zk-clean-ai-root {
@@ -885,6 +915,14 @@ export default function AIFlooringChatbot() {
           .zk-clean-ai-trigger-btn {
             width: 48px !important;
             height: 48px !important;
+            min-width: 48px !important;
+            min-height: 48px !important;
+          }
+          .zk-clean-ai-inner-circle {
+            width: 28px !important;
+            height: 28px !important;
+            min-width: 28px !important;
+            min-height: 28px !important;
           }
         }
       `}</style>
