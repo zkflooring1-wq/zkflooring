@@ -229,9 +229,6 @@ export default function AIFlooringChatbot() {
     <div
       className="zk-clean-ai-root"
       style={{
-        position: 'fixed',
-        bottom: '24px',
-        right: '24px',
         zIndex: 99999,
         fontFamily: 'var(--font-manrope, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif)',
       }}
