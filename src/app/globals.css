@@ -132,6 +132,101 @@
   justify-content: space-between !important;
 }
 
+/* ==========================================================================
+   FOOTER RECENT BLOG WIDGET UNIFORM SIZING
+   ========================================================================== */
+.footer-section .recent-post-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  margin-bottom: 16px !important;
+  float: none !important;
+  clear: both !important;
+  width: 100% !important;
+}
+
+.footer-section .recent-post-item.mb--20,
+.footer-section .recent-post-item:last-child {
+  margin-bottom: 0 !important;
+}
+
+.footer-section .recent-post-item .image {
+  width: 74px !important;
+  height: 64px !important;
+  min-width: 74px !important;
+  max-width: 74px !important;
+  min-height: 64px !important;
+  max-height: 64px !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+  float: none !important;
+  background: rgba(22, 18, 11, 0.08) !important;
+  position: relative !important;
+}
+
+.footer-section .recent-post-item .image a {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+
+.footer-section .recent-post-item .image img,
+.footer-section .recent-post-item .image a img {
+  width: 74px !important;
+  height: 64px !important;
+  min-width: 74px !important;
+  max-width: 74px !important;
+  min-height: 64px !important;
+  max-height: 64px !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border-radius: 12px !important;
+  display: block !important;
+  transition: transform 0.3s ease !important;
+}
+
+.footer-section .recent-post-item:hover .image img {
+  transform: scale(1.08) !important;
+}
+
+.footer-section .recent-post-item .recent-post-info {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+.footer-section .recent-post-item .recent-post-info .title {
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
+  margin-bottom: 4px !important;
+}
+
+.footer-section .recent-post-item .recent-post-info .title a {
+  color: #16120B !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  transition: color 0.2s ease !important;
+}
+
+.footer-section .recent-post-item .recent-post-info .title a:hover {
+  color: #5c4410 !important;
+}
+
+.footer-section .recent-post-item .recent-post-info .post-date {
+  display: block !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: rgba(22, 18, 11, 0.75) !important;
+  letter-spacing: 0.5px !important;
+}
+
 
 /* Services section equal tags sizing */
 .tv-service-section .tv-service-inner .tv-service-item .service-right .tags {

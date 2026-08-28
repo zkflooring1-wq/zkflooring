@@ -103,49 +103,67 @@ export default async function Footer() {
               <div className="footer-widget ml-0 mb-0 wow fadeInUp" data-wow-delay="0.8s">
                 <h4 className="title" style={{ color: '#16120B', fontWeight: 800 }}>Latest Blog</h4>
                 {latestPosts && latestPosts.length > 0 ? (
-                  latestPosts.map((p, pIdx) => (
-                    <div key={p.id || pIdx} className={`recent-post-item ${pIdx === latestPosts.length - 1 ? 'mb--20' : ''}`}>
-                      <figure className="image" style={{ width: '70px', height: '60px', borderRadius: '8px', overflow: 'hidden', flexShrink: 0 }}>
-                        <a href={`/blog/${p.slug}`}>
-                          <img
-                            src={p.featured_image || "/slider/Carpet.webp"}
-                            alt={p.title}
-                            loading="lazy"
-                            decoding="async"
-                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                          />
-                        </a>
-                      </figure>
-                      <div className="recent-post-info">
-                        <h4 className="title">
-                          <a href={`/blog/${p.slug}`} style={{ color: '#16120B', fontWeight: 600, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                            {p.title}
+                  latestPosts.map((p, pIdx) => {
+                    const fallbackImg = pIdx === 0
+                      ? "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80"
+                      : "https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?auto=format&fit=crop&w=600&q=80";
+                    return (
+                      <div key={p.id || pIdx} className={`recent-post-item ${pIdx === latestPosts.length - 1 ? 'mb--20' : ''}`}>
+                        <figure className="image">
+                          <a href={`/blog/${p.slug}`}>
+                            <img
+                              src={p.featured_image || fallbackImg}
+                              alt={p.title}
+                              loading="lazy"
+                              decoding="async"
+                            />
                           </a>
-                        </h4>
-                        <span className="post-date" style={{ color: 'rgba(22, 18, 11, 0.75)', fontWeight: 600 }}>
-                          {new Date(p.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase()}
-                        </span>
+                        </figure>
+                        <div className="recent-post-info">
+                          <h4 className="title">
+                            <a href={`/blog/${p.slug}`}>
+                              {p.title}
+                            </a>
+                          </h4>
+                          <span className="post-date">
+                            {new Date(p.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase()}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  ))
+                    );
+                  })
                 ) : (
                   <>
                     <div className="recent-post-item">
                       <figure className="image">
-                        <a href="/blog"><img src="/slider/Carpet.webp" alt="" loading="lazy" decoding="async" /></a>
+                        <a href="/blog">
+                          <img
+                            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80"
+                            alt="Top 10 Flooring Trends"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        </a>
                       </figure>
                       <div className="recent-post-info">
-                        <h4 className="title"><a href="/blog" style={{ color: '#16120B', fontWeight: 600 }}>Top 10 Most Popular Flooring Trends</a></h4>
-                        <span className="post-date" style={{ color: 'rgba(22, 18, 11, 0.75)', fontWeight: 600 }}>10 AUG, 2026</span>
+                        <h4 className="title"><a href="/blog">Top 10 Most Popular Flooring Trends</a></h4>
+                        <span className="post-date">10 AUG, 2026</span>
                       </div>
                     </div>
                     <div className="recent-post-item mb--20">
                       <figure className="image">
-                        <a href="/blog"><img src="/slider/Laminate Flooring.webp" alt="" loading="lazy" decoding="async" /></a>
+                        <a href="/blog">
+                          <img
+                            src="https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?auto=format&fit=crop&w=600&q=80"
+                            alt="How to Choose Best Carpet"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        </a>
                       </figure>
                       <div className="recent-post-info">
-                        <h4 className="title"><a href="/blog" style={{ color: '#16120B', fontWeight: 600 }}>How to Choose Between LVT & Hardwood</a></h4>
-                        <span className="post-date" style={{ color: 'rgba(22, 18, 11, 0.75)', fontWeight: 600 }}>10 AUG, 2026</span>
+                        <h4 className="title"><a href="/blog">How to Choose Between LVT & Hardwood</a></h4>
+                        <span className="post-date">10 AUG, 2026</span>
                       </div>
                     </div>
                   </>
