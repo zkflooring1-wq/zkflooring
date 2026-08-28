@@ -27,9 +27,9 @@ const FLOOR_FINISHES: FloorFinish[] = [
     name: 'Royal Honey Oak',
     type: 'LVT Herringbone Parquet',
     swatchColor: 'linear-gradient(135deg, #c99342, #96671e)',
-    image: 'https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?auto=format&fit=crop&w=1600&q=85',
+    image: '/assets/images/visualizer/honey_oak_parquet.png',
     fallbackImage: '/slider/Laminate Flooring.webp',
-    description: 'Classic British honey oak herringbone with micro-bevelled edges. Low-angle direct view showcasing the rich wood grain, realistic knots, and 0.55mm commercial wear layer.',
+    description: 'Bespoke British honey oak herringbone parquet. Precision micro-bevelled planks showcasing natural oak grain, authentic knots, and 0.55mm heavy commercial wear protection.',
     specs: {
       wearLayer: '0.55mm Commercial PVC Wear Layer',
       waterproof: '100% Waterproof Impervious',
@@ -44,9 +44,9 @@ const FLOOR_FINISHES: FloorFinish[] = [
     name: 'Nordic Smoke Grey',
     type: 'Ultra-Matte Wide Plank LVT',
     swatchColor: 'linear-gradient(135deg, #a69f97, #706a64)',
-    image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1600&q=85',
-    fallbackImage: '/slider/Vinyl flooring.webp',
-    description: 'Contemporary Scandinavian smoke grey wide timber planks. Ultra-matte finish with subtle oak grain texture that reflects soft daylight across open-plan interiors.',
+    image: '/slider/Vinyl flooring.webp',
+    fallbackImage: '/assets/images/visualizer/smoke_grey_wood.png',
+    description: 'Contemporary Scandinavian smoke grey wide timber planks. Ultra-matte protective surface with subtle oak grain texture that fills modern open-plan interiors.',
     specs: {
       wearLayer: '0.55mm Scratch-Guard Surface',
       waterproof: '100% Waterproof Impervious',
@@ -61,9 +61,9 @@ const FLOOR_FINISHES: FloorFinish[] = [
     name: 'Heritage Dark Walnut',
     type: 'Engineered Hardwood Parquet',
     swatchColor: 'linear-gradient(135deg, #54371b, #2b1708)',
-    image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1600&q=85',
+    image: '/assets/images/visualizer/dark_walnut_floor.png',
     fallbackImage: '/slider/Laminate Flooring.webp',
-    description: 'Rich, luxurious dark chocolate walnut parquet. Highlights deep timber swirls and satin UV-lacquered protection for executive homes and master bedroom suites.',
+    description: 'Rich, deep chocolate European walnut parquet. Highlights authentic timber swirls and satin UV-lacquered protection for executive master bedrooms and lounges.',
     specs: {
       wearLayer: '4mm European Walnut Hardwood Top',
       waterproof: 'Water-Resistant Sealed Surface',
@@ -78,9 +78,9 @@ const FLOOR_FINISHES: FloorFinish[] = [
     name: 'Champagne Royal Parquet',
     type: 'Luxury Click Vinyl Tile',
     swatchColor: 'linear-gradient(135deg, #e5d4bc, #bfa682)',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=85',
+    image: '/assets/images/visualizer/champagne_laminate.png',
     fallbackImage: '/slider/Vinyl Tile.webp',
-    description: 'Bright, airy champagne gold herringbone floor. Precision geometric planks designed to brighten interior hallways and high-traffic open living areas.',
+    description: 'Bright, airy champagne oak planks. Precision interlocking geometric planks engineered to brighten interior hallways and high-traffic family areas.',
     specs: {
       wearLayer: '0.70mm Heavy Commercial Grade',
       waterproof: '100% Waterproof Impervious',
@@ -95,9 +95,9 @@ const FLOOR_FINISHES: FloorFinish[] = [
     name: 'Plush Charcoal Saxony',
     type: 'Deep Pile Luxury Carpet',
     swatchColor: 'linear-gradient(135deg, #3d4045, #1a1c1e)',
-    image: 'https://images.unsplash.com/photo-1600121848594-d8644e57abab?auto=format&fit=crop&w=1600&q=85',
-    fallbackImage: '/slider/Carpet.webp',
-    description: 'Ultra-plush charcoal Saxony deep pile carpet. Paired with 12mm Cloud9 underlay for supreme underfoot cushioning, warmth, and sound insulation.',
+    image: '/slider/Carpet.webp',
+    fallbackImage: '/slider/Carpet Tile.webp',
+    description: 'Supreme deep pile luxury Saxony carpet. Paired with 12mm Cloud9 underlay for heavenly underfoot cushioning, warmth, and sound dampening.',
     specs: {
       wearLayer: '2,200g/m² Heavy Density Saxony',
       waterproof: '10-Year Stain-Safe Protection',
@@ -121,17 +121,17 @@ export default function RoomVisualizer() {
       setSelected(finish);
       setImgSrc(finish.image);
       setIsTransitioning(false);
-    }, 180);
+    }, 150);
   };
 
   return (
     <div className="zk-visualizer-container">
       {/* Visualizer Frame */}
       <div className="zk-visualizer-card">
-        <div className="row g-0">
-          {/* Left: Flooring Visual Canvas */}
-          <div className="col-lg-7">
-            <div className="zk-visualizer-canvas">
+        <div className="row g-0 align-items-stretch" style={{ minHeight: '560px' }}>
+          {/* Left: 100% Floor Texture Canvas */}
+          <div className="col-lg-7 d-flex">
+            <div className="zk-visualizer-canvas w-100 h-100" style={{ minHeight: '480px' }}>
               <img
                 src={imgSrc}
                 alt={selected.name}
@@ -178,8 +178,8 @@ export default function RoomVisualizer() {
                   border: '1px solid rgba(212, 175, 55, 0.3)'
                 }}
               >
-                <i className="fa-solid fa-eye" style={{ color: '#D4AF37' }}></i>
-                Real Floor Focus
+                <i className="fa-solid fa-layer-group" style={{ color: '#D4AF37' }}></i>
+                100% Pure Flooring Focus
               </div>
 
               {/* Price Tag Indicator */}
@@ -191,8 +191,8 @@ export default function RoomVisualizer() {
           </div>
 
           {/* Right: Interactive Controls & Live HUD */}
-          <div className="col-lg-5">
-            <div className="zk-visualizer-controls">
+          <div className="col-lg-5 d-flex flex-column justify-content-between">
+            <div className="zk-visualizer-controls h-100">
               <div>
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '11px', fontWeight: 800, color: '#8a6820', background: '#f3ede2', padding: '4px 12px', borderRadius: '20px', marginBottom: '10px' }}>
                   <i className="fa-solid fa-wand-magic-sparkles"></i>
@@ -202,7 +202,7 @@ export default function RoomVisualizer() {
                   Select Flooring Finish
                 </h3>
                 <p style={{ fontSize: '12.5px', color: '#666', marginBottom: '18px', lineHeight: 1.5 }}>
-                  Click any shade below to see the realistic floor texture in close-up detail and review trade specifications.
+                  Click any shade below to inspect the genuine floor texture in high resolution and review trade specifications.
                 </p>
 
                 {/* Swatch Selector Buttons */}
@@ -258,7 +258,7 @@ export default function RoomVisualizer() {
               </div>
 
               {/* Action Buttons */}
-              <div className="zk-visualizer-actions">
+              <div className="zk-visualizer-actions" style={{ marginTop: 'auto', paddingTop: '16px' }}>
                 <Link
                   href={`/contact?sample=${encodeURIComponent(selected.name)}`}
                   className="zk-btn-gold"
