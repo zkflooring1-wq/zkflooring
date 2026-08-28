@@ -1188,62 +1188,62 @@
 }
 
 /* ==========================================================================
-   UK LUXURY MULTI-STEP SURVEY BOOKING WIZARD (10/10 BESPOKE UX)
+   ULTRA-CLEAN MINIMALIST MODAL (FAST, ELEGANT & HIGH CONVERTING)
    ========================================================================== */
-.zk-uk-modal-overlay {
+.zk-minimal-modal-overlay {
   position: fixed;
   inset: 0;
   z-index: 10000;
-  background: rgba(15, 12, 8, 0.78);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(14, 12, 8, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px 16px;
-  animation: fadeIn 0.25s ease;
+  padding: 16px;
+  animation: fadeIn 0.2s ease;
 }
 
-.zk-uk-modal-box {
+.zk-minimal-modal-card {
   background: #FFFFFF;
-  border: 1.5px solid rgba(191, 149, 63, 0.45);
-  border-radius: 28px;
+  border: 1.5px solid rgba(191, 149, 63, 0.4);
+  border-radius: 24px;
   width: 100%;
-  max-width: 740px;
-  max-height: 92vh;
-  overflow-y: auto;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.15);
-  animation: scaleUp 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-  display: flex;
-  flex-direction: column;
+  max-width: 480px;
+  padding: 28px 28px 24px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
   position: relative;
-  scrollbar-width: thin;
-  scrollbar-color: #d4af37 #f5f0e6;
+  animation: scaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.zk-uk-modal-box::-webkit-scrollbar {
-  width: 6px;
-}
-
-.zk-uk-modal-box::-webkit-scrollbar-thumb {
-  background: #d4af37;
-  border-radius: 10px;
-}
-
-/* 1. Header */
-.zk-uk-modal-header {
+.zk-minimal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
   background: #FAF8F5;
-  border-bottom: 1.5px solid #EBE4D8;
-  padding: 22px 28px 18px;
+  border: 1px solid #E5DCCF;
+  color: #736E67;
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  border-top-left-radius: 26px;
-  border-top-right-radius: 26px;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
 }
 
-.zk-uk-badge-gold {
+.zk-minimal-close:hover {
+  background: #16120B;
+  color: #FCF6BA;
+}
+
+.zk-minimal-head {
+  margin-bottom: 20px;
+}
+
+.zk-minimal-van-badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -1255,467 +1255,136 @@
   padding: 3px 10px;
   border-radius: 20px;
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  margin-bottom: 8px;
 }
 
-.zk-uk-badge-green {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  background: #DCFCE7;
-  border: 1px solid #86EFAC;
-  color: #15803D;
-  font-size: 11px;
-  font-weight: 800;
-  padding: 3px 10px;
-  border-radius: 20px;
-}
-
-.zk-uk-header-title {
+.zk-minimal-head h3 {
   font-size: 21px;
   font-weight: 800;
   color: #16120B;
-  margin: 6px 0 4px;
+  margin: 0 0 4px;
   line-height: 1.25;
 }
 
-.zk-uk-header-sub {
+.zk-minimal-head p {
   font-size: 13px;
   color: #665F54;
   margin: 0;
-  line-height: 1.45;
+  line-height: 1.4;
 }
 
-.zk-uk-header-sub strong {
+.zk-minimal-head p strong {
   color: #16120B;
 }
 
-.zk-uk-close-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: #FFFFFF;
-  border: 1px solid #E0D5C5;
-  color: #736E67;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  flex-shrink: 0;
+.zk-minimal-field {
+  margin-bottom: 14px;
 }
 
-.zk-uk-close-btn:hover {
-  background: #16120B;
-  color: #FCF6BA;
-}
-
-/* 2. Step Progress Bar */
-.zk-uk-progress-bar {
-  background: #FFFFFF;
-  padding: 14px 28px;
-  border-bottom: 1.5px solid #F0EAE1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.zk-uk-step-node {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  opacity: 0.55;
-  transition: all 0.2s ease;
-}
-
-.zk-uk-step-node.active {
-  opacity: 1;
-}
-
-.zk-uk-step-node.completed .zk-uk-step-num {
-  background: #16A34A;
-  color: #FFFFFF;
-}
-
-.zk-uk-step-num {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: #FAF8F5;
-  border: 1.5px solid #D9CEBE;
-  color: #5C554A;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: 800;
-  transition: all 0.2s ease;
-}
-
-.zk-uk-step-node.active .zk-uk-step-num {
-  background: #16120B;
-  color: #FCF6BA;
-  border-color: #16120B;
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.25);
-}
-
-.zk-uk-step-text {
-  font-size: 12.5px;
-  font-weight: 700;
-  color: #16120B;
-}
-
-.zk-uk-step-divider {
-  flex: 1;
-  height: 2px;
-  background: #E8DFC0;
-  margin: 0 16px;
-}
-
-/* 3. Wizard Body */
-.zk-uk-wizard-body {
-  padding: 24px 28px;
-}
-
-.zk-uk-step-panel {
-  display: flex;
-  flex-direction: column;
-  animation: fadeIn 0.25s ease;
-}
-
-.zk-uk-panel-head {
-  margin-bottom: 20px;
-}
-
-.zk-uk-panel-head h4 {
-  font-size: 17px;
-  font-weight: 800;
-  color: #16120B;
-  margin: 0 0 4px;
-}
-
-.zk-uk-panel-head p {
-  font-size: 13px;
-  color: #665F54;
-  margin: 0;
-}
-
-/* Step 1: Flooring Grid */
-.zk-uk-flooring-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-bottom: 24px;
-}
-
-.zk-uk-flooring-card {
-  border: 1.5px solid #E5DCCF;
-  background: #FAF8F5;
-  border-radius: 18px;
-  padding: 14px 16px;
-  cursor: pointer;
-  position: relative;
-  transition: all 0.2s ease;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.zk-uk-flooring-card:hover {
-  border-color: #AA771C;
-  background: #FFFFFF;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(179, 135, 40, 0.14);
-}
-
-.zk-uk-flooring-card.selected {
-  border-color: #AA771C;
-  background: #FCFAF6;
-  box-shadow: 0 0 0 2.5px rgba(212, 175, 55, 0.4);
-}
-
-.zk-uk-flooring-card-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.zk-uk-flooring-icon {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
-  background: #FAF6EE;
-  border: 1px solid rgba(191, 149, 63, 0.35);
-  color: #AA771C;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-}
-
-.zk-uk-flooring-card.selected .zk-uk-flooring-icon {
-  background: #16120B;
-  color: #FCF6BA;
-}
-
-.zk-uk-pill-tag {
-  font-size: 10.5px;
-  font-weight: 800;
-  padding: 2px 8px;
-  border-radius: 12px;
-  background: #F0EAE0;
-  color: #635E57;
-}
-
-.zk-uk-flooring-card.selected .zk-uk-pill-tag {
-  background: #16120B;
-  color: #FCF6BA;
-}
-
-.zk-uk-flooring-info strong {
-  display: block;
-  font-size: 13.5px;
-  font-weight: 800;
-  color: #16120B;
-  margin-bottom: 2px;
-}
-
-.zk-uk-flooring-info span {
-  display: block;
-  font-size: 11.5px;
-  color: #665F54;
-  line-height: 1.35;
-}
-
-.zk-uk-radio-indicator {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  color: #AA771C;
-  font-size: 16px;
-}
-
-/* Step 2: Room Chips & Slot Cards */
-.zk-uk-field-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 800;
-  color: #16120B;
-  margin-bottom: 10px;
-}
-
-.zk-uk-field-title i {
-  color: #AA771C;
-}
-
-.zk-uk-room-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.zk-uk-room-chip {
-  border: 1.5px solid #E0D7C9;
-  background: #FAF8F5;
-  border-radius: 20px;
-  padding: 8px 14px;
-  font-size: 12px;
-  font-weight: 700;
-  color: #4A443A;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.15s ease;
-}
-
-.zk-uk-room-chip:hover {
-  border-color: #AA771C;
-  background: #FFFFFF;
-}
-
-.zk-uk-room-chip.active {
-  border-color: #16120B;
-  background: #16120B;
-  color: #FCF6BA;
-}
-
-.zk-uk-slot-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.zk-uk-slot-card {
-  border: 1.5px solid #E0D7C9;
-  background: #FAF8F5;
-  border-radius: 16px;
-  padding: 12px 14px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  position: relative;
-  transition: all 0.2s ease;
-}
-
-.zk-uk-slot-card:hover {
-  border-color: #AA771C;
-  background: #FFFFFF;
-}
-
-.zk-uk-slot-card.selected {
-  border-color: #AA771C;
-  background: #16120B;
-  color: #FFFFFF;
-  box-shadow: 0 4px 16px rgba(22, 18, 11, 0.2);
-}
-
-.zk-uk-slot-icon {
-  font-size: 18px;
-  color: #AA771C;
-}
-
-.zk-uk-slot-card.selected .zk-uk-slot-icon {
-  color: #FCF6BA;
-}
-
-.zk-uk-slot-card strong {
-  display: block;
-  font-size: 13px;
-  font-weight: 800;
-}
-
-.zk-uk-slot-card span {
+.zk-minimal-field label {
   display: block;
   font-size: 11px;
-  color: #7A7266;
-}
-
-.zk-uk-slot-card.selected span {
-  color: #E2D9CD;
-}
-
-.zk-uk-slot-radio {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  color: #FCF6BA;
-  font-size: 14px;
-}
-
-/* Step 3: Fields & Summary */
-.zk-uk-field-wrap label {
-  display: block;
-  font-size: 11.5px;
   font-weight: 800;
-  color: #4A443A;
+  color: #5C554A;
   text-transform: uppercase;
-  margin-bottom: 5px;
   letter-spacing: 0.3px;
+  margin-bottom: 6px;
 }
 
-.zk-uk-input-box {
+.zk-minimal-pills {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.zk-minimal-pill {
+  border: 1.5px solid #E5DCCF;
   background: #FAF8F5;
-  border: 1.5px solid #E0D7C9;
-  border-radius: 14px;
-  padding: 3px 14px;
-  transition: all 0.2s ease;
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #4A443A;
+  cursor: pointer;
+  transition: all 0.15s ease;
 }
 
-.zk-uk-input-box:focus-within {
-  background: #FFFFFF;
+.zk-minimal-pill:hover {
   border-color: #AA771C;
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+  background: #FFFFFF;
 }
 
-.zk-uk-input-box i {
-  color: #AA771C;
-  font-size: 14px;
-  margin-right: 10px;
-  flex-shrink: 0;
+.zk-minimal-pill.active {
+  border-color: #16120B;
+  background: #16120B;
+  color: #FCF6BA;
 }
 
-.zk-uk-input-box input {
-  flex: 1;
-  border: none !important;
-  background: transparent !important;
-  font-size: 13.5px !important;
-  font-weight: 600 !important;
-  color: #16120B !important;
-  outline: none !important;
-  padding: 10px 0 !important;
-  width: 100%;
-}
-
-.zk-uk-input-box input::placeholder {
-  color: #8C8477 !important;
-  font-weight: 400 !important;
-}
-
-.zk-uk-booking-summary {
-  background: #FAF6EE;
-  border: 1px solid rgba(191, 149, 63, 0.35);
-  border-radius: 14px;
-  padding: 12px 16px;
-  margin-top: 18px;
+.zk-minimal-input-wrap {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.zk-uk-summary-item {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12.5px;
-}
-
-.zk-uk-summary-item .label {
-  color: #736E67;
-  font-weight: 600;
-}
-
-.zk-uk-summary-item .val {
-  color: #16120B;
+.zk-minimal-input-wrap label {
+  font-size: 11px;
   font-weight: 800;
+  color: #5C554A;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 
-/* Nav Footer */
-.zk-uk-nav-footer {
+.zk-minimal-input-box {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding-top: 20px;
-  border-top: 1.5px solid #F0EAE1;
-  margin-top: 20px;
+  background: #FAF8F5;
+  border: 1.5px solid #E0D7C9;
+  border-radius: 12px;
+  padding: 0 12px;
+  height: 42px;
+  transition: all 0.2s ease;
 }
 
-.zk-uk-trust-pill {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11.5px;
-  color: #665F54;
-  font-weight: 600;
+.zk-minimal-input-box:focus-within {
+  background: #FFFFFF;
+  border-color: #AA771C;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.18);
 }
 
-.zk-uk-trust-pill i {
-  color: #16A34A;
+.zk-minimal-input-box i {
+  color: #AA771C;
+  font-size: 13px;
+  margin-right: 10px;
+  flex-shrink: 0;
 }
 
-.zk-uk-btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 26px;
+.zk-minimal-input-box input,
+.zk-minimal-input-box select {
+  flex: 1;
+  border: none !important;
+  background: transparent !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #16120B !important;
+  outline: none !important;
+  padding: 0 !important;
+  width: 100%;
+  height: 100%;
+}
+
+.zk-minimal-input-box select {
+  cursor: pointer;
+}
+
+.zk-minimal-input-box input::placeholder {
+  color: #8C8477 !important;
+  font-weight: 400 !important;
+}
+
+.zk-minimal-btn {
+  width: 100%;
+  margin-top: 18px;
+  height: 46px;
   border-radius: 14px;
   background: linear-gradient(135deg, #BF953F, #FCF6BA, #B38728);
   color: #16120B;
@@ -1723,123 +1392,66 @@
   font-weight: 800;
   border: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   box-shadow: 0 4px 18px rgba(179, 135, 40, 0.35);
   transition: all 0.2s ease;
-  white-space: nowrap;
 }
 
-.zk-uk-btn-primary:hover {
+.zk-minimal-btn:hover {
   transform: translateY(-1.5px);
   box-shadow: 0 6px 24px rgba(179, 135, 40, 0.48);
 }
 
-.zk-uk-btn-primary.submit {
-  background: linear-gradient(135deg, #16120B, #2C2417);
-  color: #FCF6BA;
-  border: 1.5px solid #BF953F;
-}
-
-.zk-uk-btn-primary.submit:hover {
-  background: #16120B;
-  color: #FFFFFF;
-}
-
-.zk-uk-btn-back {
-  display: inline-flex;
+.zk-minimal-trust {
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  padding: 11px 20px;
-  border-radius: 14px;
-  background: #FAF8F5;
-  border: 1px solid #D9CEBE;
-  font-size: 13px;
-  font-weight: 700;
-  color: #5C554A;
-  cursor: pointer;
-  transition: all 0.15s ease;
+  font-size: 11px;
+  color: #736E67;
+  margin-top: 12px;
 }
 
-.zk-uk-btn-back:hover {
-  background: #EBE3D5;
-  color: #16120B;
+.zk-minimal-trust i {
+  color: #16A34A;
 }
 
-/* Success View */
-.zk-uk-success-screen {
+/* Success Screen */
+.zk-minimal-success {
   text-align: center;
-  padding: 36px 24px;
+  padding: 20px 10px;
 }
 
-.zk-uk-success-icon {
-  width: 76px;
-  height: 76px;
+.zk-minimal-check-circle {
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   background: linear-gradient(135deg, #BF953F, #FCF6BA, #B38728);
   color: #16120B;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32px;
-  margin: 0 auto 20px;
-  box-shadow: 0 10px 30px rgba(179, 135, 40, 0.4);
+  font-size: 28px;
+  margin: 0 auto 16px;
+  box-shadow: 0 8px 24px rgba(179, 135, 40, 0.35);
   animation: zkGlowPulse 2s infinite;
 }
 
-.zk-uk-success-screen h4 {
+.zk-minimal-success h3 {
   font-size: 22px;
   font-weight: 800;
   color: #16120B;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
-.zk-uk-success-screen p {
-  font-size: 14px;
+.zk-minimal-success p {
+  font-size: 13.5px;
   color: #635E57;
-  max-width: 480px;
-  margin: 0 auto 24px;
   line-height: 1.5;
-}
-
-.zk-uk-guarantee-card {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-width: 420px;
-  margin: 0 auto 26px;
-  background: #FAF8F5;
-  border: 1px solid #EAE1D3;
-  border-radius: 18px;
-  padding: 16px 20px;
-  text-align: left;
-}
-
-.zk-uk-guarantee-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #332E27;
-}
-
-.zk-uk-guarantee-row i {
-  color: #AA771C;
-  font-size: 14px;
-  width: 18px;
-  text-align: center;
-}
-
-@media (max-width: 768px) {
-  .zk-uk-modal-box { border-radius: 20px; }
-  .zk-uk-modal-header { padding: 18px 18px 14px; }
-  .zk-uk-progress-bar { padding: 10px 16px; }
-  .zk-uk-step-text { display: none; }
-  .zk-uk-wizard-body { padding: 18px 16px; }
-  .zk-uk-flooring-grid { grid-template-columns: 1fr; }
-  .zk-uk-slot-grid { grid-template-columns: 1fr; }
-  .zk-uk-nav-footer { flex-direction: column-reverse; }
-  .zk-uk-btn-primary { width: 100%; justify-content: center; }
-  .zk-uk-btn-back { width: 100%; justify-content: center; }
+  margin-bottom: 20px;
 }
 
 
