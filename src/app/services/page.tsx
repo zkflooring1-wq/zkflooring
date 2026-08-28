@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import ServicesSection, { defaultZkServices } from '@/components/ServicesSection';
+import RoomVisualizer from '@/components/services/RoomVisualizer';
 import { supabase } from '@/lib/supabase';
 import { EditModeProvider } from '@/components/editor/EditModeProvider';
 import { EditableField } from '@/components/editor/EditableField';
@@ -106,6 +107,28 @@ export default async function ServicesPage() {
 
       {/* Services Section */}
       <ServicesSection flooringServices={flooringServices} />
+
+      {/* Interactive Room Texture & Shade Visualizer Section */}
+      <section className="zk-visualizer-section">
+        <div className="container">
+          <div className="row justify-content-center text-center mb-40">
+            <div className="col-lg-8">
+              <div className="about-badge-pill mb-3">
+                <i className="fa-solid fa-wand-magic-sparkles"></i>
+                <span>Digital Sample Studio</span>
+              </div>
+              <h2 className="sec-title mb-3" style={{ fontSize: 'clamp(26px, 3.5vw, 38px)', lineHeight: 1.25, fontWeight: 800 }}>
+                Interactive Room & Shade Visualizer
+              </h2>
+              <p className="text-secondary mx-auto" style={{ maxWidth: '640px', fontSize: '15px', lineHeight: 1.65 }}>
+                Test our best-selling luxury shades and finishes live. Click any swatch below to see the transformation and review technical trade specifications.
+              </p>
+            </div>
+          </div>
+
+          <RoomVisualizer />
+        </div>
+      </section>
 
       {/* 4-Step Installation Workflow Section */}
       <section className="space bg-white" style={{ position: 'relative' }}>
