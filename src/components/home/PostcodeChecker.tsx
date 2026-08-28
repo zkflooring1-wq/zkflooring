@@ -8,42 +8,31 @@ interface AreaInfo {
 }
 
 const COVERED_AREAS: Record<string, AreaInfo> = {
-  'B10': { name: 'Small Heath & Bordesley Green', travelTime: '5-15 mins' },
-  'B9': { name: 'Bordesley & Small Heath', travelTime: '10 mins' },
-  'B11': { name: 'Sparkhill & Tyseley', travelTime: '10 mins' },
-  'B12': { name: 'Balsall Heath & Highgate', travelTime: '15 mins' },
-  'B1': { name: 'Birmingham City Centre', travelTime: '15 mins' },
-  'B2': { name: 'Birmingham Central', travelTime: '15 mins' },
+  'B10': { name: 'Small Heath', travelTime: '5-15 mins' },
+  'B9': { name: 'Bordesley', travelTime: '10 mins' },
+  'B11': { name: 'Sparkhill', travelTime: '10 mins' },
+  'B12': { name: 'Balsall Heath', travelTime: '15 mins' },
+  'B1': { name: 'City Centre', travelTime: '15 mins' },
+  'B2': { name: 'Central', travelTime: '15 mins' },
   'B3': { name: 'Jewellery Quarter', travelTime: '15 mins' },
-  'B4': { name: 'Aston / City Centre', travelTime: '15 mins' },
-  'B5': { name: 'Digbeth & Southside', travelTime: '12 mins' },
   'B13': { name: 'Moseley', travelTime: '15 mins' },
   'B14': { name: 'Kings Heath', travelTime: '20 mins' },
   'B15': { name: 'Edgbaston', travelTime: '20 mins' },
   'B17': { name: 'Harborne', travelTime: '20 mins' },
-  'B25': { name: 'Yardley & Stechford', travelTime: '10 mins' },
-  'B26': { name: 'Sheldon & Airport Area', travelTime: '15 mins' },
+  'B25': { name: 'Yardley', travelTime: '10 mins' },
+  'B26': { name: 'Sheldon', travelTime: '15 mins' },
   'B27': { name: 'Acocks Green', travelTime: '12 mins' },
   'B28': { name: 'Hall Green', travelTime: '15 mins' },
-  'B29': { name: 'Selly Oak', travelTime: '20 mins' },
-  'B30': { name: 'Bournville', travelTime: '25 mins' },
-  'B31': { name: 'Northfield', travelTime: '25 mins' },
-  'B32': { name: 'Quinton', travelTime: '25 mins' },
-  'B90': { name: 'Shirley & Solihull South', travelTime: '20 mins' },
-  'B91': { name: 'Solihull Town Centre', travelTime: '20 mins' },
-  'B92': { name: 'Olton & Solihull North', travelTime: '15 mins' },
-  'B93': { name: 'Knowle & Dorridge', travelTime: '25 mins' },
-  'B23': { name: 'Erdington', travelTime: '20 mins' },
-  'B24': { name: 'Castle Vale', travelTime: '15 mins' },
+  'B90': { name: 'Shirley', travelTime: '20 mins' },
+  'B91': { name: 'Solihull', travelTime: '20 mins' },
+  'B92': { name: 'Olton', travelTime: '15 mins' },
   'B72': { name: 'Sutton Coldfield', travelTime: '25 mins' },
-  'B73': { name: 'Boldmere & Sutton Park', travelTime: '25 mins' },
-  'B74': { name: 'Four Oaks & Streetly', travelTime: '30 mins' },
-  'B76': { name: 'Walmley & Minworth', travelTime: '20 mins' },
+  'B73': { name: 'Boldmere', travelTime: '25 mins' },
+  'B74': { name: 'Four Oaks', travelTime: '30 mins' },
   'B62': { name: 'Halesowen', travelTime: '30 mins' },
   'B66': { name: 'Smethwick', travelTime: '20 mins' },
-  'B70': { name: 'West Bromwich', travelTime: '25 mins' },
-  'DY1': { name: 'Dudley', travelTime: '35 mins' },
   'WS1': { name: 'Walsall', travelTime: '30 mins' },
+  'DY1': { name: 'Dudley', travelTime: '35 mins' },
   'WV1': { name: 'Wolverhampton', travelTime: '40 mins' },
   'CV1': { name: 'Coventry', travelTime: '35 mins' },
 };
@@ -51,10 +40,9 @@ const COVERED_AREAS: Record<string, AreaInfo> = {
 export default function PostcodeChecker() {
   const [input, setInput] = useState('');
   const [isMinimized, setIsMinimized] = useState(false);
-  const [checkedResult, setCheckedResult] = useState<{
+  const [checkedArea, setCheckedArea] = useState<{
     postcode: string;
-    areaName: string;
-    travelTime: string;
+    name: string;
   } | null>(null);
 
   // Modal State
@@ -71,46 +59,37 @@ export default function PostcodeChecker() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  // STEP 1: Check availability
-  const handleCheck = (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    const cleaned = input.trim().toUpperCase();
-    if (!cleaned) {
-      setCheckedResult({
-        postcode: 'B10',
-        areaName: 'Small Heath & Bordesley Green',
-        travelTime: '5-15 mins',
-      });
+  const handleCheck = (query?: string) => {
+    const raw = (query !== undefined ? query : input).trim().toUpperCase();
+    if (!raw) {
+      setCheckedArea({ postcode: 'B10', name: 'Small Heath' });
       return;
     }
 
-    const match = cleaned.match(/^([A-Z]{1,2}[0-9]{1,2})/);
-    const outcode = match ? match[1] : cleaned;
+    const match = raw.match(/^([A-Z]{1,2}[0-9]{1,2})/);
+    const outcode = match ? match[1] : raw;
     const area = COVERED_AREAS[outcode];
 
     if (area) {
-      setCheckedResult({
-        postcode: outcode,
-        areaName: area.name,
-        travelTime: area.travelTime,
-      });
+      setCheckedArea({ postcode: outcode, name: area.name });
     } else {
-      setCheckedResult({
-        postcode: outcode,
-        areaName: 'Greater Birmingham Area',
-        travelTime: '20-35 mins',
-      });
+      setCheckedArea({ postcode: outcode, name: 'West Midlands' });
     }
   };
 
-  // STEP 2: Open modal
+  const handlePillClick = (code: string) => {
+    setInput(code);
+    handleCheck(code);
+  };
+
   const openModal = () => {
-    const code = checkedResult?.postcode || input.trim().toUpperCase() || 'B10';
-    const areaName = checkedResult?.areaName || 'Birmingham';
+    const currentCode = checkedArea?.postcode || input.trim().toUpperCase() || 'B10';
+    const areaName = checkedArea?.name || 'Birmingham';
+
     setBookingForm((prev) => ({
       ...prev,
-      postcode: code,
-      message: `Requested Free In-Home Survey for ${areaName} (${code})`,
+      postcode: currentCode,
+      message: `Requested Free Survey for ${areaName} (${currentCode})`,
     }));
     setIsModalOpen(true);
   };
@@ -130,7 +109,7 @@ export default function PostcodeChecker() {
           service: `Free Survey: ${bookingForm.service}`,
           room_size: `Postcode: ${bookingForm.postcode}`,
           message: `Slot: ${bookingForm.preferredSlot}. ${bookingForm.message || ''}`.trim(),
-          source: 'mobile_showroom_dock',
+          source: 'sticky_bottom_dock',
         }),
       });
       setIsSuccess(true);
@@ -144,111 +123,103 @@ export default function PostcodeChecker() {
   return (
     <>
       {/* =========================================================================
-          CLEAN LUXURY DOCK (ONE SLIM HORIZONTAL BAR)
+          STICKY BOTTOM FLOATING DOCK (PERFECT PROPORTIONS & ZERO OVERFLOW)
           ========================================================================= */}
       {!isMinimized && (
-        <aside aria-label="Mobile showroom booking" className="zk-clean-dock">
-          <div className="zk-clean-dock-card">
+        <aside aria-label="Mobile showroom booking" className="zk-sticky-dock-bar-wrap">
+          <div className="zk-sticky-dock-pill">
             
-            {!checkedResult ? (
-              /* State 1: Input & Check */
-              <form onSubmit={handleCheck} className="zk-dock-content-row">
-                <div className="zk-dock-label">
-                  <span className="zk-dock-van-dot">
-                    <i className="fa-solid fa-van-shuttle"></i>
-                  </span>
-                  <div className="zk-dock-text">
-                    <strong>Free Mobile Showroom &amp; Survey</strong>
-                    <small>We bring 200+ samples to your door</small>
-                  </div>
-                </div>
-
-                <div className="zk-dock-search-group">
-                  <i className="fa-solid fa-location-dot zk-dock-icon"></i>
-                  <input
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    placeholder="Enter Postcode (e.g. B10, B91, Solihull)..."
-                    className="zk-dock-input-field"
-                  />
-                  <button type="submit" className="zk-dock-action-btn primary">
-                    <span>Check Area</span>
-                    <i className="fa-solid fa-arrow-right"></i>
-                  </button>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => setIsMinimized(true)}
-                  className="zk-dock-dismiss-btn"
-                  title="Close bar"
-                >
-                  <i className="fa-solid fa-xmark"></i>
-                </button>
-              </form>
-            ) : (
-              /* State 2: Verified Result + Book Free Survey CTA */
-              <div className="zk-dock-content-row verified">
-                <div className="zk-dock-verified-info">
-                  <span className="zk-dock-success-badge">
-                    <i className="fa-solid fa-circle-check"></i>
-                  </span>
-                  <div className="zk-dock-text">
-                    <strong style={{ color: '#166534' }}>
-                      Survey Available in {checkedResult.areaName} ({checkedResult.postcode})!
-                    </strong>
-                    <small>
-                      Free laser measuring &bull; Response time: {checkedResult.travelTime} &bull;{' '}
-                      <button
-                        type="button"
-                        onClick={() => setCheckedResult(null)}
-                        style={{
-                          background: 'none',
-                          border: 'none',
-                          color: '#B45309',
-                          textDecoration: 'underline',
-                          fontWeight: 700,
-                          cursor: 'pointer',
-                          padding: 0,
-                          fontSize: '11px',
-                        }}
-                      >
-                        Change Area
-                      </button>
-                    </small>
-                  </div>
-                </div>
-
-                <div className="d-flex align-items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={openModal}
-                    className="zk-dock-action-btn gold"
-                  >
-                    <i className="fa-solid fa-calendar-check"></i>
-                    <span>Book Free Survey in {checkedResult.postcode}</span>
-                    <i className="fa-solid fa-arrow-right"></i>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setIsMinimized(true)}
-                    className="zk-dock-dismiss-btn"
-                    title="Close bar"
-                  >
-                    <i className="fa-solid fa-xmark"></i>
-                  </button>
-                </div>
+            {/* Left: Van Icon & Title */}
+            <div className="zk-dock-part-brand">
+              <span className="zk-dock-van-circle">
+                <i className="fa-solid fa-van-shuttle"></i>
+              </span>
+              <div className="zk-dock-brand-labels">
+                <strong>Free Home Survey</strong>
+                <span>Birmingham &amp; West Midlands</span>
               </div>
-            )}
+            </div>
 
+            {/* Middle: Integrated Input with Check Button */}
+            <div className="zk-dock-part-search">
+              <i className="fa-solid fa-location-dot zk-dock-search-pin"></i>
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => {
+                  setInput(e.target.value);
+                  if (!e.target.value) setCheckedArea(null);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleCheck(input);
+                  }
+                }}
+                placeholder="Enter Postcode (e.g. B10, B91)..."
+                className="zk-dock-input"
+              />
+              <button
+                type="button"
+                onClick={() => handleCheck(input)}
+                className="zk-dock-check-action"
+              >
+                Check
+              </button>
+            </div>
+
+            {/* Quick Area Pills */}
+            <div className="zk-dock-part-pills d-none d-xl-flex">
+              {[
+                { code: 'B10', label: 'B10' },
+                { code: 'B91', label: 'B91 Solihull' },
+                { code: 'B13', label: 'B13' },
+                { code: 'B73', label: 'B73' },
+              ].map((pill) => (
+                <button
+                  key={pill.code}
+                  type="button"
+                  onClick={() => handlePillClick(pill.code)}
+                  className={`zk-dock-quick-pill ${
+                    checkedArea?.postcode === pill.code ? 'active' : ''
+                  }`}
+                >
+                  {pill.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Right: Book Free Survey Button (Direct 1-Click to Modal) */}
+            <div className="zk-dock-part-actions">
+              <button
+                type="button"
+                onClick={openModal}
+                className={`zk-dock-book-btn ${checkedArea ? 'highlight' : ''}`}
+              >
+                <i className="fa-solid fa-calendar-check"></i>
+                <span>
+                  {checkedArea
+                    ? `Book Survey in ${checkedArea.postcode}`
+                    : 'Book Survey'}
+                </span>
+              </button>
+
+              {/* Close Button */}
+              <button
+                type="button"
+                onClick={() => setIsMinimized(true)}
+                className="zk-dock-close-btn"
+                title="Minimize bar"
+              >
+                <i className="fa-solid fa-xmark"></i>
+              </button>
+            </div>
           </div>
         </aside>
       )}
 
       {/* =========================================================================
-          RE-OPEN CHIP (Fixed at Bottom-Left, completely away from bottom-right chat widget!)
+          RE-OPEN CHIP (Positioned Bottom-Left away from bottom-right chat widget!)
           ========================================================================= */}
       {isMinimized && (
         <button
@@ -263,7 +234,7 @@ export default function PostcodeChecker() {
       )}
 
       {/* =========================================================================
-          SURVEY BOOKING MODAL
+          SURVEY BOOKING MODAL (DIRECT REALTIME SYNC TO ADMIN CRM)
           ========================================================================= */}
       {isModalOpen && (
         <div className="zk-survey-modal-overlay" onClick={() => setIsModalOpen(false)}>
@@ -283,9 +254,9 @@ export default function PostcodeChecker() {
                 <h3 style={{ fontSize: '19px', fontWeight: 800, color: '#16120B', margin: 0 }}>
                   Book Free In-Home Survey &amp; Sample Box
                 </h3>
-                {checkedResult && (
+                {bookingForm.postcode && (
                   <p style={{ fontSize: '12.5px', color: '#8a6820', fontWeight: 700, margin: '3px 0 0' }}>
-                    📍 Area: {checkedResult.areaName} ({checkedResult.postcode})
+                    📍 Area: {bookingForm.postcode}
                   </p>
                 )}
               </div>
@@ -316,7 +287,6 @@ export default function PostcodeChecker() {
                   onClick={() => {
                     setIsModalOpen(false);
                     setIsSuccess(false);
-                    setCheckedResult(null);
                     setBookingForm({
                       name: '',
                       phone: '',
@@ -327,7 +297,7 @@ export default function PostcodeChecker() {
                       message: '',
                     });
                   }}
-                  className="zk-dock-action-btn gold"
+                  className="zk-btn-book-survey"
                   style={{ margin: '0 auto' }}
                 >
                   Done
@@ -463,7 +433,8 @@ export default function PostcodeChecker() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="zk-dock-action-btn gold"
+                      className="zk-btn-book-survey"
+                      style={{ border: 'none', cursor: 'pointer' }}
                     >
                       {isSubmitting ? (
                         <>

@@ -881,9 +881,9 @@
 }
 
 /* ==========================================================================
-   PRISTINE LUXURY CLEAN FLOATING DOCK
+   STICKY BOTTOM FLOATING PILL DOCK (ZERO OVERFLOW, PERFECT ALIGNMENT)
    ========================================================================== */
-.zk-clean-dock {
+.zk-sticky-dock-bar-wrap {
   position: fixed;
   bottom: 20px;
   left: 50%;
@@ -894,32 +894,29 @@
   animation: fadeInDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.zk-clean-dock-card {
+.zk-sticky-dock-pill {
   background: #FFFFFF;
   border: 1.5px solid rgba(191, 149, 63, 0.45);
-  border-radius: 50px;
-  padding: 6px 8px 6px 16px;
-  box-shadow: 0 12px 35px rgba(22, 18, 11, 0.15), 0 2px 6px rgba(0, 0, 0, 0.04);
-}
-
-.zk-dock-content-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin: 0;
-}
-
-/* Left Label */
-.zk-dock-label {
+  border-radius: 9999px;
+  padding: 4px 8px 4px 14px;
+  box-shadow: 0 10px 30px rgba(22, 18, 11, 0.14), 0 2px 6px rgba(0, 0, 0, 0.04);
   display: flex;
   align-items: center;
   gap: 10px;
+  height: 50px;
+}
+
+/* Part 1: Brand */
+.zk-dock-part-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   flex-shrink: 0;
 }
 
-.zk-dock-van-dot {
-  width: 32px;
-  height: 32px;
+.zk-dock-van-circle {
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background: #FAF6EE;
   border: 1px solid rgba(191, 149, 63, 0.35);
@@ -927,112 +924,169 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
-  flex-shrink: 0;
+  font-size: 11px;
 }
 
-.zk-dock-text {
+.zk-dock-brand-labels {
   display: flex;
   flex-direction: column;
-  line-height: 1.2;
+  line-height: 1.15;
 }
 
-.zk-dock-text strong {
-  font-size: 13px;
+.zk-dock-brand-labels strong {
+  font-size: 12px;
   font-weight: 800;
   color: #16120B;
   white-space: nowrap;
 }
 
-.zk-dock-text small {
-  font-size: 11px;
-  color: #736E67;
+.zk-dock-brand-labels span {
+  font-size: 10px;
+  color: #7A7266;
   white-space: nowrap;
 }
 
-/* Search Group (Seamless Inside Pill) */
-.zk-dock-search-group {
+/* Part 2: Integrated Input (Matches 100% inside height without sticking out) */
+.zk-dock-part-search {
   display: flex;
   align-items: center;
   background: #FAF8F5;
-  border: 1.5px solid #ded6c8;
-  border-radius: 30px;
-  padding: 3px 4px 3px 12px;
-  width: 320px;
+  border: 1px solid #dcd3c5;
+  border-radius: 9999px;
+  padding: 2px 3px 2px 10px;
+  height: 36px;
+  width: 220px;
   transition: all 0.2s ease;
 }
 
-.zk-dock-search-group:focus-within {
+.zk-dock-part-search:focus-within {
   background: #FFFFFF;
   border-color: #AA771C;
   box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
-  width: 340px;
+  width: 240px;
 }
 
-.zk-dock-icon {
+.zk-dock-search-pin {
   color: #AA771C;
-  font-size: 12px;
-  margin-right: 8px;
+  font-size: 11px;
+  margin-right: 6px;
   flex-shrink: 0;
 }
 
-.zk-dock-input-field {
+.zk-dock-input {
   flex: 1;
   border: none !important;
   background: transparent !important;
-  font-size: 12px !important;
+  font-size: 11.5px !important;
   font-weight: 600 !important;
   color: #16120B !important;
   outline: none !important;
-  padding: 5px 0 !important;
+  padding: 0 !important;
   min-width: 0;
+  height: 100%;
 }
 
-.zk-dock-input-field::placeholder {
+.zk-dock-input::placeholder {
   color: #8C8477 !important;
   font-weight: 400 !important;
 }
 
-/* Action Buttons */
-.zk-dock-action-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 16px;
-  border-radius: 24px;
-  font-size: 12px;
-  font-weight: 800;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-  flex-shrink: 0;
-  border: none;
-}
-
-.zk-dock-action-btn.primary {
+.zk-dock-check-action {
   background: #16120B;
   color: #FCF6BA;
-  border: 1px solid rgba(191, 149, 63, 0.4);
+  border: none;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
 }
 
-.zk-dock-action-btn.primary:hover {
+.zk-dock-check-action:hover {
   background: #2b2417;
   color: #FFFFFF;
 }
 
-.zk-dock-action-btn.gold {
+/* Part 3: Quick Pills */
+.zk-dock-part-pills {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.zk-dock-quick-pill {
+  border: 1px solid #e2d9cd;
+  background: #FAF8F5;
+  color: #665F54;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  height: 28px;
+  display: flex;
+  align-items: center;
+}
+
+.zk-dock-quick-pill:hover,
+.zk-dock-quick-pill.active {
+  background: #16120B;
+  color: #FCF6BA;
+  border-color: #16120B;
+}
+
+/* Part 4: CTA & Close */
+.zk-dock-part-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.zk-dock-book-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 14px;
+  height: 36px;
+  border-radius: 9999px;
+  background: #16120B;
+  color: #FCF6BA;
+  border: 1px solid rgba(191, 149, 63, 0.4);
+  font-size: 11.5px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.zk-dock-book-btn:hover {
+  background: #2b2417;
+  color: #FFFFFF;
+}
+
+.zk-dock-book-btn.highlight {
   background: linear-gradient(135deg, #BF953F, #FCF6BA, #B38728);
   color: #16120B;
-  box-shadow: 0 3px 12px rgba(179, 135, 40, 0.35);
+  border: none;
+  box-shadow: 0 2px 10px rgba(179, 135, 40, 0.35);
   animation: zkGlowPulse 2s infinite;
 }
 
-.zk-dock-action-btn.gold:hover {
+.zk-dock-book-btn.highlight:hover {
   transform: translateY(-1px);
-  box-shadow: 0 5px 16px rgba(179, 135, 40, 0.45);
+  box-shadow: 0 4px 14px rgba(179, 135, 40, 0.45);
 }
 
-.zk-dock-dismiss-btn {
+.zk-dock-close-btn {
   width: 26px;
   height: 26px;
   border-radius: 50%;
@@ -1042,36 +1096,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  font-size: 10.5px;
   cursor: pointer;
   transition: all 0.15s ease;
-  flex-shrink: 0;
 }
 
-.zk-dock-dismiss-btn:hover {
+.zk-dock-close-btn:hover {
   background: #16120B;
   color: #FCF6BA;
 }
 
-/* Verified Result State */
-.zk-dock-verified-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 4px 10px;
-  background: #F0FDF4;
-  border: 1px solid #86EFAC;
-  border-radius: 20px;
-}
-
-.zk-dock-success-badge {
-  color: #16A34A;
-  font-size: 15px;
-  display: flex;
-  align-items: center;
-}
-
-/* Reopen Chip (Positioned Bottom-Left away from bottom-right chat widget!) */
+/* Reopen Chip */
 .zk-dock-reopen-chip {
   position: fixed;
   bottom: 22px;
@@ -1083,18 +1118,35 @@
   background: #16120B;
   color: #FCF6BA;
   border: 1.5px solid #BF953F;
-  padding: 9px 16px;
-  border-radius: 30px;
-  font-size: 12px;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-size: 11.5px;
   font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.28);
   animation: fadeInDown 0.25s ease;
 }
 
 .zk-dock-reopen-chip:hover {
   background: #2b2417;
   transform: translateY(-1px);
+}
+
+@keyframes zkGlowPulse {
+  0% { box-shadow: 0 0 0 0 rgba(179, 135, 40, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(179, 135, 40, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(179, 135, 40, 0); }
+}
+
+@media (max-width: 768px) {
+  .zk-sticky-dock-pill {
+    height: auto;
+    border-radius: 24px;
+    padding: 8px 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .zk-dock-part-search { width: 100%; }
 }
 
 @keyframes zkGlowPulse {
