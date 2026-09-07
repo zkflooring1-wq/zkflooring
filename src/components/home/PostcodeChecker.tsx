@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface AreaInfo {
   name: string;
@@ -52,8 +52,13 @@ const TIME_SLOT_GRID_ITEMS = [
 ];
 
 export default function PostcodeChecker() {
+  const [mounted, setMounted] = useState(false);
   const [input, setInput] = useState('');
   const [isMinimized, setIsMinimized] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   const [checkedArea, setCheckedArea] = useState<{
     postcode: string;
     name: string;
@@ -138,6 +143,8 @@ export default function PostcodeChecker() {
       setIsSubmitting(false);
     }
   };
+
+  if (!mounted) return null;
 
   return (
     <>

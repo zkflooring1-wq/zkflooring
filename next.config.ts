@@ -28,6 +28,25 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: "/admin-login.php",
+        destination: "http://localhost:3001/admin-login.php",
+        permanent: false,
+      },
+      {
+        source: "/admin",
+        destination: "http://localhost:3001/dashboard",
+        permanent: false,
+      },
+      {
+        source: "/admin/:path*",
+        destination: "http://localhost:3001/:path*",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

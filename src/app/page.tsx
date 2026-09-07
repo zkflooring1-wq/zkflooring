@@ -367,9 +367,6 @@ export default async function HomePage() {
         {/* Hero Section */}
         <HeroSlider slides={heroSlides} />
 
-        {/* Postcode Coverage & Mobile Showroom Checker */}
-        <PostcodeChecker />
-
         {/* Feature Section */}
         <section className="tv-feature-section bg-light space">
           <div className="container">
@@ -899,6 +896,9 @@ export default async function HomePage() {
                 </div>
             </div>
         </section>
+
+        {/* Floating Postcode Coverage & Mobile Showroom Dock */}
+        <PostcodeChecker />
 
     </main>
     </EditModeProvider>

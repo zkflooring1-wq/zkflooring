@@ -9,10 +9,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const pathname = usePathname();
   const router = useRouter();
 
+  React.useEffect(() => {
+    window.location.href = 'http://localhost:3001/dashboard';
+  }, []);
+
   const handleLogout = async () => {
-    // Basic logout by deleting cookie
+    try {
+      await fetch('/api/admin/auth', { method: 'DELETE' });
+    } catch (err) {
+      console.error('Logout error:', err);
+    }
     document.cookie = 'admin_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     router.push('/admin-login.php');
+    router.refresh();
   };
 
   const navItems = [

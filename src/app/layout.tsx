@@ -20,6 +20,7 @@ const notoSans = Noto_Sans({
   subsets: ["latin"],
   variable: "--font-noto-sans",
   display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
