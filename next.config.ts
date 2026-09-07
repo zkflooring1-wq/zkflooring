@@ -15,6 +15,14 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/admin-login.php',
+        destination: '/login',
+      },
+    ];
+  },
 };
 
 export default nextConfig;

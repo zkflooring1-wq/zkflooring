@@ -64,7 +64,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     toast.success("Logged out successfully");
-    router.push("/login");
+    router.push("/admin-login.php");
     router.refresh();
   };
 

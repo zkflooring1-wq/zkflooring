@@ -1,4 +1,4 @@
-﻿import { createServerClient as createSSRClient } from "@supabase/ssr";
+import { createServerClient as createSSRClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function updateSession(request: NextRequest) {
@@ -29,12 +29,11 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const isLoginPage = request.nextUrl.pathname === "/login";
+  const isLoginPage = request.nextUrl.pathname === "/login" || request.nextUrl.pathname === "/admin-login.php";
 
-  // TEMPORARY AUTH BYPASS
-  if (false && !user && !isLoginPage) {
+  if (!user && !isLoginPage) {
     const url = request.nextUrl.clone();
-    url.pathname = "/login";
+    url.pathname = "/admin-login.php";
     return NextResponse.redirect(url);
   }
 
