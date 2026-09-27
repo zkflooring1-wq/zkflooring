@@ -1,4 +1,5 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import { supabase } from '@/lib/supabase';
 import { getSetting, HeaderContact } from '@/lib/settings';
 import HeroSlider from '@/components/HeroSlider';
@@ -6,6 +7,26 @@ import PostcodeChecker from '@/components/home/PostcodeChecker';
 import { EditModeProvider } from '@/components/editor/EditModeProvider';
 import { EditableField } from '@/components/editor/EditableField';
 import { EditableImage } from '@/components/editor/EditableImage';
+import { SITE_URL } from '@/lib/seo';
+
+export const metadata: Metadata = {
+  title: "ZK Flooring Birmingham | Luxury Carpet, Wood, LVT & Commercial Flooring",
+  description:
+    "Birmingham's premier domestic and commercial flooring contractor. Certified installation of luxury carpets, herringbone LVT, laminate, engineered wood & self-levelling screed. Free home measuring.",
+  alternates: {
+    canonical: SITE_URL,
+  },
+  verification: {
+    google: "l5T9LYAyF1KoetW48mQyT727-GTcoPYNeENC1zxIVZ4",
+  },
+  openGraph: {
+    title: "ZK Flooring Birmingham | Luxury Carpet, Wood, LVT & Commercial Flooring",
+    description:
+      "Birmingham's premier domestic and commercial flooring contractor. Certified installation of luxury carpets, herringbone LVT, laminate, engineered wood & self-levelling screed.",
+    url: SITE_URL,
+    images: [{ url: "/slider/Carpet.webp", width: 1200, height: 630, alt: "ZK Flooring Birmingham" }],
+  },
+};
 
 export default async function HomePage() {
   const { data: pageData } = await supabase

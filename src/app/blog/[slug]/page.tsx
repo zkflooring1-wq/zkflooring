@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { blogPosts, BlogPost } from '@/data/blogPosts';
+import { SITE_URL, generateBreadcrumbSchema, generateFAQSchema } from '@/lib/seo';
 
 interface PageProps {
   params: Promise<{
@@ -23,10 +24,14 @@ export async function generateMetadata({ params }: PageProps) {
       title: seoTitle,
       description: seoDescription,
       keywords: dbPost.tags?.join(', ') || '',
+      alternates: {
+        canonical: `/blog/${resolvedParams.slug}`,
+      },
       openGraph: {
         title: seoTitle,
         description: seoDescription,
-        images: [{ url: dbPost.featured_image || '' }],
+        url: `${SITE_URL}/blog/${resolvedParams.slug}`,
+        images: [{ url: dbPost.featured_image || `${SITE_URL}/slider/Carpet.webp` }],
         type: 'article' as const,
         publishedTime: dbPost.created_at,
         authors: [author],
@@ -35,7 +40,7 @@ export async function generateMetadata({ params }: PageProps) {
         card: 'summary_large_image' as const,
         title: seoTitle,
         description: seoDescription,
-        images: [dbPost.featured_image || ''],
+        images: [dbPost.featured_image || `${SITE_URL}/slider/Carpet.webp`],
       },
     };
   }
@@ -46,12 +51,22 @@ export async function generateMetadata({ params }: PageProps) {
       title: localPost.seoTitle,
       description: localPost.seoDescription,
       keywords: localPost.keywords.join(', '),
+      alternates: {
+        canonical: `/blog/${resolvedParams.slug}`,
+      },
       openGraph: {
         title: localPost.seoTitle,
         description: localPost.seoDescription,
-        images: [{ url: localPost.coverImage || '' }],
+        url: `${SITE_URL}/blog/${resolvedParams.slug}`,
+        images: [{ url: localPost.coverImage || `${SITE_URL}/slider/Carpet.webp` }],
         type: 'article' as const,
         authors: [localPost.author],
+      },
+      twitter: {
+        card: 'summary_large_image' as const,
+        title: localPost.seoTitle,
+        description: localPost.seoDescription,
+        images: [localPost.coverImage || `${SITE_URL}/slider/Carpet.webp`],
       },
     };
   }
@@ -300,12 +315,30 @@ export default async function BlogPostPage({ params }: PageProps) {
     });
   };
 
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Blog', url: '/blog' },
+    { name: post.title, url: `/blog/${post.slug}` },
+  ]);
+
+  const postFaqSchema = post.faqs && post.faqs.length > 0 ? generateFAQSchema(post.faqs) : null;
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      {postFaqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(postFaqSchema) }}
+        />
+      )}
 
       <main>
         <style>{`

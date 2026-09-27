@@ -6,9 +6,28 @@ import { supabase } from '@/lib/supabase';
 import { EditModeProvider } from '@/components/editor/EditModeProvider';
 import { EditableField } from '@/components/editor/EditableField';
 
+import { SITE_URL, generateBreadcrumbSchema } from '@/lib/seo';
+
 export const metadata: Metadata = {
-  title: "Our Flooring Services | ZK Flooring Birmingham",
-  description: "Explore ZK Flooring's comprehensive installation services: Carpet fitting, LVT, hardwood, laminate, and commercial flooring in Birmingham.",
+  title: "Flooring Installation Services Birmingham | ZK Flooring",
+  description:
+    "Explore ZK Flooring's comprehensive installation services: Carpet fitting, LVT herringbone, hardwood, laminate, self-levelling screed & commercial flooring in Birmingham.",
+  alternates: {
+    canonical: "/services",
+  },
+  openGraph: {
+    title: "Flooring Installation Services Birmingham | ZK Flooring",
+    description:
+      "Explore ZK Flooring's comprehensive installation services: Carpet fitting, LVT herringbone, hardwood, laminate, self-levelling screed & commercial flooring in Birmingham.",
+    url: `${SITE_URL}/services`,
+    images: [{ url: "/services/Vinyl, Vinyl Tile.webp", width: 1200, height: 630, alt: "ZK Flooring Installation Services" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Flooring Installation Services Birmingham | ZK Flooring",
+    description: "Carpet, LVT, real wood, laminate, screed & commercial safety vinyl in Birmingham.",
+    images: ["/services/Vinyl, Vinyl Tile.webp"],
+  },
 };
 
 const DEFAULT_SERVICES_DATA = {
@@ -72,6 +91,17 @@ export default async function ServicesPage() {
   return (
     <EditModeProvider initialData={sections}>
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            generateBreadcrumbSchema([
+              { name: "Home", url: "/" },
+              { name: "Services", url: "/services" },
+            ])
+          ),
+        }}
+      />
       {/* Start Breadcrumb Section */}
       <section className="tv-breadcrumb-section">
         <div

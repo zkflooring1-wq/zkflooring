@@ -5,14 +5,36 @@ import { notFound } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { defaultProjects, FlooringProject } from '@/data/projectsData';
 
+import { SITE_URL, generateBreadcrumbSchema } from '@/lib/seo';
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const { data: dbProject } = await supabase.from('projects').select('*').eq('slug', slug).single();
   const project = dbProject || defaultProjects.find(p => p.slug === slug);
   if (!project) return { title: "Project | ZK Flooring Birmingham" };
+
+  const title = `${project.title} | ZK Flooring Project Portfolio`;
+  const description = project.shortDesc || (project.description && project.description.length ? project.description[0] : `Completed flooring installation in ${project.location} by ZK Flooring.`);
+  const imageUrl = project.image ? (project.image.startsWith('http') ? project.image : `${SITE_URL}${project.image}`) : `${SITE_URL}/slider/Carpet.webp`;
+
   return {
-    title: `${project.title} | ZK Flooring Projects`,
-    description: project.description && project.description.length ? project.description[0] : project.shortDesc || '',
+    title,
+    description,
+    alternates: {
+      canonical: `/projects/${slug}`,
+    },
+    openGraph: {
+      title,
+      description,
+      url: `${SITE_URL}/projects/${slug}`,
+      images: [{ url: imageUrl, alt: project.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [imageUrl],
+    },
   };
 }
 
@@ -30,8 +52,40 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
     .filter(p => p.slug !== project.slug)
     .slice(0, 3);
 
+  const projectSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: project.title,
+    description: project.shortDesc || (project.description && project.description.length ? project.description[0] : ''),
+    image: project.image ? (project.image.startsWith('http') ? project.image : `${SITE_URL}${project.image}`) : `${SITE_URL}/slider/Carpet.webp`,
+    creator: {
+      '@type': 'LocalBusiness',
+      name: 'ZK Flooring',
+      telephone: '+447903723774',
+      url: SITE_URL,
+    },
+    contentLocation: {
+      '@type': 'Place',
+      name: project.location || 'Birmingham, West Midlands',
+    },
+  };
+
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Projects', url: '/projects' },
+    { name: project.title, url: `/projects/${project.slug}` },
+  ]);
+
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <style>{`
         .zk-detail-hero-img {
           transition: transform 0.6s ease;

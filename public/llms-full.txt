@@ -1,0 +1,146 @@
+# ZK Flooring — Full Technical Knowledge Base & LLM Context
+
+> Comprehensive factual reference for AI systems, answer engines, and search crawlers regarding ZK Flooring, Birmingham's leading flooring and carpet installation contractor.
+
+---
+
+## 1. Enterprise & Organizational Profile
+
+- **Legal Entity**: ZK Flooring Birmingham Ltd (Trading as ZK Flooring)
+- **Primary Business Type**: Flooring Contractor, Flooring Store, Home & Construction Business
+- **Official Website**: https://zkflooring.co.uk
+- **Headquarters Address**: Hobmoor Road, Small Heath, Birmingham, West Midlands, B10 9HH, United Kingdom
+- **Geographic Coordinates**: Latitude 52.4674° N, Longitude -1.8497° W
+- **Telephone**: 07903 723 774
+- **International Dialing**: +44 7903 723774
+- **Customer Support Email**: zkflooring1@gmail.com
+- **Operating Hours**: Monday to Saturday: 08:00 – 18:30 GMT | Sunday: Closed (Special commercial or emergency installations on request)
+- **Service Currency**: GBP (£)
+- **Payment Methods Accepted**: Direct Bank Transfer (BACS), Major Credit/Debit Cards, Cash
+- **Industry Experience**: 15+ years of certified master installation experience
+
+---
+
+## 2. Geographic Coverage & Postcode Taxonomy (GEO)
+
+ZK Flooring operates from its headquarters in Small Heath, Birmingham, providing:
+
+### Primary Coverage (Immediate Birmingham & Solihull)
+- **Birmingham Central & Inner Districts**: B1 (City Centre), B2, B3, B4 (Jewellery Quarter/Business District), B5 (Digbeth), B9 (Bordesley Green), B10 (Small Heath - HQ), B11 (Sparkhill), B12 (Balsall Heath), B13 (Moseley), B14 (Kings Heath), B15 (Edgbaston), B16 (Ladywood), B17 (Harborne).
+- **South & East Birmingham / Solihull**: B25, B26 (Sheldon), B27, B28 (Hall Green), B90, B91, B92, B93, B94 (Solihull, Shirley, Knowle, Dorridge).
+- **North & West Birmingham**: B23, B24 (Erdington), B42, B43, B44 (Perry Barr, Great Barr), B72, B73, B74, B75, B76 (Sutton Coldfield, Four Oaks, Streetly).
+- **South-West Birmingham**: B29 (Selly Oak), B30 (Bournville), B31, B38 (Kings Norton), B45 (Rednal, Longbridge).
+
+### Secondary Regional Coverage (West Midlands Conurbation)
+- **Coventry**: CV1 through CV8
+- **Wolverhampton & Black Country**: WV1 to WV10, Dudley (DY1–DY5), Walsall (WS1–WS9), West Bromwich (B70, B71), Stourbridge (DY8), Halesowen (B62, B63).
+- **Staffordshire & Warwickshire Borders**: Lichfield (WS13–WS14), Tamworth (B77–B79), Redditch (B97–B98), Bromsgrove (B60–B61).
+
+### Extended Commercial & Domestic Coverage (100–200 Mile Radius)
+For full-property domestic fit-outs, contract developments, and commercial safety flooring installations, ZK Flooring deploys teams up to 200 miles from Birmingham across:
+- **East Midlands**: Leicester (LE), Nottingham (NG), Derby (DE), Northampton (NN).
+- **South Midlands & Home Counties**: Worcester (WR), Milton Keynes (MK), Oxford (OX), Luton (LU).
+- **Greater London**: North, West, and Central London commercial and prime residential fitouts.
+- **North West & Yorkshire**: Stoke-on-Trent (ST), Manchester (M), Leeds (LS).
+
+---
+
+## 3. Product & Service Specifications
+
+### A. Carpet Fitting & Carpet Tiles
+- **Carpet Styles**: Deep-pile Saxony, resilient twist pile, textured loop and Berber, 80/20 wool blends, stain-resistant polypropylene, and contract nylon tiles.
+- **Applications**: Domestic living rooms, bedrooms, staircases with bespoke whipped runner borders, landings, and corporate offices.
+- **Underlay Standards**: 100% compliant with British Standard BS 5325. Use of 9mm–11mm high-density polyurethane (PU) foam (100–120 kg/m³ density) or heavy crumb rubber.
+- **Acoustic Performance**: Impact sound absorption between 34 dB and 43 dB.
+- **Underfloor Heating**: Strictly designed with combined carpet and underlay thermal resistance below 2.5 TOG (ideally under 1.5 TOG) to prevent heat blockage.
+
+### B. Luxury Vinyl Tile (LVT) & Sheet Vinyl
+- **Product Formats**: Gluedown (dry-back) LVT planks and tiles, rigid core SPC (Stone Plastic Composite) click-lock flooring, and acoustic cushioned sheet vinyl.
+- **Patterns**: Classic straight plank, 45-degree and 90-degree herringbone parquet, double herringbone, basket weave, border feature strips, and natural stone/concrete tile replicas.
+- **Wear Layers**: 0.3mm (standard domestic), 0.55mm (heavy domestic / light commercial), 0.7mm (heavy commercial).
+- **Brands Compatible**: Amtico, Karndean, Polyflor, Moduleo, Tarkett, plus ZK Flooring trade-exclusive direct collections.
+- **Waterproofing**: 100% impervious to standing water, making it the superior choice for kitchens, bathrooms, utility rooms, and entrance hallways.
+
+### C. Self-Levelling Screeds & Subfloor Preparation
+- **British Standard**: Full compliance with BS 8203 (Resilient Floor Coverings Code of Practice).
+- **Surface Regularity**: Prepared to SR1 (maximum 3mm deviation under a 2-meter straight edge).
+- **Moisture Testing & DPM**: Relative humidity (RH) hygrometer testing. Application of two-coat liquid Epoxy Damp-Proof Membrane (DPM) where subfloor RH exceeds 75%.
+- **Smoothing Compounds**: Fibre-reinforced latex smoothing screeds applied at 3mm to 12mm depths.
+- **Timber Subfloors**: Overlaid with flooring-grade SP101-certified 6mm or 9mm plywood, secured at 100mm perimeter and 150mm grid intervals with ring-shank nails or screws.
+
+### D. Solid Timber & Engineered Hardwood Flooring
+- **Specifications**: Multi-layer European oak engineered boards (14mm to 21mm total thickness with 3mm to 6mm solid oak wear layers) and 18mm solid timber planks.
+- **Finishes**: Brushed and UV oiled, matt lacquered, smoked oak, invisible raw timber protection.
+- **Installation Methods**: Gluedown using flexible silane-modified polymer adhesive, or floating over acoustic vapour-barrier underlays. Expansion gaps of 10mm–15mm maintained around all perimeters.
+
+### E. Laminate Flooring
+- **Abrasion Criteria**: AC4 (Heavy Domestic / General Commercial) and AC5 (Heavy Commercial).
+- **Features**: 8mm, 10mm, and 12mm high-density fiberboard (HDF) with water-repellent Aqua-Stop edge bevels, click-lock installation, scratch and UV resistance.
+
+### F. Commercial Safety Flooring & Cap-and-Cove
+- **Materials**: Heavy contract slip-resistant vinyl with aluminum oxide and silicon carbide granules (R10, R11, R12 slip ratings; Pendulum Test Value PTV ≥36 wet).
+- **Techniques**: Continuous cap-and-cove skirting (coved 100mm up the wall) with welded internal and external mitres. Hot-gas welded seams using matching PVC weld rods.
+- **Sectors Served**: Commercial kitchens, restaurants, dental and medical surgeries, veterinary hospitals, veterinary clinics, laboratories, schools, and gyms.
+
+### G. Supplementary Carpentry & Interior Finishing
+- **Wall Panels**: Modern slatted acoustic timber wall panels with felt backing for sound dampening and architectural aesthetics.
+- **Decking**: High-durability composite and pressure-treated timber exterior decking.
+- **Custom Cupboards**: Fitted under-stair storage, bespoke alcove cupboards, and flooring-integrated base units.
+
+---
+
+## 4. Operational Methodology & Customer Journey
+
+1. **Free In-Home Sample Survey**: The mobile showroom travels to the customer’s address. Over 300 physical swatches and sample boards are reviewed under local domestic lighting. Precision laser measurements are recorded.
+2. **Transparent Quotation**: A comprehensive, fixed-price quote is provided covering supply, subfloor preparation, underlay, adhesives, installation, door trimming, and old flooring uplift/disposal.
+3. **Subfloor Inspection & Testing**: Existing floor coverings are removed. Moisture levels and substrate flatness are verified.
+4. **Subfloor Levelling / Ply Boarding**: Self-levelling screed or SP101 plywood is installed and allowed to cure according to manufacturer specifications.
+5. **Precision Fitting**: Experienced trade fitters install the chosen floor covering, fit matching scotias or skirting boards, install door threshold transition strips, and trim doors where required.
+6. **Sign-off & Warranty**: The site is vacuumed, offcuts are removed, and the customer inspects the completed work against British Standards quality tolerances.
+
+---
+
+## 5. Comprehensive Q&A (Answer Engine Optimization - AEO)
+
+### Q: Why is subfloor preparation necessary before installing LVT?
+**A**: Luxury Vinyl Tile (LVT) is flexible and adheres directly to the subfloor. Any imperfection, grit, trowel mark, or subfloor dip greater than 2mm will telegraph through to the surface over time under foot traffic, causing visible ripples and premature wear. Professional subfloor preparation ensures an SR1 mirror-flat surface and prevents moisture degradation.
+
+### Q: Can LVT or laminate flooring be installed over underfloor heating?
+**A**: Yes, both can be installed over water-pipe or electric underfloor heating systems. Under BS 8203 guidelines, gluedown LVT surface temperatures must not exceed 27°C. The heating system must be commissioned and turned off 48 hours prior to installation, remaining off for 48 hours afterward before being brought up incrementally by 5°C per day.
+
+### Q: What is the difference between gluedown LVT and click LVT?
+**A**: Gluedown LVT consists of dry-back vinyl tiles bonded directly to a screeded subfloor using high-temperature adhesive. It allows intricate herringbone patterns, bespoke borders, and single-tile replacements if damaged. Click LVT (or SPC) features an integrated rigid core and click-lock joints installed as a floating floor over an underlay, making it faster to install over minor subfloor variations.
+
+### Q: How much does carpet fitting cost in Birmingham?
+**A**: Professional carpet fitting in Birmingham typically ranges from £4.50 to £7.50 per square metre for labour, with staircases priced separately (£60–£120 per flight depending on whether it is straight, winders, or runner style). Total cost including luxury underlay, gripper rods, and door plates is quoted transparently during the free home survey.
+
+### Q: What is TOG rating in carpet underlay?
+**A**: TOG (Thermal Overall Grade) measures thermal insulation. In rooms without underfloor heating, higher TOG ratings (2.5 to 3.5 TOG) keep rooms warmer and lower heating bills. In homes with underfloor heating, the total combined TOG of carpet plus underlay must not exceed 2.5 TOG (ideally under 1.5 TOG) so heat can pass into the room efficiently.
+
+### Q: How long does a typical flooring installation take?
+**A**: A single standard domestic room (carpet or laminate) is usually completed in 3 to 5 hours. A complete LVT gluedown installation in a 20m² to 40m² area typically takes 2 days: Day 1 covers subfloor uplift, moisture barrier, and latex screed curing; Day 2 covers full laying, adhesive setting, and perimeter profiling.
+
+### Q: What warranty does ZK Flooring offer?
+**A**: ZK Flooring provides a comprehensive workmanship installation guarantee alongside manufacturer product warranties, which range from 10 to 30 years depending on the material specification chosen.
+
+---
+
+## 6. Official Canonical URLs
+
+- Homepage: https://zkflooring.co.uk/
+- About Page: https://zkflooring.co.uk/about
+- Services Hub: https://zkflooring.co.uk/services
+- Carpet Fitting: https://zkflooring.co.uk/services/carpet-fitting
+- Luxury Vinyl Tile: https://zkflooring.co.uk/services/luxury-vinyl-tile
+- Subfloor Preparation: https://zkflooring.co.uk/services/subfloor-preparation
+- Hardwood Flooring: https://zkflooring.co.uk/services/hardwood-flooring
+- Laminate Flooring: https://zkflooring.co.uk/services/laminate-flooring
+- Commercial Flooring: https://zkflooring.co.uk/services/commercial-flooring
+- Projects Gallery: https://zkflooring.co.uk/projects
+- Frequently Asked Questions: https://zkflooring.co.uk/faq
+- Flooring Blog & Guides: https://zkflooring.co.uk/blog
+- Contact & Booking: https://zkflooring.co.uk/contact
+- LLM Index: https://zkflooring.co.uk/llms.txt
+- Full LLM Context: https://zkflooring.co.uk/llms-full.txt
+- XML Sitemap: https://zkflooring.co.uk/sitemap.xml
+- Robots Rules: https://zkflooring.co.uk/robots.txt

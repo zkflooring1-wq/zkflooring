@@ -6,9 +6,28 @@ import { defaultProjects, FlooringProject } from '@/data/projectsData';
 import { EditModeProvider } from '@/components/editor/EditModeProvider';
 import { EditableField } from '@/components/editor/EditableField';
 
+import { SITE_URL, generateBreadcrumbSchema } from '@/lib/seo';
+
 export const metadata: Metadata = {
-  title: "Our Flooring Projects | ZK Flooring Birmingham",
-  description: "Explore ZK Flooring's completed residential & commercial flooring projects across Birmingham: LVT herringbone, carpet tile fitting, engineered hardwood, and safety vinyl.",
+  title: "Completed Flooring Projects Birmingham | Portfolio | ZK Flooring",
+  description:
+    "Explore ZK Flooring's completed residential & commercial flooring projects across Birmingham: LVT herringbone, carpet tile fitting, engineered hardwood, and safety vinyl.",
+  alternates: {
+    canonical: "/projects",
+  },
+  openGraph: {
+    title: "Completed Flooring Projects Birmingham | Portfolio | ZK Flooring",
+    description:
+      "Explore ZK Flooring's completed residential & commercial flooring projects across Birmingham: LVT herringbone, carpet tile fitting, engineered hardwood, and safety vinyl.",
+    url: `${SITE_URL}/projects`,
+    images: [{ url: "/services/Vinyl, Vinyl Tile.webp", width: 1200, height: 630, alt: "ZK Flooring Projects Portfolio" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Completed Flooring Projects Birmingham | ZK Flooring",
+    description: "Browse real completed residential and commercial flooring installations in Birmingham.",
+    images: ["/services/Vinyl, Vinyl Tile.webp"],
+  },
 };
 
 const DEFAULT_PROJECTS_PAGE_DATA = {
@@ -64,6 +83,17 @@ export default async function ProjectsPage() {
   return (
     <EditModeProvider initialData={sections}>
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            generateBreadcrumbSchema([
+              { name: "Home", url: "/" },
+              { name: "Projects", url: "/projects" },
+            ])
+          ),
+        }}
+      />
       <style>{`
         .zk-proj-hero-card {
           transition: box-shadow 0.4s ease, border-color 0.35s ease;

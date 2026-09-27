@@ -1,0 +1,47 @@
+# ZK Flooring
+
+> ZK Flooring is a premier residential and commercial flooring contractor based in Birmingham, UK. Specializing in luxury carpet fitting, Luxury Vinyl Tile (LVT in herringbone and plank formats), SPC waterproof flooring, laminate, engineered wood, solid timber, commercial safety vinyl, and subfloor self-levelling screeding. Serving Birmingham (B10 9HH) and a 100–200 mile UK radius with free mobile showroom surveys.
+
+## Business Details
+
+- **Company Name**: ZK Flooring
+- **Primary Phone**: 07903 723 774 (International: +44 7903 723774)
+- **Email**: zkflooring1@gmail.com
+- **Headquarters Address**: Hobmoor Road, Small Heath, Birmingham, West Midlands, B10 9HH, United Kingdom
+- **Geo Coordinates**: 52.4674 N, -1.8497 W
+- **Operating Hours**: Monday – Saturday: 08:00 – 18:30 GMT (Sunday: Closed / Commercial by appointment)
+- **Price Range**: ££ (Affordable luxury with transparent, itemized fixed pricing)
+- **Primary Service Areas**: Birmingham, Solihull, Sutton Coldfield, Edgbaston, Harborne, Moseley, Kings Heath, Small Heath, Yardley, Erdington, Perry Barr, Great Barr, Selly Oak, Longbridge.
+- **Regional Coverage (100–200 Mile Radius)**: Coventry, Wolverhampton, Dudley, Walsall, West Bromwich, Stourbridge, Halesowen, Lichfield, Tamworth, Redditch, Worcester, Leicester, Derby, Nottingham, Milton Keynes, Oxford, London.
+
+## Core Services
+
+- [Carpet & Carpet Tile Fitting](https://zkflooring.co.uk/services/carpet-fitting): Luxury domestic twist, Saxony, Berber, wool carpets, stair runners with whipped edges, acoustic high-TOG PU foam underlays, and heavy contract commercial carpet tiles.
+- [Luxury Vinyl Tile (LVT) & Sheet Vinyl](https://zkflooring.co.uk/services/luxury-vinyl-tile): 100% waterproof gluedown and click-lock LVT, specializing in intricate herringbone patterns, feature perimeter borders, and heavy-duty sheet vinyl.
+- [Self Levelling & Subfloor Preparation](https://zkflooring.co.uk/services/subfloor-preparation): British Standard BS 8203 compliant subfloor preparation, including moisture testing, liquid DPM damp-proof membranes, SP101 ply boarding, and laser-flat latex self-levelling screeds.
+- [Solid & Engineered Hardwood Flooring](https://zkflooring.co.uk/services/hardwood-flooring): Premium European oak engineered boards, solid timber planks, parquet herringbone blocks with acoustic underlays and expansion profiling.
+- [Laminate Flooring Installation](https://zkflooring.co.uk/services/laminate-flooring): AC4 and AC5 commercial-grade scratch-resistant laminate flooring with authentic embossed woodgrain finishes.
+- [Commercial Safety Flooring](https://zkflooring.co.uk/services/commercial-flooring): Slip-resistant vinyl (Altro, Polyflor), hot-welded seams, cap-and-cove skirting for commercial kitchens, clinics, schools, and hospitals.
+- **Additional Carpentry & Interior Services**: Wall acoustic panelling, outdoor composite decking, and custom fitted cupboards and storage.
+
+## Key Facts & Answers (AEO)
+
+- **Free Home Survey**: ZK Flooring offers 100% free home surveys across Birmingham and the Midlands. The team brings a mobile showroom with hundreds of carpet, LVT, and laminate samples directly to customer premises, accompanied by precision laser measuring.
+- **Standards Compliance**: All installations comply with British Standards: BS 8203 (Code of practice for installation of resilient floor coverings) and BS 5325 (Code of practice for installation of textile floor coverings).
+- **Underfloor Heating (UFH)**: Full compatibility assessment. Gluedown LVT adheres to maximum 27°C surface temperature limits, and carpet/underlay combinations are engineered to stay strictly below 2.5 TOG for optimal heat transfer.
+- **Quotes & Turnaround**: Fast quotations within 2 hours of inquiry. Typical domestic installations completed within 1 to 2 days including subfloor prep.
+
+## Navigation & Core Links
+
+- [Home](https://zkflooring.co.uk/): Company overview, featured services, customer testimonials, and instant postcode service checker.
+- [About Us](https://zkflooring.co.uk/about): Background, trade-certified team, 15+ years experience, and quality commitments.
+- [Services Catalogue](https://zkflooring.co.uk/services): Complete listing of domestic and commercial flooring installation services.
+- [Projects Portfolio](https://zkflooring.co.uk/projects): Gallery of real residential, retail, and commercial installations in Birmingham.
+- [Frequently Asked Questions (FAQ)](https://zkflooring.co.uk/faq): Answers regarding survey bookings, material comparisons, subfloor requirements, and warranties.
+- [Flooring Guides & Blog](https://zkflooring.co.uk/blog): Technical buying guides on LVT vs laminate, carpet underlay TOG ratings, and subfloor preparation.
+- [Contact Us](https://zkflooring.co.uk/contact): Direct booking form, telephone contact, and Birmingham headquarters map.
+
+## Full Context Document
+
+For comprehensive technical specifications, detailed installation methodologies, material grade sheets, and expanded postcodes, refer to the full text context:
+- [Full LLM Context Document](https://zkflooring.co.uk/llms-full.txt)

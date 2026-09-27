@@ -23,16 +23,84 @@ const notoSans = Noto_Sans({
   preload: false,
 });
 
+import { SITE_URL, BUSINESS_INFO, generateLocalBusinessSchema, generateWebSiteSchema, generateFAQSchema, CORE_SITE_FAQS } from "@/lib/seo";
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
-  title: "ZK Flooring - Premium Flooring & Carpet Installation in Birmingham",
-  description: "ZK Flooring offers premium carpet, wood, vinyl, LVT, and SPC flooring installation services in Birmingham and surrounding regions.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "ZK Flooring | Luxury Carpet, Wood, LVT & Commercial Flooring Birmingham",
+    template: "%s | ZK Flooring Birmingham",
+  },
+  description:
+    "Birmingham's premier flooring specialists. Precision installation of luxury carpets, LVT herringbone, real wood, laminate, commercial safety flooring & self-levelling across Birmingham & 100-200 mile UK radius. Free home surveys.",
+  keywords: [
+    "flooring Birmingham",
+    "carpet fitting Birmingham",
+    "luxury vinyl tile Birmingham",
+    "LVT herringbone Solihull",
+    "laminate flooring West Midlands",
+    "commercial safety flooring",
+    "self levelling Birmingham",
+    "subfloor preparation",
+    "carpet fitters near me",
+    "wood flooring B10",
+    "ZK Flooring",
+    "flooring suppliers Birmingham",
+  ],
+  authors: [{ name: "ZK Flooring", url: SITE_URL }],
+  creator: "ZK Flooring",
+  publisher: "ZK Flooring",
+  formatDetection: {
+    email: false,
+    address: true,
+    telephone: true,
+  },
+  verification: {
+    google: "l5T9LYAyF1KoetW48mQyT727-GTcoPYNeENC1zxIVZ4",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_GB",
+    url: SITE_URL,
+    siteName: "ZK Flooring",
+    title: "ZK Flooring | Luxury Carpet, Wood, LVT & Commercial Flooring Birmingham",
+    description:
+      "Birmingham's premier flooring specialists. Precision installation of luxury carpets, LVT herringbone, real wood, laminate, commercial safety flooring & self-levelling.",
+    images: [
+      {
+        url: "/slider/Carpet.webp",
+        width: 1200,
+        height: 630,
+        alt: "ZK Flooring Birmingham - Luxury Flooring & Carpet Installation",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ZK Flooring | Luxury Carpet, Wood, LVT & Commercial Flooring Birmingham",
+    description:
+      "Birmingham's trusted flooring contractor: carpets, LVT herringbone, engineered wood, laminate & subfloor prep. Free home survey.",
+    images: ["/slider/Carpet.webp"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  category: "Home Improvement & Construction",
   icons: {
     icon: [
-      { url: "/favicon.ico" },
       { url: "/icon.png", type: "image/png" },
+      { url: "/favicon.png", type: "image/png" },
+      { url: "/favicon.ico" },
     ],
-    shortcut: "/favicon.ico",
+    shortcut: "/icon.png",
     apple: "/apple-icon.png",
   },
 };
@@ -42,13 +110,42 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const localBusinessSchema = generateLocalBusinessSchema();
+  const webSiteSchema = generateWebSiteSchema();
+  const faqSchema = generateFAQSchema(CORE_SITE_FAQS);
+
   return (
     <html lang="en" className={`${manrope.variable} ${notoSans.variable}`} suppressHydrationWarning>
       <head>
-        {/* Favicon & Site Icons */}
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        {/* Google Site Verification */}
+        <meta name="google-site-verification" content="l5T9LYAyF1KoetW48mQyT727-GTcoPYNeENC1zxIVZ4" />
+
+        {/* Favicon & Manifest */}
         <link rel="icon" href="/icon.png" type="image/png" />
+        <link rel="shortcut icon" href="/icon.png" type="image/png" />
         <link rel="apple-touch-icon" href="/apple-icon.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <meta name="theme-color" content="#D4AF37" />
+
+        {/* GEO Optimization Meta Tags (Geotargeting / Local SEO) */}
+        <meta name="geo.region" content="GB-BIR" />
+        <meta name="geo.placename" content="Birmingham, West Midlands, United Kingdom" />
+        <meta name="geo.position" content="52.4674;-1.8497" />
+        <meta name="ICBM" content="52.4674, -1.8497" />
+
+        {/* Answer Engine Optimization (AEO) & Local Business Schemas (JSON-LD) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
 
         {/* Template CSS Stylesheets */}
         <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />

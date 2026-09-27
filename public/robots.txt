@@ -1,0 +1,47 @@
+# Robots.txt for ZK Flooring (https://zkflooring.co.uk)
+# Optimized for Search Engines (SEO) & AI Answer Engines (AEO)
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /admin-login.php
+Disallow: /api/admin/
+
+# Explicit rules for AI scrapers and Answer Engines
+User-agent: GPTBot
+Allow: /
+Allow: /llms.txt
+Allow: /llm.txt
+Allow: /llms-full.txt
+Disallow: /admin
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+# Sitemap Index
+Sitemap: https://zkflooring.co.uk/sitemap.xml

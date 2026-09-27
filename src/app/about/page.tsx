@@ -5,9 +5,28 @@ import { EditModeProvider } from '@/components/editor/EditModeProvider';
 import { EditableField } from '@/components/editor/EditableField';
 import { EditableImage } from '@/components/editor/EditableImage';
 
+import { SITE_URL, generateBreadcrumbSchema } from '@/lib/seo';
+
 export const metadata: Metadata = {
   title: "About Us | ZK Flooring Birmingham",
-  description: "Learn about ZK Flooring, Birmingham's trusted specialists in premium carpet, hardwood, LVT, laminate, and commercial flooring installations with 15+ years of experience.",
+  description:
+    "Learn about ZK Flooring, Birmingham's trusted specialists in premium carpet, hardwood, LVT, laminate, and commercial flooring installations with 15+ years of experience.",
+  alternates: {
+    canonical: "/about",
+  },
+  openGraph: {
+    title: "About Us | ZK Flooring Birmingham",
+    description:
+      "Learn about ZK Flooring, Birmingham's trusted specialists in premium carpet, hardwood, LVT, laminate, and commercial flooring installations with 15+ years of experience.",
+    url: `${SITE_URL}/about`,
+    images: [{ url: "/about page/1.webp", width: 1200, height: 630, alt: "About ZK Flooring Birmingham" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Us | ZK Flooring Birmingham",
+    description: "15+ years of master flooring craftsmanship across Birmingham & West Midlands.",
+    images: ["/about page/1.webp"],
+  },
 };
 
 const DEFAULT_ABOUT_DATA = {
@@ -130,6 +149,17 @@ export default async function AboutPage() {
   return (
     <EditModeProvider initialData={sections}>
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            generateBreadcrumbSchema([
+              { name: "Home", url: "/" },
+              { name: "About Us", url: "/about" },
+            ])
+          ),
+        }}
+      />
       {/* Start Breadcrumb Section */}
       <section className="tv-breadcrumb-section">
         <div className="tv-breadcrumb-inner mx-30 ml-mx-0 position-relative overflow-hidden br-30 ml-br-0" style={{ background: 'linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C)' }}>

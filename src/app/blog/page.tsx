@@ -6,10 +6,28 @@ import { EditModeProvider } from '@/components/editor/EditModeProvider';
 import { EditableField } from '@/components/editor/EditableField';
 import BlogFeed, { BlogItem } from '@/components/blog/BlogFeed';
 
+import { SITE_URL, generateBreadcrumbSchema } from '@/lib/seo';
+
 export const metadata = {
-  title: 'Flooring Insights & Buying Guides Birmingham | ZK Flooring Blog',
+  title: 'Flooring Insights & Technical Buying Guides Birmingham | ZK Flooring Blog',
   description:
     'Expert flooring advice, technical buying guides, and British Standards installation tips for LVT, Laminate, Carpet Underlays, and Hardwood in Birmingham & West Midlands.',
+  alternates: {
+    canonical: '/blog',
+  },
+  openGraph: {
+    title: 'Flooring Insights & Technical Buying Guides Birmingham | ZK Flooring Blog',
+    description:
+      'Expert flooring advice, technical buying guides, and British Standards installation tips for LVT, Laminate, Carpet Underlays, and Hardwood in Birmingham & West Midlands.',
+    url: `${SITE_URL}/blog`,
+    images: [{ url: '/slider/Carpet.webp', width: 1200, height: 630, alt: 'ZK Flooring Blog' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Flooring Insights & Technical Buying Guides Birmingham | ZK Flooring',
+    description: 'Expert flooring advice, British Standards installation tips, and technical guides.',
+    images: ['/slider/Carpet.webp'],
+  },
 };
 
 const DEFAULT_BLOG_PAGE_DATA = {
@@ -97,6 +115,17 @@ export default async function BlogIndexPage() {
   return (
     <EditModeProvider initialData={sections}>
       <main>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(
+              generateBreadcrumbSchema([
+                { name: 'Home', url: '/' },
+                { name: 'Blog', url: '/blog' },
+              ])
+            ),
+          }}
+        />
         {/* Metallic Gold Breadcrumb Section */}
         <section className="tv-breadcrumb-section">
           <div

@@ -13,29 +13,84 @@ interface ServiceDetail {
 }
 
 import { supabase } from '@/lib/supabase';
+import { defaultZkServices } from '@/components/ServicesSection';
+import { SITE_URL, generateServiceSchema, generateBreadcrumbSchema } from '@/lib/seo';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const { data: service } = await supabase.from('services').select('*').eq('slug', slug).single();
+  const { data: dbService } = await supabase.from('services').select('*').eq('slug', slug).single();
+  const fallbackService = defaultZkServices.find(s => s.slug === slug);
+  const service = dbService || fallbackService;
+  
   if (!service) return { title: "Service | ZK Flooring Birmingham" };
+
+  const title = `${service.title} | ZK Flooring Services Birmingham`;
+  const description = service.summary || `Expert ${service.title} services in Birmingham & West Midlands by ZK Flooring. Free home surveys and quotes.`;
+  const imageUrl = service.image ? (service.image.startsWith('http') ? service.image : `${SITE_URL}${service.image}`) : `${SITE_URL}/slider/Carpet.webp`;
+
   return {
-    title: `${service.title} | ZK Flooring Services Birmingham`,
-    description: service.summary,
+    title,
+    description,
+    alternates: {
+      canonical: `/services/${slug}`,
+    },
+    openGraph: {
+      title,
+      description,
+      url: `${SITE_URL}/services/${slug}`,
+      images: [{ url: imageUrl, alt: service.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [imageUrl],
+    },
   };
 }
 
 export default async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const { data: service } = await supabase.from('services').select('*').eq('slug', slug).single();
+  const { data: dbService } = await supabase.from('services').select('*').eq('slug', slug).single();
+  const fallbackService = defaultZkServices.find(s => s.slug === slug);
+  
+  const service = dbService || (fallbackService ? {
+    ...fallbackService,
+    description: [fallbackService.summary],
+    features: fallbackService.badges,
+  } : null);
+
   const { data: allServicesData } = await supabase.from('services').select('*').order('created_at', { ascending: false });
-  const allServices = allServicesData || [];
+  const allServices = (allServicesData && allServicesData.length > 0) ? allServicesData : defaultZkServices;
 
   if (!service) {
     notFound();
   }
 
+  const serviceSchema = generateServiceSchema({
+    title: service.title,
+    summary: service.summary || (Array.isArray(service.description) ? service.description[0] : ''),
+    slug: service.slug,
+    image: service.image,
+    category: service.category,
+  });
+
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Services', url: '/services' },
+    { name: service.title, url: `/services/${service.slug}` },
+  ]);
+
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       {/* Start Breadcrumb Section */}
       <section className="tv-breadcrumb-section">
         <div className="tv-breadcrumb-inner mx-30 ml-mx-0 position-relative overflow-hidden br-30 ml-br-0" style={{ background: 'linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C)' }}>
