@@ -22,9 +22,6 @@ import {
   ZoomOut,
   Maximize2,
   ChevronDown,
-  Check,
-  FileText,
-  ShieldCheck,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { jsPDF } from "jspdf";
@@ -133,7 +130,7 @@ const DEFAULT_SAMPLE: InvoiceData = {
 export default function InvoicesPage() {
   const [data, setData] = useState<InvoiceData>(DEFAULT_SAMPLE);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [zoom, setZoom] = useState(100);
+  const [zoom, setZoom] = useState(85);
   const [activeMobileTab, setActiveMobileTab] = useState<"edit" | "preview">("edit");
   const [showPresetsMenu, setShowPresetsMenu] = useState(false);
   const invoiceSheetRef = useRef<HTMLDivElement | null>(null);
@@ -236,16 +233,15 @@ export default function InvoicesPage() {
       toast.loading("Rendering high-resolution vector PDF...", { id: "pdf-toast" });
 
       const element = invoiceSheetRef.current;
-      // High-DPI canvas capture (scale: 3 for ~300 DPI sharpness)
       const canvas = await html2canvas(element, {
-        scale: 3,
+        scale: 3.125, // 794px * 3.125 = 2481px (exact 300 DPI A4)
         useCORS: true,
         allowTaint: true,
         backgroundColor: "#ffffff",
         logging: false,
       });
 
-      const imgData = canvas.toDataURL("image/jpeg", 0.95);
+      const imgData = canvas.toDataURL("image/jpeg", 0.96);
       const pdf = new jsPDF({
         orientation: "portrait",
         unit: "mm",
@@ -270,11 +266,11 @@ export default function InvoicesPage() {
     if (!invoiceSheetRef.current) return;
     try {
       setIsGenerating(true);
-      toast.loading("Exporting high-definition image...", { id: "img-toast" });
+      toast.loading("Exporting 300 DPI image...", { id: "img-toast" });
 
       const element = invoiceSheetRef.current;
       const canvas = await html2canvas(element, {
-        scale: 3,
+        scale: 3.125,
         useCORS: true,
         allowTaint: true,
         backgroundColor: "#ffffff",
@@ -325,7 +321,6 @@ export default function InvoicesPage() {
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
           }
-          /* Hide all surrounding admin chrome */
           aside, nav, header, [data-no-print="true"], .no-print-area {
             display: none !important;
           }
@@ -337,7 +332,6 @@ export default function InvoicesPage() {
             margin: 0 !important;
             background: transparent !important;
           }
-          /* Show ONLY the invoice sheet */
           .invoice-sheet-container {
             display: block !important;
             position: absolute !important;
@@ -345,7 +339,7 @@ export default function InvoicesPage() {
             left: 0 !important;
             width: 210mm !important;
             height: 297mm !important;
-            max-height: 297mm !important;
+            transform: none !important;
             margin: 0 !important;
             padding: 0 !important;
             box-shadow: none !important;
@@ -515,11 +509,11 @@ export default function InvoicesPage() {
                 <div className="grid grid-cols-5 gap-1.5">
                   {(
                     [
-                      { id: "paid", label: "Paid in Full", color: "emerald" },
-                      { id: "pending", label: "Pending", color: "amber" },
-                      { id: "partial", label: "Partial", color: "blue" },
-                      { id: "overdue", label: "Overdue", color: "rose" },
-                      { id: "draft", label: "Draft", color: "slate" },
+                      { id: "paid", label: "Paid in Full" },
+                      { id: "pending", label: "Pending" },
+                      { id: "partial", label: "Partial" },
+                      { id: "overdue", label: "Overdue" },
+                      { id: "draft", label: "Draft" },
                     ] as const
                   ).map((st) => (
                     <button
@@ -610,7 +604,7 @@ export default function InvoicesPage() {
                   className="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-amber-400 text-xs font-bold rounded-lg border border-slate-700 flex items-center gap-1.5 cursor-pointer shadow-sm transition-all"
                 >
                   <Sparkles className="w-3.5 h-3.5" />
-                  <span>+ Add Flooring Preset</span>
+                  <span>+ Flooring Presets</span>
                   <ChevronDown className="w-3 h-3 ml-0.5" />
                 </button>
 
@@ -855,7 +849,7 @@ export default function InvoicesPage() {
             <div className="flex items-center gap-2">
               <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span className="font-semibold text-white">Live A4 Paper Preview</span>
-              <span className="text-[11px] text-slate-500">(1:1 Physical Ratio)</span>
+              <span className="text-[11px] text-slate-500">(1:1 Ratio)</span>
             </div>
 
             <div className="flex items-center gap-1.5 bg-slate-800 px-2 py-1 rounded-lg border border-slate-700">
@@ -878,9 +872,9 @@ export default function InvoicesPage() {
               </button>
               <button
                 type="button"
-                onClick={() => setZoom(100)}
+                onClick={() => setZoom(85)}
                 className="p-1 hover:text-white transition-colors cursor-pointer border-l border-slate-700 pl-1.5 ml-0.5"
-                title="Reset Zoom"
+                title="Fit View"
               >
                 <Maximize2 className="w-3 h-3" />
               </button>
@@ -889,144 +883,163 @@ export default function InvoicesPage() {
 
           {/* ================= THE A4 INVOICE SHEET ================= */}
           <div className="overflow-auto max-h-[88vh] p-2 sm:p-4 bg-slate-950/80 rounded-2xl border border-slate-800 flex justify-center shadow-2xl">
+            {/* The scaled wrapper */}
             <div
-              ref={invoiceSheetRef}
               style={{
-                width: `${(595.5 * zoom) / 100}px`,
-                height: `${(842.25 * zoom) / 100}px`,
-                backgroundImage: "url('/invoice-template.png')",
-                backgroundSize: "100% 100%",
-                backgroundRepeat: "no-repeat",
+                width: `${(794 * zoom) / 100}px`,
+                height: `${(1123 * zoom) / 100}px`,
               }}
-              className="invoice-sheet-container relative bg-white shadow-2xl rounded-sm transition-all duration-150 select-none text-slate-900 box-border overflow-hidden"
+              className="flex justify-center items-start overflow-hidden"
             >
-              {/* CONTENT OVERLAY: Positioned strictly within the safe printable zone:
-                  Top padding: 23.5% (safely below top logo and top-right flourish)
-                  Left padding: 7.5%
-                  Right padding: 7.5%
-                  Bottom: safely above bottom-left flourish (ends at ~72%)
-              */}
+              {/* Canonical 794 x 1123 A4 element */}
               <div
+                ref={invoiceSheetRef}
                 style={{
-                  position: "absolute",
-                  top: "23.5%",
-                  left: "7.5%",
-                  right: "7.5%",
-                  bottom: "27%",
+                  width: "794px",
+                  height: "1123px",
+                  minWidth: "794px",
+                  minHeight: "1123px",
+                  backgroundImage: "url('/invoice-template.png')",
+                  backgroundSize: "100% 100%",
+                  backgroundRepeat: "no-repeat",
+                  transform: `scale(${zoom / 100})`,
+                  transformOrigin: "top left",
                 }}
-                className="flex flex-col justify-between"
+                className="invoice-sheet-container relative bg-white shadow-2xl rounded-sm select-none text-slate-900 box-border overflow-hidden"
               >
-                {/* 1. Header Information Block */}
-                <div>
-                  <div className="flex justify-between items-start mb-5">
-                    {/* Left: Invoice Title & Meta */}
-                    <div>
-                      <div className="flex items-center gap-2.5 mb-2.5">
-                        <h1 className="text-[22px] font-black tracking-tight text-slate-900 leading-none">
-                          {data.documentType}
-                        </h1>
+                {/* 1. Header Information Block (Starts at Y: 260px, clearance below logo & top flourish) */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "260px",
+                    left: "56px",
+                    right: "56px",
+                  }}
+                  className="flex justify-between items-start"
+                >
+                  {/* Left Column: Title & Metadata */}
+                  <div>
+                    <div className="flex items-center gap-3 mb-3">
+                      <h1 className="text-[26px] font-black tracking-tight text-slate-900 leading-none">
+                        {data.documentType}
+                      </h1>
 
-                        {/* Status Badge */}
-                        <span
-                          className={`text-[9px] font-extrabold px-2.5 py-0.5 rounded-md uppercase border tracking-wider ${
-                            data.status === "paid"
-                              ? "bg-emerald-50 text-emerald-700 border-emerald-300"
-                              : data.status === "pending"
-                              ? "bg-amber-50 text-amber-700 border-amber-300"
-                              : data.status === "partial"
-                              ? "bg-blue-50 text-blue-700 border-blue-300"
-                              : data.status === "overdue"
-                              ? "bg-rose-50 text-rose-700 border-rose-300"
-                              : "bg-slate-100 text-slate-700 border-slate-300"
-                          }`}
-                        >
-                          {data.status === "paid"
-                            ? "PAID IN FULL"
+                      {/* Status Badge */}
+                      <span
+                        className={`text-[10px] font-bold px-2.5 py-0.5 rounded uppercase tracking-wider border ${
+                          data.status === "paid"
+                            ? "bg-emerald-50 text-emerald-700 border-emerald-300"
+                            : data.status === "pending"
+                            ? "bg-amber-50 text-amber-700 border-amber-300"
                             : data.status === "partial"
-                            ? "DEPOSIT PAID"
-                            : data.status.toUpperCase()}
-                        </span>
-                      </div>
-
-                      <div className="space-y-1 text-[10px]">
-                        <p className="flex items-center gap-2">
-                          <span className="text-slate-500 font-medium w-24">Invoice Number:</span>
-                          <span className="font-bold text-slate-900 font-mono">{data.invoiceNumber}</span>
-                        </p>
-                        <p className="flex items-center gap-2">
-                          <span className="text-slate-500 font-medium w-24">Invoice Date:</span>
-                          <span className="font-bold text-slate-800">{formatDate(data.invoiceDate)}</span>
-                        </p>
-                        <p className="flex items-center gap-2">
-                          <span className="text-slate-500 font-medium w-24">Due Date:</span>
-                          <span className="font-bold text-slate-800">{formatDate(data.dueDate)}</span>
-                        </p>
-                      </div>
+                            ? "bg-blue-50 text-blue-700 border-blue-300"
+                            : data.status === "overdue"
+                            ? "bg-rose-50 text-rose-700 border-rose-300"
+                            : "bg-slate-100 text-slate-700 border-slate-300"
+                        }`}
+                      >
+                        {data.status === "paid"
+                          ? "PAID IN FULL"
+                          : data.status === "partial"
+                          ? "DEPOSIT PAID"
+                          : data.status.toUpperCase()}
+                      </span>
                     </div>
 
-                    {/* Right: Bill To Client Info */}
-                    <div className="text-left w-[240px]">
-                      <span className="text-[10px] font-extrabold text-[#c59b27] uppercase tracking-wider block mb-1">
-                        INVOICE TO:
-                      </span>
-                      <p className="font-bold text-slate-900 text-[13px] leading-tight mb-1">
-                        {data.clientName || "Valued Customer"}
+                    <div className="space-y-1 text-[11px]">
+                      <p className="flex items-center gap-2">
+                        <span className="text-slate-500 font-medium w-28">Invoice Number:</span>
+                        <span className="font-bold text-slate-900 font-mono">{data.invoiceNumber}</span>
                       </p>
-                      {data.clientPhone && (
-                        <p className="text-slate-600 text-[10px] leading-tight">{data.clientPhone}</p>
-                      )}
-                      {data.clientEmail && (
-                        <p className="text-slate-600 text-[10px] leading-tight">{data.clientEmail}</p>
-                      )}
-                      {data.clientAddress && (
-                        <p className="text-slate-600 text-[9.5px] leading-tight mt-1">{data.clientAddress}</p>
-                      )}
+                      <p className="flex items-center gap-2">
+                        <span className="text-slate-500 font-medium w-28">Invoice Date:</span>
+                        <span className="font-bold text-slate-800">{formatDate(data.invoiceDate)}</span>
+                      </p>
+                      <p className="flex items-center gap-2">
+                        <span className="text-slate-500 font-medium w-28">Due Date:</span>
+                        <span className="font-bold text-slate-800">{formatDate(data.dueDate)}</span>
+                      </p>
                     </div>
                   </div>
 
-                  {/* 2. Items & Services Table */}
-                  <div className="rounded-lg overflow-hidden border border-slate-200 shadow-sm mb-4">
-                    <table className="w-full text-left border-collapse text-[10px]">
-                      <thead>
-                        <tr className="bg-[#18181b] text-white font-bold text-[9px] uppercase tracking-wider border-t-2 border-[#d4af37]">
-                          <th className="py-2 px-2.5 w-7 text-center">#</th>
-                          <th className="py-2 px-3">Service / Material Description</th>
-                          <th className="py-2 px-3 text-right w-24">Qty / Area</th>
-                          <th className="py-2 px-3 text-right w-24">Rate (£)</th>
-                          <th className="py-2 px-3 text-right w-28">Amount (£)</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-slate-100">
-                        {data.items.map((item, idx) => (
-                          <tr key={idx} className={idx % 2 === 1 ? "bg-slate-50/70" : "bg-white"}>
-                            <td className="py-2 px-2.5 text-center text-slate-400 font-mono text-[9.5px]">
-                              {idx + 1}
-                            </td>
-                            <td className="py-2 px-3 font-semibold text-slate-800 leading-snug">
-                              {item.description}
-                            </td>
-                            <td className="py-2 px-3 text-right text-slate-600 font-medium">
-                              {item.quantity} {item.unit}
-                            </td>
-                            <td className="py-2 px-3 text-right text-slate-600 font-mono">
-                              £{item.rate.toFixed(2)}
-                            </td>
-                            <td className="py-2 px-3 text-right font-bold text-slate-900 font-mono">
-                              £{item.total.toFixed(2)}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                  {/* Right Column: Bill To */}
+                  <div className="text-left w-[300px]">
+                    <span className="text-[11px] font-extrabold text-[#c59b27] uppercase tracking-wider block mb-1">
+                      INVOICE TO:
+                    </span>
+                    <p className="font-bold text-slate-900 text-[15px] leading-tight mb-1">
+                      {data.clientName || "Valued Customer"}
+                    </p>
+                    {data.clientPhone && (
+                      <p className="text-slate-600 text-[11px] leading-tight">{data.clientPhone}</p>
+                    )}
+                    {data.clientEmail && (
+                      <p className="text-slate-600 text-[11px] leading-tight">{data.clientEmail}</p>
+                    )}
+                    {data.clientAddress && (
+                      <p className="text-slate-600 text-[10.5px] leading-tight mt-1">{data.clientAddress}</p>
+                    )}
                   </div>
                 </div>
 
-                {/* 3. Bottom Financial & Bank Section */}
-                <div>
-                  <div className="grid grid-cols-2 gap-5 items-start mb-3">
-                    {/* Bank Info Box (Left) */}
-                    <div className="bg-slate-50/90 border border-slate-200/90 rounded-xl p-3 text-[9.5px] space-y-1 shadow-sm">
-                      <span className="font-extrabold text-[#c59b27] uppercase text-[9.5px] tracking-wider block mb-1">
+                {/* 2. Items & Services Table (Starts at Y: 380px) */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "380px",
+                    left: "56px",
+                    right: "56px",
+                  }}
+                  className="rounded-lg overflow-hidden border border-slate-200 shadow-sm"
+                >
+                  <table className="w-full text-left border-collapse text-[11px]">
+                    <thead>
+                      <tr className="bg-[#18181b] text-white font-bold text-[10px] uppercase tracking-wider border-t-2 border-[#d4af37]">
+                        <th className="py-2.5 px-3 w-10 text-center">#</th>
+                        <th className="py-2.5 px-3.5">Service / Material Description</th>
+                        <th className="py-2.5 px-3.5 text-right w-28">Qty / Area</th>
+                        <th className="py-2.5 px-3.5 text-right w-28">Rate (£)</th>
+                        <th className="py-2.5 px-4 text-right w-32">Amount (£)</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {data.items.map((item, idx) => (
+                        <tr key={idx} className={idx % 2 === 1 ? "bg-slate-50/70" : "bg-white"}>
+                          <td className="py-2.5 px-3 text-center text-slate-400 font-mono text-[10px]">
+                            {idx + 1}
+                          </td>
+                          <td className="py-2.5 px-3.5 font-semibold text-slate-800 leading-snug">
+                            {item.description}
+                          </td>
+                          <td className="py-2.5 px-3.5 text-right text-slate-600 font-medium">
+                            {item.quantity} {item.unit}
+                          </td>
+                          <td className="py-2.5 px-3.5 text-right text-slate-600 font-mono">
+                            £{item.rate.toFixed(2)}
+                          </td>
+                          <td className="py-2.5 px-4 text-right font-bold text-slate-900 font-mono">
+                            £{item.total.toFixed(2)}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* 3. Bottom Section: Bank (Left) & Totals (Right) - Positioned safely above bottom-left flourish */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "590px",
+                    left: "56px",
+                    right: "56px",
+                  }}
+                  className="flex justify-between items-start"
+                >
+                  {/* Left Column: Bank Details & Guarantee */}
+                  <div className="w-[335px]">
+                    <div className="bg-slate-50/90 border border-slate-200/90 rounded-xl p-3 text-[10px] space-y-1 shadow-sm">
+                      <span className="font-extrabold text-[#c59b27] uppercase text-[10px] tracking-wider block mb-1">
                         PAYMENT & BANK DETAILS
                       </span>
                       <p className="text-slate-700">
@@ -1049,57 +1062,57 @@ export default function InvoicesPage() {
                       </p>
                     </div>
 
-                    {/* Financial Summary (Right) */}
-                    <div className="space-y-1 text-[10px] text-right">
-                      <div className="flex justify-between text-slate-600">
-                        <span>Subtotal:</span>
-                        <span className="font-mono font-semibold text-slate-800">£{subtotal.toFixed(2)}</span>
+                    {/* Guarantee Disclaimer */}
+                    {data.notes && (
+                      <div className="pt-2.5 text-[8.5px] text-slate-500 italic leading-snug">
+                        <p>{data.notes}</p>
                       </div>
-                      {data.discount > 0 && (
-                        <div className="flex justify-between text-emerald-700 font-medium">
-                          <span>Discount:</span>
-                          <span className="font-mono">-£{data.discount.toFixed(2)}</span>
-                        </div>
-                      )}
-                      <div className="flex justify-between text-slate-600">
-                        <span>
-                          VAT (
-                          {data.vatType === "exempt"
-                            ? "0% DRC / Exempt"
-                            : data.vatType === "standard"
-                            ? "20%"
-                            : `${data.customVatRate}%`}
-                          ):
-                        </span>
-                        <span className="font-mono font-semibold text-slate-800">£{vatAmount.toFixed(2)}</span>
-                      </div>
-                      {data.depositPaid > 0 && (
-                        <div className="flex justify-between text-slate-600">
-                          <span>Deposit Paid:</span>
-                          <span className="font-mono font-semibold text-slate-800">
-                            £{data.depositPaid.toFixed(2)}
-                          </span>
-                        </div>
-                      )}
-
-                      {/* BALANCE DUE HIGHLIGHT BAR */}
-                      <div className="flex justify-between items-center bg-[#18181b] text-white px-3 py-2 rounded-lg font-bold text-[11px] mt-2 shadow-sm border-t-2 border-[#d4af37]">
-                        <span className="text-[#d4af37] tracking-wider uppercase text-[10px]">
-                          BALANCE DUE:
-                        </span>
-                        <span className="text-white font-mono text-[13px] font-extrabold">
-                          £{balanceDue.toFixed(2)}
-                        </span>
-                      </div>
-                    </div>
+                    )}
                   </div>
 
-                  {/* Guarantee Disclaimer (Positioned safely above bottom flourish) */}
-                  {data.notes && (
-                    <div className="border-t border-slate-200/90 pt-2 text-[8px] text-slate-500 italic leading-snug">
-                      <p>{data.notes}</p>
+                  {/* Right Column: Financial Totals */}
+                  <div className="w-[300px] text-right space-y-1.5 text-[11px]">
+                    <div className="flex justify-between text-slate-600">
+                      <span>Subtotal:</span>
+                      <span className="font-mono font-semibold text-slate-800">£{subtotal.toFixed(2)}</span>
                     </div>
-                  )}
+                    {data.discount > 0 && (
+                      <div className="flex justify-between text-emerald-700 font-medium">
+                        <span>Discount:</span>
+                        <span className="font-mono">-£{data.discount.toFixed(2)}</span>
+                      </div>
+                    )}
+                    <div className="flex justify-between text-slate-600">
+                      <span>
+                        VAT (
+                        {data.vatType === "exempt"
+                          ? "0% DRC / Exempt"
+                          : data.vatType === "standard"
+                          ? "20%"
+                          : `${data.customVatRate}%`}
+                        ):
+                      </span>
+                      <span className="font-mono font-semibold text-slate-800">£{vatAmount.toFixed(2)}</span>
+                    </div>
+                    {data.depositPaid > 0 && (
+                      <div className="flex justify-between text-slate-600">
+                        <span>Deposit Paid:</span>
+                        <span className="font-mono font-semibold text-slate-800">
+                          £{data.depositPaid.toFixed(2)}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* BALANCE DUE Bar */}
+                    <div className="flex justify-between items-center bg-[#18181b] text-white px-3.5 py-2.5 rounded-lg font-bold text-[12px] mt-2 shadow-sm border-t-2 border-[#d4af37]">
+                      <span className="text-[#d4af37] tracking-wider uppercase text-[10.5px]">
+                        BALANCE DUE:
+                      </span>
+                      <span className="text-white font-mono text-[14px] font-extrabold">
+                        £{balanceDue.toFixed(2)}
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
