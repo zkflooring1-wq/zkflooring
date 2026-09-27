@@ -9,6 +9,8 @@ import HeaderSearch from '@/components/layout/HeaderSearch';
 import Sidebar from '@/components/layout/Sidebar';
 import Footer from '@/components/layout/Footer';
 import LayoutWrapper from "@/components/layout/LayoutWrapper";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -228,6 +230,10 @@ export default function RootLayout({
         <Script src="/assets/js/vanilla-tilt.min.js" strategy="afterInteractive" />
         <Script src="/assets/js/three.min.js" strategy="afterInteractive" />
         <Script src="/assets/js/hover.js" strategy="afterInteractive" />
+
+        {/* Vercel Web Analytics & Real-Time Speed Insights */}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
