@@ -17,6 +17,7 @@ import {
   User,
   Users,
   MessageSquare,
+  Receipt,
   Bot,
   LogOut,
   X,
@@ -32,6 +33,7 @@ interface SidebarProps {
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/leads", label: "Leads CRM", icon: Inbox, hasBadge: true },
+  { href: "/invoices", label: "Invoices", icon: Receipt },
   { href: "/ai-training", label: "AI Training & Bot", icon: Bot },
   { href: "/projects", label: "Projects", icon: FolderKanban },
   { href: "/services", label: "Services", icon: Wrench },
