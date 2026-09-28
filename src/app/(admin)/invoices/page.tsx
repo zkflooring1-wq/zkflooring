@@ -231,17 +231,23 @@ export default function InvoicesPage() {
   // 1. Download as High-Resolution PDF
   const handleDownloadPDF = async () => {
     if (!invoiceSheetRef.current) return;
+    const element = invoiceSheetRef.current;
+    const originalTransform = element.style.transform;
     try {
       setIsGenerating(true);
       toast.loading("Rendering high-definition 300 DPI PDF...", { id: "pdf-toast" });
 
-      const element = invoiceSheetRef.current;
+      // Temporarily set transform to scale(1) for pure 1:1 capture
+      element.style.transform = "scale(1)";
+
       const canvas = await html2canvas(element, {
         scale: 3.125, // 794px * 3.125 = 2481px (exact 300 DPI A4)
         useCORS: true,
         allowTaint: true,
         backgroundColor: "#ffffff",
         logging: false,
+        width: 794,
+        height: 1123,
       });
 
       const imgData = canvas.toDataURL("image/jpeg", 0.96);
@@ -260,6 +266,7 @@ export default function InvoicesPage() {
       console.error(err);
       toast.error(`Failed to generate PDF: ${err.message}`, { id: "pdf-toast" });
     } finally {
+      element.style.transform = originalTransform;
       setIsGenerating(false);
     }
   };
@@ -267,17 +274,23 @@ export default function InvoicesPage() {
   // 2. Download as High-Resolution PNG Image
   const handleDownloadImage = async () => {
     if (!invoiceSheetRef.current) return;
+    const element = invoiceSheetRef.current;
+    const originalTransform = element.style.transform;
     try {
       setIsGenerating(true);
       toast.loading("Exporting 300 DPI image...", { id: "img-toast" });
 
-      const element = invoiceSheetRef.current;
+      // Temporarily set transform to scale(1) for pure 1:1 capture
+      element.style.transform = "scale(1)";
+
       const canvas = await html2canvas(element, {
         scale: 3.125,
         useCORS: true,
         allowTaint: true,
         backgroundColor: "#ffffff",
         logging: false,
+        width: 794,
+        height: 1123,
       });
 
       canvas.toBlob((blob) => {
@@ -299,6 +312,7 @@ export default function InvoicesPage() {
       console.error(err);
       toast.error(`Failed to export image: ${err.message}`, { id: "img-toast" });
     } finally {
+      element.style.transform = originalTransform;
       setIsGenerating(false);
     }
   };
