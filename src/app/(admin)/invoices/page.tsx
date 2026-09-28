@@ -28,7 +28,7 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { jsPDF } from "jspdf";
-import html2canvas from "html2canvas";
+import { toPng, toJpeg } from "html-to-image";
 
 interface LineItem {
   id: string;
@@ -240,17 +240,15 @@ export default function InvoicesPage() {
       // Temporarily set transform to scale(1) for pure 1:1 capture
       element.style.transform = "scale(1)";
 
-      const canvas = await html2canvas(element, {
-        scale: 3.125, // 794px * 3.125 = 2481px (exact 300 DPI A4)
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: "#ffffff",
-        logging: false,
+      const imgData = await toJpeg(element, {
+        quality: 0.98,
+        pixelRatio: 3.125, // 794px * 3.125 = 2481px (exact 300 DPI A4)
         width: 794,
         height: 1123,
+        backgroundColor: "#ffffff",
+        cacheBust: true,
       });
 
-      const imgData = canvas.toDataURL("image/jpeg", 0.96);
       const pdf = new jsPDF({
         orientation: "portrait",
         unit: "mm",
@@ -263,7 +261,7 @@ export default function InvoicesPage() {
 
       toast.success("PDF downloaded successfully!", { id: "pdf-toast" });
     } catch (err: any) {
-      console.error(err);
+      console.error("PDF generation error:", err);
       toast.error(`Failed to generate PDF: ${err.message}`, { id: "pdf-toast" });
     } finally {
       element.style.transform = originalTransform;
@@ -283,33 +281,24 @@ export default function InvoicesPage() {
       // Temporarily set transform to scale(1) for pure 1:1 capture
       element.style.transform = "scale(1)";
 
-      const canvas = await html2canvas(element, {
-        scale: 3.125,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: "#ffffff",
-        logging: false,
+      const dataUrl = await toPng(element, {
+        pixelRatio: 3.125,
         width: 794,
         height: 1123,
+        backgroundColor: "#ffffff",
+        cacheBust: true,
       });
 
-      canvas.toBlob((blob) => {
-        if (!blob) {
-          toast.error("Failed to export image", { id: "img-toast" });
-          return;
-        }
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `ZK_Invoice_${data.invoiceNumber || "Draft"}.png`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        toast.success("Image downloaded successfully!", { id: "img-toast" });
-      }, "image/png");
+      const a = document.createElement("a");
+      a.href = dataUrl;
+      a.download = `ZK_Invoice_${data.invoiceNumber || "Draft"}.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      toast.success("Image downloaded successfully!", { id: "img-toast" });
     } catch (err: any) {
-      console.error(err);
+      console.error("Image export error:", err);
       toast.error(`Failed to export image: ${err.message}`, { id: "img-toast" });
     } finally {
       element.style.transform = originalTransform;
@@ -319,7 +308,10 @@ export default function InvoicesPage() {
 
   // 3. Print Directly (Browser native A4 print dialog with 100% vector fidelity)
   const handlePrint = () => {
-    window.print();
+    setActiveMobileTab("preview");
+    setTimeout(() => {
+      window.print();
+    }, 120);
   };
 
   return (
@@ -345,6 +337,7 @@ export default function InvoicesPage() {
             background: #ffffff !important;
             width: 210mm !important;
             height: 297mm !important;
+            overflow: visible !important;
           }
           aside,
           nav,
@@ -361,6 +354,35 @@ export default function InvoicesPage() {
             padding: 0 !important;
             margin: 0 !important;
             background: transparent !important;
+            display: block !important;
+          }
+          /* Force invoice preview column to stay visible even if Tailwind hidden/lg:block applies on print */
+          .invoice-preview-column {
+            display: block !important;
+            position: static !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: visible !important;
+          }
+          .invoice-viewport-container {
+            overflow: visible !important;
+            max-height: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            display: block !important;
+          }
+          .invoice-scaled-wrapper {
+            width: 210mm !important;
+            height: 297mm !important;
+            transform: none !important;
+            display: block !important;
+            margin: 0 !important;
+            padding: 0 !important;
           }
           .invoice-sheet-container {
             display: block !important;
@@ -379,9 +401,8 @@ export default function InvoicesPage() {
             overflow: hidden !important;
             page-break-after: avoid !important;
             page-break-inside: avoid !important;
-            background-image: url("/invoice-template.png") !important;
-            background-size: 100% 100% !important;
-            background-repeat: no-repeat !important;
+            background-color: #ffffff !important;
+            z-index: 9999999 !important;
           }
         }
       `}</style>
@@ -911,7 +932,7 @@ export default function InvoicesPage() {
         </div>
 
         {/* ================= RIGHT COLUMN: Live A4 Visual Preview ================= */}
-        <div className={`lg:col-span-6 sticky top-20 ${activeMobileTab === "edit" ? "hidden lg:block" : "block"}`}>
+        <div className={`invoice-preview-column lg:col-span-6 sticky top-20 ${activeMobileTab === "edit" ? "hidden lg:block" : "block"}`}>
           {/* Preview Toolbar */}
           <div data-no-print="true" className="no-print-area flex items-center justify-between mb-3 px-1 text-xs text-slate-400">
             <div className="flex items-center gap-2">
@@ -950,7 +971,7 @@ export default function InvoicesPage() {
           </div>
 
           {/* ================= THE A4 INVOICE SHEET VIEWPORT ================= */}
-          <div className="overflow-auto max-h-[88vh] p-2 sm:p-4 bg-slate-950/80 rounded-2xl border border-slate-800 flex justify-center shadow-2xl">
+          <div className="invoice-viewport-container overflow-auto max-h-[88vh] p-2 sm:p-4 bg-slate-950/80 rounded-2xl border border-slate-800 flex justify-center shadow-2xl">
             {/* The scaled container that handles width & height with centering */}
             <div
               style={{
@@ -958,7 +979,7 @@ export default function InvoicesPage() {
                 height: `${(1123 * zoom) / 100}px`,
                 position: "relative",
               }}
-              className="flex-shrink-0"
+              className="invoice-scaled-wrapper flex-shrink-0"
             >
               {/* Canonical 794 x 1123 A4 element */}
               <div
@@ -968,14 +989,33 @@ export default function InvoicesPage() {
                   height: "1123px",
                   minWidth: "794px",
                   minHeight: "1123px",
-                  backgroundImage: "url('/invoice-template.png')",
-                  backgroundSize: "100% 100%",
-                  backgroundRepeat: "no-repeat",
                   transform: `scale(${zoom / 100})`,
                   transformOrigin: "top left",
                 }}
                 className="invoice-sheet-container relative bg-white shadow-2xl rounded-sm select-none text-slate-900 box-border overflow-hidden"
               >
+                {/* 
+                  Foreground Letterhead Template Image:
+                  Using a real <img> tag guarantees that the official letterhead ALWAYS renders in
+                  print (even when "Background graphics" is unchecked in Chrome print dialog) and
+                  in 300 DPI exports without CSS background stripping!
+                */}
+                <img
+                  src="/invoice-template.png"
+                  alt="Invoice Letterhead Background"
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "fill",
+                    pointerEvents: "none",
+                    userSelect: "none",
+                    zIndex: 0,
+                  }}
+                />
+
                 {/* 
                   ================ SAFE CONTENT CANVAS ================
                   Template Geometry Analysis:
@@ -1001,8 +1041,9 @@ export default function InvoicesPage() {
                     left: "80px",
                     right: "70px",
                     width: "644px",
+                    zIndex: 10,
                   }}
-                  className="space-y-4"
+                  className="space-y-4 relative"
                 >
                   {/* 1. Header Information Block */}
                   <div className="flex justify-between items-start">
